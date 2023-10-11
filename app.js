@@ -1,13 +1,26 @@
 const express = require('express')
+const fs = require('fs')
 
 const app = express();
 
-app.get('/' , (req , res) => {
-    res.status(404).json
-    ({message : ' hello from the serve side!' , app:'Natours'})
+// middleware
+app.use(express.json())
+
+const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`))
+
+
+app.get('/api/v1/tours' , (req , res) => {
+    res.status(200).json({
+        status : 'success',
+        data: {
+            tours
+        }
+    })
 } )
-app.post('/', (req,res ) => {
-    res.send("you can post")
+
+app.post('/api/v1/tours', (req,res ) => {
+    console.log(req.body)
+    res.send('Done')
 })
 
 app.listen(8000, () =>{
