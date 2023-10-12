@@ -1,24 +1,21 @@
 const express = require('express')
-const fs = require('fs')
+const fs = require('fs');
+const path = require('path');
 const app = express();
 // middleware
 app.use(express.json())
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`))
-app.get('/api/v1/tours/:id' , (req , res) => {
-    const id = req.params.id * 1 ;
-    const tour = tours.find(el => el.id = id)  
-    if(id > tours.length){
-    // if(!tour){
-        return res.status(404).json({status:'fail' , message : 'Invalid ID'})
-    }
+
+
+const getAll = (req , res) => {
     res.status(200).json({
         status : 'success',
         data: {
             tours
         }
     })
-} )
-app.post('/api/v1/tours', (req,res ) => {
+} 
+const postingTour =  (req,res ) => {
     // console.log(req.body)
     const newId = tours[tours.length - 1].id + 1
     const newTour  = Object.assign({id:newId} , req.body)
@@ -31,9 +28,24 @@ app.post('/api/v1/tours', (req,res ) => {
             }
         })
     })
-})
+}
 
-app.patch('/api/v1/tour/:id' , (req , res) =>{
+const getTour =  (req , res) => {
+    const id = req.params.id * 1 ;
+    const tour = tours.find(el => el.id = id)  
+    if(id > tours.length){
+    // if(!tour){
+        return res.status(404).json({status:'fail' , message : 'Invalid ID'})
+    }
+    res.status(200).json({
+        status : 'success',
+        data: {
+            tours
+        }
+    })
+} 
+
+const patchTour =  (req , res) =>{
     if(req.param.id*1 > tours.length){
         // if(!tour){
             return res.status(404).json({status:'fail' , message : 'Invalid ID'})
@@ -44,8 +56,8 @@ app.patch('/api/v1/tour/:id' , (req , res) =>{
             tours : '<Updated here>'
         }
     })
-})
-app.delete('/api/v1/tour/:id' , (req , res) =>{
+}
+ const deleteTour =  (req , res) =>{
     if(req.param.id*1 > tours.length){
         // if(!tour){
             return res.status(404).json({status:'fail' , message : 'Invalid ID'})
@@ -56,7 +68,11 @@ app.delete('/api/v1/tour/:id' , (req , res) =>{
             tours : null
         }
     })
-})
+}
+app.root('/api/v1/tours').get(getAll).post(postingTour)
+
+app.root('/api/v1/tours/:id').get(getTour).patch(patchTour).delete(deleteTour);
+
 
 
 app.listen(8000, () =>{
