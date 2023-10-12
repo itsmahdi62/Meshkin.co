@@ -6,16 +6,25 @@ const app = express();
 app.use(express.json())
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`))
 
+app.use((req,res,next) =>{
+    console.log("The middleware");
+    next()
+})
+app.use((req,res,next) =>{
+    req.requestTime = new Date().toISOString();
+    next();
+})
 
 const getAll = (req , res) => {
     res.status(200).json({
         status : 'success',
+        requestedAt : req.requestTime,
         data: {
             tours
         }
     })
 } 
-const postingTour =  (req,res ) => {
+const createTour =  (req,res ) => {
     // console.log(req.body)
     const newId = tours[tours.length - 1].id + 1
     const newTour  = Object.assign({id:newId} , req.body)
@@ -69,9 +78,9 @@ const patchTour =  (req , res) =>{
         }
     })
 }
-app.root('/api/v1/tours').get(getAll).post(postingTour)
+app.route('/api/v1/tours').get(getAll).post(createTour)
 
-app.root('/api/v1/tours/:id').get(getTour).patch(patchTour).delete(deleteTour);
+app.route('/api/v1/tours/:id').get(getTour).patch(patchTour).delete(deleteTour);
 
 
 
