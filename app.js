@@ -3,11 +3,19 @@ const morgan = require('morgan')
 const tourRouter = require('./routes/tourRoutes')
 const userRouter = require('./routes/userRoutes.js')
 const dotenv  = require('dotenv')
-
-
-
+const mongoose = require('mongoose')
 
 dotenv.config({ path: './config.env'})
+
+
+mongoose.connect(process.env.DATABASE_LOCAL , {
+    useNewUrlParser:true ,
+    useCreateIndex :true ,
+    useFindAndModify: false
+}).then(con => {
+    console.log(con.connections);
+    console.log('DB connection successful')
+})
 
 const app = express();
 // middleware
@@ -23,7 +31,7 @@ app.use((req,res,next) =>{
     next();
 })
 
-console.log(dotenv)
+// console.log(dotenv)
 
 
 app.use('/api/v1/tours' , tourRouter)
