@@ -1,24 +1,42 @@
 const fs = require('fs');
-const Tour = require('../models/tourModel')
+const Tour = require('../models/tourModel');
+const { error } = require('console');
 // const tours = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`))
 
 exports.getAllTour = (req , res) => {
-    res.status(200).json({
-        status : 'success',
-        requestedAt : req.requestTime,
-        // data: {
-        //     tours
-        // }
-    })
-} 
-exports.createTour =  (req,res ) => {
-        res.status(201).json({
-            status:'success',
-            // data:{
-            //     tours : newTour  
-            // }
-        })
+    // try{
+    //     res.status(201).json({
+    //         status:'success',
+    //         data:{
+    //             tours : tours    
+    //         }
+    //     })
     
+    //    }catch{
+    //         res.status(400).json({
+    //             status:'unsuccessful',
+    //             message: 'invalid data sent!' ,
+    //         })
+    //    }
+} 
+exports.createTour = async (req,res ) => {
+    // const newTour = new Tour({})
+    // newTour.save()
+   try{
+    const newTour = await Tour.create(req.body);
+    res.status(201).json({
+        status:'success',
+        data:{
+            tours : newTour  
+        }
+    })
+
+   }catch{
+        res.status(400).json({
+            status:'unsuccessful',
+            message: 'invalid data sent!' ,
+        })
+   }
 }
 
 exports.getTour =  (req , res) => {
