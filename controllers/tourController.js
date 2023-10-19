@@ -1,24 +1,25 @@
 const fs = require('fs');
 const Tour = require('../models/tourModel');
-const { error } = require('console');
 // const tours = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`))
+exports.getAllTours = async (req , res) => {
+    try{
+        const tours = await Tour.find()
 
-exports.getAllTour = (req , res) => {
-    // try{
-    //     res.status(201).json({
-    //         status:'success',
-    //         data:{
-    //             tours : tours    
-    //         }
-    //     })
-    
-    //    }catch{
-    //         res.status(400).json({
-    //             status:'unsuccessful',
-    //             message: 'invalid data sent!' ,
-    //         })
-    //    }
+        res.status(200).json({
+            status:'success',
+            results:tours.length,
+            data:{
+                tours     : tours
+            }
+        })
+       }catch(err){
+            res.status(400).json({
+                status:'unsuccessful',
+                message: 'invalid data sent!' ,
+            })
+       }
 } 
+
 exports.createTour = async (req,res ) => {
     // const newTour = new Tour({})
     // newTour.save()
@@ -30,7 +31,6 @@ exports.createTour = async (req,res ) => {
             tours : newTour  
         }
     })
-
    }catch{
         res.status(400).json({
             status:'unsuccessful',
