@@ -1,15 +1,14 @@
-const fs = require('fs');
+// const fs = require('fs');
 const Tour = require('../models/tourModel');
 // const tours = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`))
 exports.getAllTours = async (req , res) => {
     try{
         const tours = await Tour.find()
-
         res.status(200).json({
             status:'success',
             results:tours.length,
             data:{
-                tours     : tours
+                tours : tours
             }
         })
        }catch(err){
@@ -39,42 +38,55 @@ exports.createTour = async (req,res ) => {
    }
 }
 
-exports.getTour =  (req , res) => {
-    // const id = req.params.id * 1 ;
-    // const tour = tours.find(el => el.id = id)  
-    // if(id > tours.length){
-    // if(!tour){
-        // return res.status(404).json({status:'fail' , message : 'Invalid ID'})
-    // }
-    res.status(200).json({
-        status : 'success',
-        // data: {
-        //     tours
-        // }
-    })
+exports.getTour =async  (req , res) => {
+    try{
+        const tour =await Tour.findById(req.params.id)
+        res.status(201).json({
+            status:'success',
+            data:{
+                tour  
+            }
+        })
+       }catch{
+            res.status(400).json({
+                status:'unsuccessful',
+                message: 'invalid data sent!' ,
+            })
+       }
 } 
 
-exports.patchTour =  (req , res) =>{
-    // if(req.param.id*1 > tours.length){
-    //     // if(!tour){
-    //         return res.status(404).json({status:'fail' , message : 'Invalid ID'})
-    //     }
-    res.status(200).json({
-        status:'success',  
-        // data:{
-        //     tours : '<Updated here>'
-        // }
-    })
+exports.patchTour = async (req , res) =>{
+    try{
+        const tour = await Tour.findByIdAndUpdate(req.params.id , req.body , {
+            new:true
+        })
+
+        res.status(201).json({
+            status:'success',
+            data:{
+                tour: '<Updated Tour >'
+            }
+        })
+       }catch{
+            res.status(400).json({
+                status:'unsuccessful',
+                message: 'invalid data sent!' ,
+            })
+       }
 }
 exports.deleteTour =  (req , res) =>{
-    if(req.param.id*1 > tours.length){
-        // if(!tour){
-            return res.status(404).json({status:'fail' , message : 'Invalid ID'})
-        }
-    res.status(202).json({
-        status:'success',
-        // data:{
-        //     tours : null
-        // }
-    })
+    try{
+        const tour = Tour.findById(req.params.id)
+        res.status(201).json({
+            status:'success',
+            data:{
+                tour  
+            }
+        })
+       }catch{
+            res.status(400).json({
+                status:'unsuccessful',
+                message: 'invalid data sent!' ,
+            })
+       }
 }
