@@ -2,11 +2,9 @@ const express = require('express')
 const morgan = require('morgan')
 const tourRouter = require('./routes/tourRoutes')
 const userRouter = require('./routes/userRoutes.js')
-
 const mongoose = require('mongoose')
 const dotenv  = require('dotenv')
-
-
+const Tour = require('./models/tourModel')
 dotenv.config({ path: './config.env'})
 
 mongoose.connect(process.env.DATABASE_LOCAL , {
@@ -17,6 +15,8 @@ mongoose.connect(process.env.DATABASE_LOCAL , {
     // console.log(con.connections);
     console.log('DB connection successful')
 })
+
+
 
 const app = express();
 // middleware

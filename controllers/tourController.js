@@ -3,7 +3,34 @@ const Tour = require('../models/tourModel');
 // const tours = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`))
 exports.getAllTours = async (req , res) => {
     try{
-        const tours = await Tour.find()
+        
+        //Build query
+        const queryObj = {...req.query};
+        const excludedfields = ['page', 'sort' , 'limit' , 'filds']
+        excludedfields.forEach(el => delete(excludedfields[el])) 
+        console.log(queryObj)
+        let queryStr = JSON.stringify(queryObj)
+        queryStr = queryStr.replace( (/\b(gte|gt|lte|lt)\b/g) , match => `$${match}` )
+        
+        console.log(JSON.parse(queryStr))
+
+        
+        const query =  Tour.find(JSON.parse(queryStr))
+       const tours = await query
+        // const tours = await Tour.find();
+
+        //write query
+        // const tours = await Tour.find({
+        //     duration:5,
+        //     difficulty : 'easy'
+        // })
+        // const tours = await Tour.find()
+        //     .where('duration')
+        //     .equals(5)
+        //     .where('difficulty')
+        //     .equals('easy')
+
+       //Send responses
         res.status(200).json({
             status:'success',
             results:tours.length,
@@ -15,7 +42,7 @@ exports.getAllTours = async (req , res) => {
             res.status(400).json({
                 status:'unsuccessful',
                 message: 'invalid data sent!' ,
-            })
+            }),
        }
 } 
 
