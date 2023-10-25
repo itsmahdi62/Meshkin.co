@@ -4,7 +4,6 @@ const tourRouter = require('./routes/tourRoutes')
 const userRouter = require('./routes/userRoutes.js')
 const mongoose = require('mongoose')
 const dotenv  = require('dotenv')
-const Tour = require('./models/tourModel')
 dotenv.config({ path: './config.env'})
 
 mongoose.connect(process.env.DATABASE_LOCAL , {
@@ -23,10 +22,6 @@ const app = express();
 app.use(express.json())
 app.use(morgan('dev'))
 
-app.use((req,res,next) =>{
-    console.log("The middleware");
-    next()
-})
 app.use((req,res,next) =>{
     req.requestTime = new Date().toISOString();
     next();

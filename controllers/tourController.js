@@ -3,22 +3,24 @@ const Tour = require('../models/tourModel');
 // const tours = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`))
 exports.getAllTours = async (req , res) => {
     try{
-        
         //Build query
+        // 1A) Filtering
         const queryObj = {...req.query};
-        const excludedfields = ['page', 'sort' , 'limit' , 'filds']
-        excludedfields.forEach(el => delete(excludedfields[el])) 
-        console.log(queryObj)
+        const excludedfields = ['page', 'sort' , 'limit' , 'fields']
+        excludedfields.forEach(el => delete queryObj[el]) 
+        // 1B advance filtering
         let queryStr = JSON.stringify(queryObj)
-        queryStr = queryStr.replace( (/\b(gte|gt|lte|lt)\b/g) , match => `$${match}` )
-        
+        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g , match => `$${match}` )
         console.log(JSON.parse(queryStr))
 
-        
-        const query =  Tour.find(JSON.parse(queryStr))
+        let query =  Tour.find(JSON.parse(queryStr)) 
+        // 2) Sorting
+        if(req.query.sort){
+            query = query.sort(req.query.sort)
+        }
+        // Execute query
        const tours = await query
-        // const tours = await Tour.find();
-
+       // const tours = await Tour.find();
         //write query
         // const tours = await Tour.find({
         //     duration:5,
@@ -33,19 +35,18 @@ exports.getAllTours = async (req , res) => {
        //Send responses
         res.status(200).json({
             status:'success',
-            results:tours.length,
             data:{
                 tours : tours
             }
         })
-       }catch(err){
+        }catch(err){
             res.status(400).json({
                 status:'unsuccessful',
-                message: 'invalid data sent!' ,
-            }),
-       }
-} 
-
+                message: err ,
+            }) 
+            console.log(err)
+        }       
+}
 exports.createTour = async (req,res ) => {
     // const newTour = new Tour({})
     // newTour.save()
