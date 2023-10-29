@@ -12,7 +12,7 @@ mongoose.connect(process.env.DATABASE_LOCAL , {
     useFindAndModify: false
 }).then(con => {
     // console.log(con.connections);
-    console.log('DB connection successful')
+    // console.log('DB connection successful')
 })
 
 
