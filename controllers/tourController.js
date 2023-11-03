@@ -129,10 +129,10 @@ exports.patchTour = async (req , res) =>{
                 tour: '<Updated Tour >'
             }
         })
-       }catch{
+       }catch(err){
             res.status(400).json({
                 status:'unsuccessful',
-                message: 'invalid data sent!' ,
+                message: err ,
             })
        }
 }
