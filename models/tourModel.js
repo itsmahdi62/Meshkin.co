@@ -52,7 +52,11 @@ const tourSchema  = new mongoose.Schema({
         default : Date.now(),
         select:false
     },
-    startDates:[Date]
+    startDates:[Date],
+    secretTour:{
+        type:Boolean,
+        default:false
+    }
 
 },{
     toJSON:{virtuals:true},
@@ -69,10 +73,22 @@ tourSchema.pre('save' , function(next){
     next()
 })
 
-tourSchema.post('save' , function( doc , next ){
-    console.log(doc)
+// tourSchema.post('save' , function( doc , next ){
+//     console.log(doc)
+//     next()
+// })
+
+// GUERY middleware
+tourSchema.pre(/^find/ ,  function(next){
+    // tourSchema.pre('find' , function(next){
+    this.find({ secretTour : {$ne:true}})
     next()
 })
+
+// tourSchema.pre('findOne' , function(next){
+//     this.find({ secretTour : {$ne:true}})
+//     next()
+// })
 
 
 const Tour = mongoose.model('Tour' , tourSchema);
