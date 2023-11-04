@@ -120,13 +120,14 @@ exports.getTour =async  (req , res) => {
 exports.patchTour = async (req , res) =>{
     try{
         const tour = await Tour.findByIdAndUpdate(req.params.id , req.body , {
-            new:true
+            new:true,
+            runValidators:true
         })
 
         res.status(201).json({
             status:'success',
             data:{
-                tour: '<Updated Tour >'
+                tour
             }
         })
        }catch(err){
