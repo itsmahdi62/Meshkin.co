@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
         required:[true , "please provide your email"],
         unique:true , 
         lowercase:true,
-        validate : [validator.isEmai , 'Please provide a valid email']
+        validate : [validator.isEmail , 'Please provide a valid email']
     },
     photo:String,
     password: {
@@ -26,8 +26,6 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-
-
-const User = mongoose.model('User' , tourSchema);
+const User = mongoose.model('User' , userSchema);
 
 module.exports  = User
