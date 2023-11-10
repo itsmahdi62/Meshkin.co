@@ -1,8 +1,8 @@
 // const fs = require('fs');
-const { query } = require('express');
 const Tour = require('../models/tourModel');
 // const tours = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`))
 const APIfeatures = require('../utils/apiFeatures');
+const catchAsync = require('../utils/catchAsync');
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = '5';
   req.query.sort = '-ratingAverage,price';
@@ -82,7 +82,7 @@ exports.getAllTours = async (req, res) => {
     });
   }
 };
-exports.createTour = async (req, res) => {
+exports.createTour = catchAsync(async (req, res) => {
   // const newTour = new Tour({})
   // newTour.save()
   try {
@@ -99,7 +99,7 @@ exports.createTour = async (req, res) => {
       message: error,
     });
   }
-};
+});
 
 exports.getTour = async (req, res) => {
   try {

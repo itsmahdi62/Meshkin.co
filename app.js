@@ -4,8 +4,10 @@ const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes.js');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-dotenv.config({ path: './config.env' });
+const AppError = require('./utils/appError.js');
+const globalErrorHandler = require('./controllers/authController');
 
+dotenv.config({ path: './config.env' });
 mongoose
   .connect(process.env.DATABASE_LOCAL, {
     useNewUrlParser: true,
@@ -36,21 +38,13 @@ app.all('*', (req, res, next) => {
   //   status: 'fail',
   //   message: `Can not find ${req.originalUrl} on this server`,
   // });
-  const err = new Error(`Can not find ${req.originalUrl} on this server`);
-  err.status = 'fail' 
-  err.statusCode = 404;
-  next(err);
+  // const err = new Error(`Can not find ${req.originalUrl} on this server`);
+  // err.status = 'fail'
+  // err.statusCode = 404;
+  next(new AppError(`Can not find ${req.originalUrl} on this server`));
 });
 
-app.use((err, req, res, next) => {
-  err.statusCode = err.statusCode || 500; // internal server error
-  err.status = err.status || 'error';
-
-  res.status(err.statusCode).json({
-    status: err.status,
-    message: err.message,
-  });
-});
+app.use(globalErrorHandler);
 
 app.listen(8000, () => {
   console.log('Listening ... on port 8000');
