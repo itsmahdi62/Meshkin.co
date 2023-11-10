@@ -2,6 +2,7 @@
 const Tour = require('../models/tourModel');
 // const tours = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`))
 const APIfeatures = require('../utils/apiFeatures');
+const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
 exports.aliasTopTours = (req, res, next) => {
@@ -92,6 +93,11 @@ exports.createTour = catchAsync(async (req, res) => {
 
 exports.getTour = catchAsync(async (req, res) => {
   const tour = await Tour.findById(req.params.id);
+
+  if(!tour){
+    return next(new AppError('No tour found with that id' , 404))
+  }
+
   res.status(201).json({
     status: 'success',
     data: {
