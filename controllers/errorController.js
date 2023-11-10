@@ -1,4 +1,4 @@
-module.exports = app.use((err, req, res, next) => {
+module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500; // internal server error
   err.status = err.status || 'error';
 
@@ -6,4 +6,4 @@ module.exports = app.use((err, req, res, next) => {
     status: err.status,
     message: err.message,
   });
-});
+};

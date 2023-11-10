@@ -5,7 +5,7 @@ const userRouter = require('./routes/userRoutes.js');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const AppError = require('./utils/appError.js');
-const globalErrorHandler = require('./controllers/authController');
+const globalErrorHandler = require('./controllers/errorController');
 
 dotenv.config({ path: './config.env' });
 mongoose
