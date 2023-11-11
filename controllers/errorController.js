@@ -5,6 +5,7 @@ const sendErrorDev = (err, res) => {
     error: err,
     stack: err.stack,
   });
+  console.error('ERROR 😁', err);
 };
 
 const sendErrorProd = (err, res) => {
@@ -15,7 +16,7 @@ const sendErrorProd = (err, res) => {
       message: err.message,
     });
 
-    // Programmin of other unko=nown error : don't leak error details
+    // Programming of other unko=nown error : don't leak error details
   } else {
     // 1) Log error
     console.error('ERROR 😁😁', err);
@@ -32,9 +33,9 @@ module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500; // internal server error
   err.status = err.status || 'error';
 
-  if (proccess.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, res);
-  } else if (proccess.env.NODE_ENV === 'production') {
+  } else if (process.env.NODE_ENV === 'production') {
     sendErrorProd(err, res);
   }
 };
