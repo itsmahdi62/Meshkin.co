@@ -11,7 +11,7 @@ const sendErrorDev = (err, res) => {
     error: err,
     stack: err.stack,
   });
-  console.error('ERROR 😁', err);
+  console.error('ERROR 😁 in sendErrorDev', err);
 };
 
 const sendErrorProd = (err, res) => {
@@ -25,7 +25,7 @@ const sendErrorProd = (err, res) => {
     // Programming of other unko=nown error : don't leak error details
   } else {
     // 1) Log error
-    console.error('ERROR 😁😁', err);
+    console.error('ERROR 😁😁 in sendErrorProd', err);
 
     // 2) send generic message
     res.status(500).json({
@@ -40,9 +40,9 @@ module.exports = (err, req, res, next) => {
   err.status = err.status || 'error';
 
   if (process.env.NODE_ENV === 'development') {
-    let error = { ...err };
-    if (error.name === 'CastError') error = handleCastErrorDB(error);
-    sendErrorDev(error, res);
+    // let error = { ...err };
+    if (err.name === 'CastError') err = handleCastErrorDB(err);
+    sendErrorDev(err, res);
 
   } else if (process.env.NODE_ENV === 'production') {
     let error = { ...err };

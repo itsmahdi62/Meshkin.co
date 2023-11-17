@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide a password'],
     minlength: 8,
-    select:false
+    select: false,
   },
   passwordConfirm: {
     type: String,
@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre('save', async function (next) {
-  // only run if password was modified 
+  // only run if password was modified
   if (!this.isModified('password')) return next();
 
   //hash the password with cost 12
@@ -41,7 +41,7 @@ userSchema.pre('save', async function (next) {
 
   //delete password confirm field
   this.passwordConfirm = undefined;
-  next()
+  next();
 });
 
 const User = mongoose.model('User', userSchema);
