@@ -3,10 +3,10 @@ const catchAsync = require('../utils/catchAsync');
 const jwt = require('jsonwebtoken');
 const AppError = require('../utils/appError');
 
-const signToken = id => {
-  return jwt.sign({ id}, process.env.JWT_SECRET, {
+const signToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
-  })
+  });
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
@@ -49,4 +49,26 @@ exports.login = catchAsync(async (req, res, next) => {
     status: 'success',
     token,
   });
+});
+
+exports.protect = catchAsync(async (req, res, next) => {
+  let token;
+  // 1) get Token and check if it exist
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    token = req.headers.authorization.split(' ');
+  }
+
+  if (!token) {
+    return next(new AppError('You are not logged in !', 401));
+  }
+  // 2) Verification token
+
+  // 3) Check if user still exist
+
+  // 4) Check if user changed password after the token was issued
+
+  next();
 });
