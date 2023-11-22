@@ -35,17 +35,26 @@ const sendErrorProd = (err, res) => {
   }
 };
 
+const handleJWTError = () =>
+  new AppError('Invalid token please login again', 401);
+
+const handleExpireToken = () => {
+  new AppError('Your token is expired !', 401);
+};
+
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500; // internal server error
   err.status = err.status || 'error';
 
   if (process.env.NODE_ENV === 'development') {
     // let error = { ...err };
-    if (err.name === 'CastError') err = handleCastErrorDB(err);
     sendErrorDev(err, res);
+    if (err.name === 'TokenExpiredError') err = handleExpireToken(err);
   } else if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
     if (error.name === 'CastError') error = handleCastErrorDB(error);
+    if (error.name === 'JsonWebTokenError') error = handleJWTError();
+    if (error.name === 'TokenExpiredError') error = handleExpireToken();
 
     sendErrorProd(error, res);
   }
