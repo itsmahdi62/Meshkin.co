@@ -83,11 +83,25 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   // 4) Check if user changed password after the token was issued
-  if(freshUser.changedPasswordAfter(decoded.iat)){
-    return next(new AppError('User recently changed password ! Please login again.' , 401))
+  if (freshUser.changedPasswordAfter(decoded.iat)) {
+    return next(
+      new AppError('User recently changed password ! Please login again.', 401)
+    );
   }
 
   // GRANT ACCESS TO PROTECTED ROUTE
-  req.user = freshUser
+  req.user = freshUser;
   next();
 });
+
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    // roles is an array example ['admin' , 'lead-guide']. role='user'
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('You do not have permission to perform this action', 403)
+      );
+    }
+    next();
+  };
+};
