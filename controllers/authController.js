@@ -91,6 +91,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // GRANT ACCESS TO PROTECTED ROUTE
   req.user = freshUser;
+  
   next();
 });
 
@@ -177,9 +178,8 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 exports.updatePassword = catchAsync(async (req, res, next) => {
   // 1) Get user from collection
   const user = await User.findById(req.user.id).select('+password');
-
   // 2) Check if posted current password is correct
-  if (!(await user.correctPassword(req.body.passwordConfirm, user.password))) {
+  if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
     return next(new AppError('Your corrent password is wrong', 401));
   }
   // 3) If so , update password
@@ -189,5 +189,4 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   // 4) log user in , send JWT
   createSendToken(user, 200, res);
-  
 });
