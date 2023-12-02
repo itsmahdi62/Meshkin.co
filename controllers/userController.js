@@ -2,12 +2,10 @@ const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
-const filterObj = (obj , ...allowdFields)=>{
+const filterObj = (obj , ...allowedFields)=>{
   const newObj = {}
   Object.keys(obj).forEach(el =>{
-    if(allowdFields.includes(el)){
-      newObj[el] = obj[el]
-    }
+    if(allowedFields.includes(el)) newObj[el] = obj[el]
   })
   return newObj
 }
@@ -23,7 +21,7 @@ exports.getAllUser = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updatMe = catchAsync(async (req, res, next) => {
+exports.updateMe = catchAsync(async (req, res, next) => {
   // 1) Create error if user Posts password data
   if (req.body.password || req.body.passwordConfirm) {
     return next(
