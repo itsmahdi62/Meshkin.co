@@ -28,5 +28,6 @@
     "activityBar.background": "#4a0f0f",
     "titleBar.activeBackground": "#4a0f0f",
     "titleBar.activeForeground": "#F5FDF4"
-  }
+  },
+  "editor.inlineSuggest.showToolbar": "onHover"
 }
