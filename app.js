@@ -1,13 +1,14 @@
-const express = require('express');
-const morgan = require('morgan');
-const tourRouter = require('./routes/tourRoutes');
-const userRouter = require('./routes/userRoutes.js');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const AppError = require('./utils/appError.js');
-const globalErrorHandler = require('./controllers/errorController');
+const express = require("express");
+const morgan = require("morgan");
+const tourRouter = require("./routes/tourRoutes");
+const userRouter = require("./routes/userRoutes.js");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const AppError = require("./utils/appError.js");
+const globalErrorHandler = require("./controllers/errorController");
+const rateLimit = require("express-rate-limit");
 
-dotenv.config({ path: './config.env' });
+dotenv.config({ path: "./config.env" });
 mongoose
   .connect(process.env.DATABASE_LOCAL, {
     useNewUrlParser: true,
@@ -21,19 +22,26 @@ mongoose
   });
 
 const app = express();
-// middleware
+// GLOBAL middleware
 app.use(express.json());
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
 });
 
-app.use('/api/v1/tours', tourRouter);
-app.use('/api/v1/users', userRouter);
+const limiter = rateLimit({
+  max: 30,
+  windowMs: 60 * 60 * 1000,
+  message: "Too many requests from this IP, please try again in an hour!",
+});
+app.use("/api", limiter);
 
-app.all('*', (req, res, next) => {
+app.use("/api/v1/tours", tourRouter);
+app.use("/api/v1/users", userRouter);
+
+app.all("*", (req, res, next) => {
   // res.status(404).json({
   //   status: 'fail',
   //   message: `Can not find ${req.originalUrl} on this server`,
@@ -47,5 +55,5 @@ app.all('*', (req, res, next) => {
 app.use(globalErrorHandler);
 
 app.listen(8000, () => {
-  console.log('Listening ... on port 8000');
+  console.log("Listening ... on port 8000");
 });
