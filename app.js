@@ -7,6 +7,12 @@ const dotenv = require("dotenv");
 const AppError = require("./utils/appError.js");
 const globalErrorHandler = require("./controllers/errorController");
 const rateLimit = require("express-rate-limit");
+const helmet = require('helmet')
+const monogoSanitiz = require('express-mongo-sanitiz')
+const xss = require('xss-clean')
+
+
+// console.log(process.env.NODE_ENV);
 
 dotenv.config({ path: "./config.env" });
 mongoose
@@ -23,20 +29,35 @@ mongoose
 
 const app = express();
 // GLOBAL middleware
-app.use(express.json());
+
+// Body parser , reading data from body into req.body
+app.use(express.json({limit: '10kb'}));
+
+//Set Security HETTP  headers
+app.use(helmet())
+
+// Development logging
 app.use(morgan("dev"));
 
+//Test middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
 });
 
+// limit request from same api
 const limiter = rateLimit({
   max: 30,
   windowMs: 60 * 60 * 1000,
   message: "Too many requests from this IP, please try again in an hour!",
 });
 app.use("/api", limiter);
+
+// Data sanitization against NoSQL query injection
+app.use(monogoSanitiz());
+// Data sanitization against XSS
+app.use(xss())
+
 
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);

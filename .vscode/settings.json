@@ -29,5 +29,5 @@
     "titleBar.activeBackground": "#4a0f0f",
     "titleBar.activeForeground": "#F5FDF4"
   },
-  "editor.inlineSuggest.showToolbar": "onHover"
+  "editor.inlineSuggest.showToolbar": "always"
 }
