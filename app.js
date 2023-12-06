@@ -7,10 +7,10 @@ const dotenv = require("dotenv");
 const AppError = require("./utils/appError.js");
 const globalErrorHandler = require("./controllers/errorController");
 const rateLimit = require("express-rate-limit");
-const helmet = require('helmet')
-const monogoSanitiz = require('express-mongo-sanitiz')
-const xss = require('xss-clean')
-
+const helmet = require("helmet");
+const monogoSanitize = require("express-mongo-sanitize");
+const xss = require("xss-clean");
+const hpp = require("hpp");
 
 // console.log(process.env.NODE_ENV);
 
@@ -31,10 +31,10 @@ const app = express();
 // GLOBAL middleware
 
 // Body parser , reading data from body into req.body
-app.use(express.json({limit: '10kb'}));
+app.use(express.json({ limit: "10kb" }));
 
 //Set Security HETTP  headers
-app.use(helmet())
+app.use(helmet());
 
 // Development logging
 app.use(morgan("dev"));
@@ -54,10 +54,23 @@ const limiter = rateLimit({
 app.use("/api", limiter);
 
 // Data sanitization against NoSQL query injection
-app.use(monogoSanitiz());
+app.use(monogoSanitize());
 // Data sanitization against XSS
-app.use(xss())
+app.use(xss());
 
+// Prevent parameter polution
+app.use(
+  hpp({
+    whitelist: [
+      "duration",
+      "ratingsQuantity",
+      "ratingsAverage",
+      "difficulty",
+      "maxGroupSize",
+      "price",
+    ],
+  })
+);
 
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
