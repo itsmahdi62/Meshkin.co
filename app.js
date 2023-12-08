@@ -11,6 +11,7 @@ const helmet = require("helmet");
 const monogoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
+const reveiwRouter = require("./routes/reviewRoutes.js");
 
 // console.log(process.env.NODE_ENV);
 
@@ -74,6 +75,7 @@ app.use(
 
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/reviews", reveiwRouter);
 
 app.all("*", (req, res, next) => {
   // res.status(404).json({
