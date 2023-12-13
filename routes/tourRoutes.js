@@ -12,11 +12,7 @@ const reviewRouter = require("../routes/reviewRoutes");
 //     reviewController.createReview
 //   )
 //   .get(authController.protect, reviewController.getAllReviews);
-router.use('/:tourID/reviews' , reviewRouter)
-
-
-
-
+router.use("/:tourId/reviews", reviewRouter);
 
 router
   .route("/top-5-cheap")
@@ -24,7 +20,6 @@ router
 
 router.route("/tour-stats").get(tourController.getTourStats);
 router.route("/monthly-plan/:year").get(tourController.getMonthlyPlan);
-
 
 router
   .route("/")
@@ -39,6 +34,5 @@ router
     authController.restrictTo("admin", "lead-guide"),
     tourController.deleteTour
   );
-
 
 module.exports = router;
