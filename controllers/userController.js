@@ -61,10 +61,5 @@ exports.createUser = (req, res) => {
     message: "This route its not yet defined!",
   });
 };
-exports.patchUser = (req, res) => {
-  res.status(500).json({
-    status: "fail",
-    message: "This route its not yet defined!",
-  });
-};
+exports.patchUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);

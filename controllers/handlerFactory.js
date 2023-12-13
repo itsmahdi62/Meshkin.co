@@ -11,7 +11,27 @@ exports.deleteOne = (Model) =>
     res.status(201).json({
       status: "success",
       data: {
-        data:null,
+        data: null,
       },
     });
   });
+
+exports.updateOne = (Model) => {
+  catchAsync(async (req, res) => {
+    const doc = await Modal.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!doc) {
+      return next(new AppError("No document found with that ID", 404));
+    }
+
+    res.status(201).json({
+      status: "success",
+      data: {
+        data: doc,
+      },
+    });
+  });
+};

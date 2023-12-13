@@ -106,19 +106,8 @@ exports.getTour = catchAsync(async (req, res) => {
   });
 });
 
-exports.patchTour = catchAsync(async (req, res) => {
-  const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
-  res.status(201).json({
-    status: "success",
-    data: {
-      tour,
-    },
-  });
-});
-
+// Do not update passwords with this!
+exports.updateTour = factory.deleteOne(Tour);
 exports.deleteTour = factory.deleteOne(Tour);
 
 exports.getTourStats = catchAsync(async (req, res) => {
