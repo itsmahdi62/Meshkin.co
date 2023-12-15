@@ -64,21 +64,21 @@ exports.createOne = (Model) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
-  // To allow for nested getReviews on tour
-  let filter = {};
-  if (req.params.tourId) filter = { tour: req.params.tourId };
+    // To allow for nested getReviews on tour
+    let filter = {};
+    if (req.params.tourId) filter = { tour: req.params.tourId };
 
-  // Execute query
-  const features = new APIfeatures(Model.find(), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
-  const doc = await features.query;
-  res.status(200).json({
-    status: "success",
-    data: {
-      data: doc,
-    },
+    // Execute query
+    const features = new APIfeatures(Model.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+    const doc = await features.query;
+    res.status(200).json({
+      status: "success",
+      data: {
+        data: doc,
+      },
+    });
   });
-});
