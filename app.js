@@ -12,7 +12,7 @@ const monogoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 const reveiwRouter = require("./routes/reviewRoutes.js");
-
+const path = require("path");
 // console.log(process.env.NODE_ENV);
 
 dotenv.config({ path: "./config.env" });
@@ -29,7 +29,12 @@ mongoose
   });
 
 const app = express();
+app.set("view engine", "pug");
+app.set("views", path.join(__dirname, "views"));
 // GLOBAL middleware
+
+//Serving static files
+app.use(express.static(path.join(__dirname, "public")));
 
 // Body parser , reading data from body into req.body
 app.use(express.json({ limit: "10kb" }));
@@ -72,6 +77,14 @@ app.use(
     ],
   })
 );
+
+// 3) Routes
+app.get("/", (req, res) => {
+  res.status(200).render("base" , {
+    tour : 'The forest hiker',
+    user:'Jonas'
+  });
+});
 
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
