@@ -13,6 +13,7 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 const reveiwRouter = require("./routes/reviewRoutes.js");
 const path = require("path");
+const viewRouter = require("./routes/viewRoutes.js");
 // console.log(process.env.NODE_ENV);
 
 dotenv.config({ path: "./config.env" });
@@ -79,13 +80,7 @@ app.use(
 );
 
 // 3) Routes
-app.get("/", (req, res) => {
-  res.status(200).render("base" , {
-    tour : 'The forest hiker',
-    user:'Jonas'
-  });
-});
-
+app.use("/", viewRouter);
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reveiwRouter);
