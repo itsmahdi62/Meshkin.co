@@ -15,6 +15,7 @@ const reveiwRouter = require("./routes/reviewRoutes.js");
 const path = require("path");
 const viewRouter = require("./routes/viewRoutes.js");
 // console.log(process.env.NODE_ENV);
+const cookieParser = require("cookie-parser");
 
 dotenv.config({ path: "./config.env" });
 mongoose
@@ -39,6 +40,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Body parser , reading data from body into req.body
 app.use(express.json({ limit: "10kb" }));
+app.use(cookieParser());
 
 //Set Security HETTP  headers
 app.use(helmet());
@@ -49,6 +51,7 @@ app.use(morgan("dev"));
 //Test middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
+  // console.log(req.cookies);
   next();
 });
 
