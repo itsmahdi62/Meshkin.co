@@ -25,8 +25,8 @@
             "selection.background": "#FF704240",
             "statusBarItem.remoteBackground": "#FF7042"
         },
-        "activityBar.background": "#11350B",
-        "titleBar.activeBackground": "#174A0F",
-        "titleBar.activeForeground": "#F5FDF4"
+        "activityBar.background": "#4C2022",
+        "titleBar.activeBackground": "#6A2D30",
+        "titleBar.activeForeground": "#FDFBFC"
     }
 }
