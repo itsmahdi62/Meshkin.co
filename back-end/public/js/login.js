@@ -3,14 +3,18 @@
 const login = async (email, password) => {
   try {
     console.log(email);
-    const res = await axios({
-      method: "POST",
-      url: "http://127.0.0.1:8000/api/v1/users/login",
-      data: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    });
+    const res = await axios.POST('http://127.0.0.1:8000/api/v1/users/login' , {
+    email: email,
+    password: password,
+  })
+    // const res = await axios({
+    //   method: "POST",
+    //   url: "http://127.0.0.1:8000/api/v1/users/login",
+    //   data: JSON.stringify({
+    //     email: email,
+    //     password: password,
+    //   }),
+    // });
     console.log(res.data);
   } catch (err) {
     console.log(err);

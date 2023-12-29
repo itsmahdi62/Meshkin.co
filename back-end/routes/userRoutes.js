@@ -10,8 +10,8 @@ router.post("/forgotPassword", authController.forgotPassword);
 
 router.use(authController.protect);
 
-// router.post("/logout", authController.logOut);
-router.get("/login", authController.logOut);
+router.post("/login", authController.login);
+router.get("/logout", authController.logOut);
 
 router.get("/me", userController.getMe, userController.getUser);
 
