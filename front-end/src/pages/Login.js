@@ -68,7 +68,6 @@ const Login = () => {
             <button className="btn btn--green">Login</button>
           </div>
         </form>
-        {localStorage.getItem("token") ? "dddiiin" : "Heollo"}
       </div>
     </main>
   );
