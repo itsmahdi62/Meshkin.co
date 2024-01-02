@@ -1,6 +1,4 @@
-import { useSelector } from "react";
 const Header = () => {
-  //   const user = useSelector((state) => state.user);
   return (
     <header className="header">
       <nav className="nav nav--tours">

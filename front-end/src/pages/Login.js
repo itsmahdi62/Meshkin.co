@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-const Login = () => {
+const Login = (props) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   // const [error, setError] = useState("");
@@ -11,10 +11,11 @@ const Login = () => {
     e.preventDefault();
     setEmail("");
     setPassword("");
+
     try {
       const response = await axios({
         method: "POST",
-        url: "127.0.0.1:8000/api/v1/users/login",
+        url: "http://127.0.0.1:8000/api/v1/users/login",
         data: {
           email: email,
           password: password,
@@ -65,9 +66,12 @@ const Login = () => {
             />
           </div>
           <div className="form__group">
-            <button className="btn btn--green">Login</button>
+            <button className="btn btn--green" type="submit">
+              Login
+            </button>
           </div>
         </form>
+        {localStorage.getItem("token")}
       </div>
     </main>
   );

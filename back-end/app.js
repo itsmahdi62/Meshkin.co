@@ -16,7 +16,9 @@ const path = require("path");
 const viewRouter = require("./routes/viewRoutes.js");
 // console.log(process.env.NODE_ENV);
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
+// console.log(process.env);
 dotenv.config({ path: "./config.env" });
 mongoose
   .connect(process.env.DATABASE_LOCAL, {
@@ -44,7 +46,7 @@ app.use(cookieParser());
 
 //Set Security HETTP  headers
 app.use(helmet());
-
+app.use(cors());
 // Development logging
 app.use(morgan("dev"));
 
@@ -83,7 +85,7 @@ app.use(
 );
 
 // 3) Routes
-app.use("/", viewRouter);
+// app.use("/", viewRouter);
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reveiwRouter);
