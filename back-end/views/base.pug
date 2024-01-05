@@ -3,7 +3,7 @@ html
     head 
         block head 
             link(rel='stylesheet' href='/css/style.css')
-            //- link(rel='shortcut icon' type='../image/png' href='img/favicon.png')
+            link(rel='shortcut icon' type='../image/png' href='img/favicon.png')
             meta(charset='UTF-8')
             meta(name='viewport' content='width=device-width, initial-scale=1.0')
             meta(http-equiv="Content-Security-Policy" content="script-src 'self' 'nonce-abc123' https://cdn.jsdelivr.net;")
@@ -17,15 +17,13 @@ html
         include _header
 
         //-  Content
-        //- block content 
+        block content 
         h1 This is a placeholder heading
 
         // Footer
         include  _footer
         script(src='/js/bundle.js')
                
-
-
 
 
 

@@ -1,4 +1,9 @@
+import { useState, useEffect } from "react";
 const Header = () => {
+  const [token, setToken] = useState("");
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, []);
   return (
     <header className="header">
       <nav className="nav nav--tours">
@@ -10,7 +15,7 @@ const Header = () => {
         <img src="./img/logo-white.png" alt="Natours logo" />
       </div>
       <nav className="nav nav--user">
-        {/* {user ? (
+        {token ? (
           <>
             <a className="nav__el nav__el--logout" href="/logout">
               Log Out
@@ -21,7 +26,7 @@ const Header = () => {
                 // src={`../img/users/${user.photo}`}
                 // alt={`Photo of ${user.name}`}
               />
-              <span>{user.name.split(" ")[0]}</span>
+              {/* <span>{token.name.split(" ")[0]}</span> */}
             </a>
           </>
         ) : (
@@ -33,7 +38,7 @@ const Header = () => {
               Sign Up
             </a>
           </>
-        )} */}
+        )}
       </nav>
     </header>
   );

@@ -1,11 +1,27 @@
-import { useSelector } from "react";
-
-const Main = () => {
-  const tours = useSelector((state) => state.tours);
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+const Overview = () => {
+  const [tours, setTours] = useState();
+  useEffect(() => {
+    const response = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/v1/tours");
+        setTours(response.data);
+        // tours.data.map((item) => {
+        //   console.log(item);
+        // });
+        console.log(tours);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    response();
+  }, []);
 
   return (
     <main className="main">
-      <div className="card-container">
+      {/* <div className="card-container">
         {tours.map((tour) => (
           <div className="card">
             <div className="card__header">
@@ -72,9 +88,15 @@ const Main = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
+      <Link to="/user">
+        <button>user</button>
+      </Link>
+      <Link to="/login">
+        <button>login</button>
+      </Link>
     </main>
   );
 };
 
-export default Main;
+export default Overview;
