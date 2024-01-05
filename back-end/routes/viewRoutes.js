@@ -3,7 +3,7 @@ const viewsController = require("../controllers/viewsController");
 const router = express.Router();
 const authController = require("../controllers/authController");
 
-router.use(authController.isLoogedIn);
+// router.use(authController.isLoogedIn);
 
 router.get("/", viewsController.getOverview);
 

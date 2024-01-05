@@ -12,7 +12,7 @@ const reviewRouter = require("../routes/reviewRoutes");
 //     reviewController.createReview
 //   )
 //   .get(authController.protect, reviewController.getAllReviews);
-router.use("/:tourId/reviews", reviewRouter);
+// router.use("/:tourId/reviews", reviewRouter);
 
 router
   .route("/top-5-cheap")
@@ -37,7 +37,7 @@ router
   );
 router
   .route("/:id")
-  .get(tourController.getTour)
+  .get(authController.isLoogedIn , tourController.getTour)
   .patch(
     authController.protect,
     authController.restrictTo("admin", "lead-guide"),
