@@ -1,28 +1,42 @@
 /* eslint-disable no-unused-vars */
 import "./App.css";
-import Footer from "./components/Footer/Footer";
-import Login from "./pages/Login";
-import Header from "./components/Header/Header";
-import Overview from "./pages/Overview";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import { useState } from "react";
-import User from "./pages/User";
-function App() {
-  // const [user, setUser] = useState("");
-  return (
-    <BrowserRouter>
-      <div className="App">
-        {/* <Header />
-        <Routes>
-          <Route path="/" element={<Navigate replace to="/overview" />}></Route>
-          <Route path="/overview" element={<Overview />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/user" element={<User />}></Route>
-        </Routes>
-        <Footer /> */}
-      </div>
-    </BrowserRouter>
-  );
-}
+import Home from "./ui/Home";
+import Cart from "./features/cart/Cart";
+import Menu from "./features/Menu/Menu";
+import CreateOrder from "./features/order/CreateOrder";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Order from "./features/order/Order";
+import AppLayout from "./ui/AppLayout";
+const router = createBrowserRouter([
+  {
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/menu",
+        element: <Menu />,
+      },
+      {
+        path: "cart",
+        element: <Cart />,
+      },
+      {
+        path: "/order/new",
+        element: <CreateOrder />,
+      },
+      {
+        path: "/order/:order",
+        element: <Order />,
+      },
+    ],
+  },
+]);
+
+const App = () => {
+  return <RouterProvider router={router} />;
+};
 
 export default App;
