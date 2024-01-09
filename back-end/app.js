@@ -33,7 +33,7 @@ mongoose
   });
 
 const app = express();
-app.set("view engine", "pug");
+// app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 // GLOBAL middleware
 
@@ -85,7 +85,7 @@ app.use(
 );
 
 // 3) Routes
-app.use("/", viewRouter);
+// app.use("/", viewRouter);
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reveiwRouter);

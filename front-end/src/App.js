@@ -12,14 +12,14 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Header />
+        {/* <Header />
         <Routes>
           <Route path="/" element={<Navigate replace to="/overview" />}></Route>
           <Route path="/overview" element={<Overview />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/user" element={<User />}></Route>
         </Routes>
-        <Footer />
+        <Footer /> */}
       </div>
     </BrowserRouter>
   );
