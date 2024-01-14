@@ -1,7 +1,7 @@
 function Home() {
   return (
     <div className="my-8 text-center sm:my-16">
-      <h1 className="mb-8 text-xlfont-semibold text-center text-stone-700">
+      <h1 className="mb-8 text-xl font-semibold md:text-3xl px-4 sm:my-16">
         The best pizza.
         <br />
         <span className="text-yellow-500">
