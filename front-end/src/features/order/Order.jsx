@@ -7,6 +7,7 @@ import {
   formatCurrency,
   formatDate,
 } from "../../utils/helpers";
+import OrderItem from "./OrderItem";
 
 function Order() {
   const order = useLoaderData();
