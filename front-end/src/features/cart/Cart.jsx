@@ -4,8 +4,6 @@ import CartItem from "./CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "./cartSlice";
 import { clearCart } from "./cartSlice";
-import EmptyCart from "./EmptyCart"
-
 
 function Cart() {
   const dispatch = useDispatch();
@@ -20,7 +18,7 @@ function Cart() {
 
       <ul className="divide-y divide-stone-200 border-b mt-3">
         {cart.map((item) => (
-          <CartItem item={item} key={item.key} />
+          <CartItem item={item} key={item.id} />
         ))}
       </ul>
 
