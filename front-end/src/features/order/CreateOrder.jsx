@@ -3,37 +3,14 @@ import { Form, redirect, useActionData, useNavigate } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 import Button from "../../ui/Button";
 import { useSelector } from "react-redux";
-import { clearCart, getCart } from "../cart/cartSlice";
+import { clearCart, getCart, getTotalCartPrice } from "../cart/cartSlice";
 import EmptyCart from "../cart/EmptyCart";
 import store from "../../store";
+import { formatCurrency } from "../../utils/helpers";
 const isValidPhone = (str) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
     str
   );
-
-const fakeCart = [
-  {
-    pizzaId: 12,
-    name: "Mediterranean",
-    quantity: 2,
-    unitPrice: 16,
-    totalPrice: 32,
-  },
-  {
-    pizzaId: 6,
-    name: "Vegetale",
-    quantity: 1,
-    unitPrice: 13,
-    totalPrice: 13,
-  },
-  {
-    pizzaId: 11,
-    name: "Spinach and Mushroom",
-    quantity: 1,
-    unitPrice: 15,
-    totalPrice: 15,
-  },
-];
 
 function CreateOrder() {
   // const [withPriority, setWithPriority] = useState(false);
@@ -44,6 +21,7 @@ function CreateOrder() {
   const formErrors = useActionData();
 
   const cart = useSelector(getCart);
+  const totalCartPrice = useSelector(getTotalCartPrice);
   if (!cart.length) return <EmptyCart />;
 
   return (
@@ -87,7 +65,7 @@ function CreateOrder() {
           </div>
         </div>
 
-        <div>
+        <div className="mb-7 flex">
           <input
             type="checkbox"
             name="priority"
@@ -97,7 +75,7 @@ function CreateOrder() {
             // onChange={(e) => setWithPriority(e.target.checked)}
           />
 
-          <label className="font-medium" htmlFor="priority">
+          <label className="font-medium ms-5" htmlFor="priority">
             Want to yo give your order priority?
           </label>
         </div>
@@ -105,7 +83,9 @@ function CreateOrder() {
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
           <Button type="primary" disabled={isSubmitting}>
-            {isSubmitting ? "Placing order...." : "Order now"}
+            {isSubmitting
+              ? "Placing order...."
+              : `Order now from ${formatCurrency(totalCartPrice)}`}
           </Button>
         </div>
       </Form>

@@ -3,12 +3,12 @@ import { getMenu } from "../../services/apiRestaurant";
 import MenuItem from "./MenuItem";
 function Menu() {
   const menu = useLoaderData();
-
+  console.log(menu.data + "darya");
   return (
     <ul className="divide-y divide-slate-200 px-2">
-      {menu.map((pizza) => (
+      {/* {menu.map((pizza) => (
         <MenuItem pizza={pizza} key={pizza.id} />
-      ))}
+      ))} */}
     </ul>
   );
 }
