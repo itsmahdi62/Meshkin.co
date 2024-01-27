@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const factory = require("./handlerFactory");
+const Products = require("../models/productsModel");
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
   Object.keys(obj).forEach((el) => {
@@ -9,12 +10,10 @@ const filterObj = (obj, ...allowedFields) => {
   });
   return newObj;
 };
-
 exports.getMe = (req, res, next) => {
   req.params.id = req.user.id;
   next();
 };
-
 exports.updateMe = catchAsync(async (req, res, next) => {
   // 1) Create error if user Posts password data
   if (req.body.password || req.body.passwordConfirm) {

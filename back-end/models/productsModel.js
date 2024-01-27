@@ -3,7 +3,7 @@ const multer = require("multer");
 const slugify = require("slugify");
 const validator = require("validator");
 
-const productsSchema = new Mongoose.Schema(
+const productsSchema = new mongoose.Schema(
   {
     name: {
       type: String,

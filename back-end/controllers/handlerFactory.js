@@ -61,7 +61,6 @@ exports.createOne = (Model) =>
       },
     });
   });
-
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
     // To allow for nested getReviews on tour
