@@ -13,13 +13,16 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 const reveiwRouter = require("./routes/reviewRoutes.js");
 const path = require("path");
-const productsRoutes = require("./routes/productsRoutes")
-const orderRouter = require("./routes/orderRoutes.js")
-// console.log(process.env.NODE_ENV);
+const request = require("request");
+const productsRoutes = require("./routes/productsRoutes");
+// const orderRouter = require("./routes/orderRoutes.js")
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-
+const { initializePayment, verifyPayment } = require("./payStack");
+const pug = require("pug");
 // console.log(process.env);
+const { Tour } = require("./models/tourModel");
+const _ = require("lodash");
 dotenv.config({ path: "./config.env" });
 mongoose
   .connect(process.env.DATABASE_LOCAL, {
@@ -34,7 +37,7 @@ mongoose
   });
 
 const app = express();
-// app.set("view engine", "pug");
+app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 // GLOBAL middleware
 
@@ -87,11 +90,33 @@ app.use(
 
 // 3) Routes
 // app.use("/", viewRouter);
+
+app.get("/", (req, res) => {
+  res.render("./index.pug");
+});
+
+app.post("/paystack/pay", (req, res) => {
+  const form = _.pick(req.body, ["amount", "email", "full_name"]);
+  form.metadata = {
+    full_name: form.full_name,
+  };
+  form.amount *= 100;
+  initializePayment(form, (error, body) => {
+    if (error) {
+      //handle errors
+      console.log(error);
+      return;
+    }
+    response = JSON.parse(body);
+    res.redirect(response.data.authorization_url);
+  });
+});
+
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/products", productsRoutes);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reveiwRouter);
-app.use("/api/v1/orders",orderRouter)
+// app.use("/api/v1/orders",orderRouter)
 app.all("*", (req, res, next) => {
   // res.status(404).json({
   //   status: 'fail',

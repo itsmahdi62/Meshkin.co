@@ -11,6 +11,9 @@ exports.getCkeckOutSession = catchAsync(async(req , res , next) =>{
         
     })
 })
-exports.getAllOrders = factory.getAll(Product);
-exports.updateOrder = factory.updateOne(Product);
-exports.deleteOrder = factory.deleteOne(Product)
+
+exports.createOrderCheckout = (req , res ,next) =>{
+    const {product , user , price} = req.query;
+    if(!product && !user && !price) return next()
+    
+}
