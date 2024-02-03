@@ -37,7 +37,7 @@ mongoose
   });
 
 const app = express();
-app.set("view engine", "pug");
+// app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 // GLOBAL middleware
 
@@ -90,56 +90,56 @@ app.use(
 
 // 3) Routes
 // app.use("/", viewRouter);
-app.get('/',(req, res) => {
-  res.render('index.pug');
-  });
-app.post("/paystack/pay", (req, res) => {
-  const form = _.pick(req.body, ["amount", "email", "full_name"]);
-  form.metadata = {
-    full_name: form.full_name,
-  };
-  form.amount *= 100;
-  initializePayment(form, (error, body) => {
-    if (error) {
-      //handle errors
-      console.log("error");
-      return;
-    }
-    response = JSON.parse(body);
-    res.redirect(response.data.authorization_url);
-    // res.redirect("/pay");
-  });
-});
-app.get("/paystack/callback", (req, res) => {
-  const ref = req.query.reference;
-  verifyPayment(ref, (error, body) => {
-    if (error) {
-      //handle errors appropriately
-      console.log("inja ");
-      return res.redirect("/error");
-    }
-    response = JSON.parse(body);
-    const data = _.at(response.data, [
-      "reference",
-      "amount",
-      "customer.email",
-      "metadata.full_name",
-    ]);
-    [reference, amount, email, full_name] = data;
-    newDonor = { reference, amount, email, full_name };
-    const donor = new Donor(newDonor);
-    donor
-      .save()
-      .then((donor) => {
-        if (donor) {
-          res.redirect("/receipt/" + donor._id);
-        }
-      })
-      .catch((e) => {
-        res.redirect("/error");
-      });
-  });
-});
+// app.get('/',(req, res) => {
+//   res.render('index.pug');
+//   });
+// app.post("/paystack/pay", (req, res) => {
+//   const form = _.pick(req.body, ["amount", "email", "full_name"]);
+//   form.metadata = {
+//     full_name: form.full_name,
+//   };
+//   form.amount *= 100;
+//   initializePayment(form, (error, body) => {
+//     if (error) {
+//       //handle errors
+//       console.log("error");
+//       return;
+//     }
+//     response = JSON.parse(body);
+//     res.redirect(response.data.authorization_url);
+//     // res.redirect("/pay");
+//   });
+// });
+// app.get("/paystack/callback", (req, res) => {
+//   const ref = req.query.reference;
+//   verifyPayment(ref, (error, body) => {
+//     if (error) {
+//       //handle errors appropriately
+//       console.log("inja ");
+//       return res.redirect("/error");
+//     }
+//     response = JSON.parse(body);
+//     const data = _.at(response.data, [
+//       "reference",
+//       "amount",
+//       "customer.email",
+//       "metadata.full_name",
+//     ]);
+//     [reference, amount, email, full_name] = data;
+//     newDonor = { reference, amount, email, full_name };
+//     const donor = new Donor(newDonor);
+//     donor
+//       .save()
+//       .then((donor) => {
+//         if (donor) {
+//           res.redirect("/receipt/" + donor._id);
+//         }
+//       })
+//       .catch((e) => {
+//         res.redirect("/error");
+//       });
+//   });
+// });
 
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/products", productsRoutes);
@@ -154,7 +154,7 @@ app.all("*", (req, res, next) => {
   // const err = new Error(`Can not find ${req.originalUrl} on this server`);
   // err.status = 'fail'
   // err.statusCode = 404;
-  // next(new AppError(`Can not find ${req.originalUrl} on this server`, 404));
+  next(new AppError(`Can not find ${req.originalUrl} on this server`, 404));
 });
 
 app.use(globalErrorHandler);
