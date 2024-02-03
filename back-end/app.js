@@ -18,10 +18,10 @@ const productsRoutes = require("./routes/productsRoutes");
 // const orderRouter = require("./routes/orderRoutes.js")
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const { initializePayment, verifyPayment } = require("./payStack");
+const { initializePayment, verifyPayment } = require("./payStack")(request);
 const pug = require("pug");
 // console.log(process.env);
-const { Tour } = require("./models/tourModel");
+const { Donor } = require("./models/Donor.js");
 const _ = require("lodash");
 dotenv.config({ path: "./config.env" });
 mongoose
@@ -90,11 +90,9 @@ app.use(
 
 // 3) Routes
 // app.use("/", viewRouter);
-
-app.get("/", (req, res) => {
-  res.render("./index.pug");
-});
-
+app.get('/',(req, res) => {
+  res.render('index.pug');
+  });
 app.post("/paystack/pay", (req, res) => {
   const form = _.pick(req.body, ["amount", "email", "full_name"]);
   form.metadata = {
@@ -104,11 +102,42 @@ app.post("/paystack/pay", (req, res) => {
   initializePayment(form, (error, body) => {
     if (error) {
       //handle errors
-      console.log(error);
+      console.log("error");
       return;
     }
     response = JSON.parse(body);
     res.redirect(response.data.authorization_url);
+    // res.redirect("/pay");
+  });
+});
+app.get("/paystack/callback", (req, res) => {
+  const ref = req.query.reference;
+  verifyPayment(ref, (error, body) => {
+    if (error) {
+      //handle errors appropriately
+      console.log("inja ");
+      return res.redirect("/error");
+    }
+    response = JSON.parse(body);
+    const data = _.at(response.data, [
+      "reference",
+      "amount",
+      "customer.email",
+      "metadata.full_name",
+    ]);
+    [reference, amount, email, full_name] = data;
+    newDonor = { reference, amount, email, full_name };
+    const donor = new Donor(newDonor);
+    donor
+      .save()
+      .then((donor) => {
+        if (donor) {
+          res.redirect("/receipt/" + donor._id);
+        }
+      })
+      .catch((e) => {
+        res.redirect("/error");
+      });
   });
 });
 
@@ -125,7 +154,7 @@ app.all("*", (req, res, next) => {
   // const err = new Error(`Can not find ${req.originalUrl} on this server`);
   // err.status = 'fail'
   // err.statusCode = 404;
-  next(new AppError(`Can not find ${req.originalUrl} on this server`, 404));
+  // next(new AppError(`Can not find ${req.originalUrl} on this server`, 404));
 });
 
 app.use(globalErrorHandler);
