@@ -24,7 +24,7 @@ module.exports = class Email {
   // Send the actual Email
   async send(template, subject) {
     // 1)  Render Html
-    const html = pug.renderFile(`${__dirname}/..views/emails/${template.pug}`, {
+    const html = pug.renderFile(`../views/${template}.pug`, {
       firstName: this.firstName,
       url: this.url,
       subject,
@@ -42,7 +42,7 @@ module.exports = class Email {
     await this.newTransport().sendMail(mailOptions);
   }
   async sendWelcome() {
-   await this.send("Welcome", "Welcome to the Meshkin family !");
+    await this.send("welcome", "Welcome to the Meshkin family !");
   }
 };
 
