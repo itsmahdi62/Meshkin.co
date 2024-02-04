@@ -44,6 +44,12 @@ module.exports = class Email {
   async sendWelcome() {
     await this.send("welcome", "Welcome to the Meshkin family !");
   }
+  async sendPasswordReset() {
+    await this.send(
+      "passwordReset",
+      "Your password reset token (valid for only ten minutes)"
+    );
+  }
 };
 
 // new Email(user, url).sendWelcome();
