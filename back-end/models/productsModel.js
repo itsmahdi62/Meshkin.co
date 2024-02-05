@@ -21,8 +21,10 @@ const productsSchema = new mongoose.Schema(
     price: {
       type: Number,
       required: [true, "A product must have a price"],
+      enum:[1 , 3 , 6 , 12]
     },
     image: [String], 
+    plan:String
   },
   {
     toJSON: { virtuals: true },
