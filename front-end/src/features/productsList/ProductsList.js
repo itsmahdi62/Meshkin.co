@@ -1,6 +1,6 @@
 import { useLoaderData } from "react-router-dom";
-import { getMenu } from "../../services/apiRestaurant";
-import MenuItem from "./MenuItem";
+import { getList } from "../../services/apiRestaurant";
+import MenuItem from "../Menu/MenuItem";
 function Menu() {
   const menu = useLoaderData();
   console.log(menu.data + "darya");
@@ -13,7 +13,7 @@ function Menu() {
   );
 }
 export async function loader() {
-  const menu = await getMenu();
+  const menu = await getList();
   return menu;
 }
 

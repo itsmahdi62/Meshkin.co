@@ -10,6 +10,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Order, { loader as orderLoader } from "./features/order/Order";
 import AppLayout from "./ui/AppLayout";
 import Error from "./ui/Error";
+import ProductsList , {loader as listLoader} from "./features/productsList/ProductsList"
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
@@ -24,6 +25,12 @@ const router = createBrowserRouter([
         path: "/menu",
         element: <Menu />,
         loader: menuLoader,
+        errorElement: <Error />,
+      },
+      {
+        path: "/list",
+        element: <ProductsList />,
+        loader: listLoader,
         errorElement: <Error />,
       },
       {

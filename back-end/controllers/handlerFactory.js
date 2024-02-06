@@ -11,9 +11,7 @@ exports.deleteOne = (Model) =>
     }
     res.status(201).json({
       status: "success",
-      data: {
-        data: null,
-      },
+      data: null
     });
   });
 
@@ -29,9 +27,7 @@ exports.updateOne = (Model) =>
     }
     res.status(200).json({
       status: "success",
-      data: {
-        data: doc,
-      },
+      data: doc
     });
   });
 
@@ -45,9 +41,7 @@ exports.getOne = (Model, popOptions) =>
     }
     res.status(201).json({
       status: "success",
-      data: {
-        doc,
-      },
+      data: doc
     });
   });
 
@@ -56,9 +50,7 @@ exports.createOne = (Model) =>
     const doc = await Model.create(req.body);
     res.status(201).json({
       status: "success",
-      data: {
-        data: doc,
-      },
+      data: doc
     });
   });
 exports.getAll = (Model) =>
@@ -76,8 +68,6 @@ exports.getAll = (Model) =>
     const doc = await features.query;
     res.status(200).json({
       status: "success",
-      data: {
-        data: doc,
-      },
+      data:doc
     });
   });
