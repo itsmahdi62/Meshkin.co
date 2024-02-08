@@ -1,20 +1,20 @@
 import { useLoaderData } from "react-router-dom";
-import { getList } from "../../services/apiRestaurant";
-import MenuItem from "../Menu/MenuItem";
+import { getList } from "../../services/apiShop";
+import ProductListItem from "./ProductListItem"
 function Menu() {
   const menu = useLoaderData();
-  console.log(menu.data + "darya");
   return (
     <ul className="divide-y divide-slate-200 px-2">
-      {menu.map((pizza) => (
-        <MenuItem pizza={pizza} key={pizza.id} />
+    <img src="../../../../back-end/dev-data/img/duolingo.jpg" alt="dj" />
+      {menu.map((product) => (
+        <ProductListItem product={product} key={product.id} />
       ))}
     </ul>
   );
 }
 export async function loader() {
-  const menu = await getList();
-  return menu;
+  const list = await getList();
+  return list;
 }
 
 export default Menu;
