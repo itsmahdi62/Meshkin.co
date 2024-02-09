@@ -6,13 +6,13 @@ import { useNavigate } from "react-router-dom";
 function CreateUser() {
   const [username, setUsername] = useState("");
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!username) return null;
     dispatch(updateName(username));
-    navigate('/menu')
+    navigate("/list");
   }
 
   return (

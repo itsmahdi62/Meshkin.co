@@ -3,75 +3,75 @@
     "name": "Duolingo",
     "duration": 1,
     "price": 10,
-    "photo": "duolingo.jpg"
+    "imageURL": "https://s200-narin.s3.ca-central-1.amazonaws.com/images/Anargift/products/2023/114f84f039-81ec-4453-8554-ac6fcc4a2dc5.jpg"
   },
   {
     "name": "Duolingo",
     "duration": 12,
     "price": 129,
-    "photo": "duolingo.jpg"
+    "imageURL": "https://s200-narin.s3.ca-central-1.amazonaws.com/images/Anargift/products/2023/114f84f039-81ec-4453-8554-ac6fcc4a2dc5.jpg"
   },
   {
     "name": "Spotify",
     "duration": 1,
     "price": 10.99,
     "plan": "Premium Individual",
-    "photo": "spotify.jpg"
+    "imageURL": "https://s200-narin.s3.ca-central-1.amazonaws.com/thumbnails/anargift/products/2022/217024fa92-6488-43e6-b231-7af98b97f256.jpg"
   },
   {
     "name": "Spotify",
     "duration": 1,
     "price": 14.99,
     "plan": "Premium Duo",
-    "photo": "spotify.jpg"
+    "imageURL": "https://s200-narin.s3.ca-central-1.amazonaws.com/thumbnails/anargift/products/2022/217024fa92-6488-43e6-b231-7af98b97f256.jpg"
   },
   {
     "name": "Spotify",
     "duration": 1,
     "price": 16.99,
     "plan": "Premium Family",
-    "photo": "spotify.jpg"
+    "imageURL": "https://s200-narin.s3.ca-central-1.amazonaws.com/thumbnails/anargift/products/2022/217024fa92-6488-43e6-b231-7af98b97f256.jpg"
   },
   {
     "name": "Telegram Premium",
     "duration": 1,
     "price": 11,
-    "photo": "telegram.jpg"
+    "imageURL": "https://s200-narin.s3.ca-central-1.amazonaws.com/thumbnails/Anargift/products/2023/119804bbab-026a-4756-8ae5-a13f105bf199.jpg"
   },
   {
     "name": "Telegram Premium",
     "duration": 3,
     "price": 15.8,
-    "photo": "telegram.jpg"
+    "imageURL": "https://s200-narin.s3.ca-central-1.amazonaws.com/thumbnails/Anargift/products/2023/119804bbab-026a-4756-8ae5-a13f105bf199.jpg"
   },
   {
     "name": "Telegram Premium",
     "duration": 12,
     "price": 34,
-    "photo": "telegram.jpg"
+    "imageURL": "https://s200-narin.s3.ca-central-1.amazonaws.com/thumbnails/Anargift/products/2023/119804bbab-026a-4756-8ae5-a13f105bf199.jpg"
   },
   {
     "name": "YouTube Premium",
     "duration": 1,
     "price": 2.2,
-    "photo": ""
+    "imageURL": "https://s200-narin.s3.ca-central-1.amazonaws.com/thumbnails/anargift/products/2022/242e7970b7-c251-40c7-a783-0a6ac1f03014.jpg"
   },
   {
     "name": "YouTube Premium",
     "duration": 3,
     "price": 4.85,
-    "photo": "youtube.jpg"
+    "imageURL": "https://s200-narin.s3.ca-central-1.amazonaws.com/thumbnails/anargift/products/2022/242e7970b7-c251-40c7-a783-0a6ac1f03014.jpg"
   },
   {
     "name": "YouTube Premium",
     "duration": 6,
     "price": 8.8,
-    "photo": "youtube.jpg"
+    "imageURL": "https://s200-narin.s3.ca-central-1.amazonaws.com/thumbnails/anargift/products/2022/242e7970b7-c251-40c7-a783-0a6ac1f03014.jpg"
   },
   {
     "name": "YouTube Premium",
     "duration": 12,
     "price": 16.5,
-    "photo": "youtube.jpg"
+    "imageURL": "https://s200-narin.s3.ca-central-1.amazonaws.com/thumbnails/anargift/products/2022/242e7970b7-c251-40c7-a783-0a6ac1f03014.jpg"
   }
 ]
