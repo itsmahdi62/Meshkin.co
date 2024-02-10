@@ -24,7 +24,7 @@ function ProductListItem({ product }) {
   };
 
   return (
-    <div className="w-60 h-72 shadow-xl rounded-[25px] mx-auto">
+    <div className="w-60 h-72 shadow-xl rounded-[25px] mx-auto  hover:shadow-blue-300 transition-all duration-500">
       <img
         src={imageURL}
         alt={name}
