@@ -1,0 +1,33 @@
+.container {
+  .banner-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .container {
+    .banner-container {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      grid-auto-rows: minmax(80px, auto);
+      grid-gap: 50px;
+      grid-template-areas:
+        "sidebar  content1"
+        "sidebar  content1"
+        "sidebar  content2"
+        "sidebar  content2";
+      .grid-item-1 {
+        grid-area: sidebar;
+      }
+      .grid-item-2 {
+        grid-area: content1;
+      }
+      .grid-item-3 {
+        grid-area: content2;
+      }
+    }
+  }
+}
