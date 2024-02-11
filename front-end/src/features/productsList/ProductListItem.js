@@ -7,7 +7,6 @@ import UpdateQuantity from "../cart/UpdataQuantity";
 import ProductDetails from "./ProductDetails";
 function ProductListItem({ product }) {
   const dispatch = useDispatch();
-  console.log(product);
   const { id, name, price, duration, imageURL, plan } = product;
 
   const currentQuantity = useSelector(getCurrentQuantityById(id));
