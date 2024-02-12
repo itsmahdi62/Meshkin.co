@@ -1,46 +1,31 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { loginUser } from "../../services/apiShop";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "./authSlice";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // redux state
+  const { loading, error } = useSelector((state) => state.user);
+
   async function handleSubmit(e) {
     e.preventDefault();
-    let data = JSON.stringify({
+    let userCredentials = {
       email,
       password,
-    });
-    console.log(data);
-    let config = {
-      method: "POST",
-      maxBodyLength: Infinity,
-      // url: "127.0.0.1:8000/api/v1/users/login",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer null",
-      },
-      data: data,
     };
-    const response = await fetch("http://127.0.0.1:8000/api/v1/users/login", {
-      method: "POST",
-      maxBodyLength: Infinity,
-      // url: "127.0.0.1:8000/api/v1/users/login",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer null",
-      },
-      body: data,
+    dispatch(loginUser(userCredentials)).then((result) => {
+      if (result.payload) {
+        setEmail("");
+        setPassword("");
+        navigate("/list");
+      }
     });
-    const formatedResponse = response.json();
-    if (formatedResponse.status === "success") {
-      console.log(formatedResponse);
-      setTimeout(() => navigate("/list"), 500);
-    } else {
-    }
-    // dispatch(updateName(username));
   }
   return (
     <div className="flex flex-col items-center justify-center mt-16 bg-gray-100 ">
@@ -81,8 +66,13 @@ const Login = () => {
               className="bg-blue-500  text-white font-bold py-2 px-4 rounded-xl hover:bg-blue-700 hover:px-8 transition-all
               duration-700 focus:outline-none focus:shadow-outline"
               type="submit">
-              Sign In
+              {loading ? "Loading..." : "Login"}
             </button>
+            {error && (
+              <div className="alert" role="alert">
+                {error}
+              </div>
+            )}
             <Link
               className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
               to="/resetPassword">

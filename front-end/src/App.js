@@ -10,8 +10,8 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Order, { loader as orderLoader } from "./features/order/Order";
 import AppLayout from "./ui/AppLayout";
 import Error from "./ui/Error";
-import Login from "./features/Login/Login";
-import SignupPage from "./features/Signup/SignupPage";
+import Login from "./features/auth/Login";
+import SignupPage from "./features/auth/SignupPage";
 import ProductsList, {
   loader as listLoader,
 } from "./features/productsList/ProductsList";

@@ -14,7 +14,7 @@ const isValidPhone = (str) =>
 
 function CreateOrder() {
   // const [withPriority, setWithPriority] = useState(false);
-  const username = useSelector((state) => state.user.username);
+  // const username = useSelector((state) => state.user.username);
   const navigation = useNavigate();
   const isSubmitting = navigation.state === "submitting";
 
@@ -37,7 +37,7 @@ function CreateOrder() {
             type="text"
             name="customer"
             required
-            defaultValue={username}
+            defaultValue="username"
           />
         </div>
 
