@@ -15,16 +15,14 @@ const Login = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    let userCredentials = {
+    let userCredentials = JSON.stringify({
       email,
       password,
-    };
+    });
     dispatch(loginUser(userCredentials)).then((result) => {
-      if (result.payload) {
-        setEmail("");
-        setPassword("");
-        navigate("/list");
-      }
+      setEmail("");
+      setPassword("");
+      navigate("/list");
     });
   }
   return (

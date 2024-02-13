@@ -15,6 +15,7 @@ import SignupPage from "./features/auth/SignupPage";
 import ProductsList, {
   loader as listLoader,
 } from "./features/productsList/ProductsList";
+import ProductDetails from "./features/productsList/ProductDetails";
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
@@ -33,6 +34,12 @@ const router = createBrowserRouter([
       {
         path: "/list",
         element: <ProductsList />,
+        loader: listLoader,
+        errorElement: <Error />,
+      },
+      {
+        path: "/list/:id",
+        element: <ProductDetails />,
         loader: listLoader,
         errorElement: <Error />,
       },

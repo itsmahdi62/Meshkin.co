@@ -1,21 +1,13 @@
-import { Link, json } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Username from "../features/user/Username";
 import CartOverview from "../features/cart/CartOverview";
 import { useSelector } from "react-redux";
-import { useState } from "react";
 
-function getUser() {
-  let user = localStorage.getItem("user");
-  if (user) {
-    user = JSON.parse(user);
-  } else {
-    user = null;
-  }
-}
+
 
 const Header = () => {
-  // const username = useSelector((state) => state.auth.user.name);
-  const [user, setUser] = useState(getUser());
+  const user = useSelector((state) => state.auth.user);
+  
 
   return (
     <header className="flex items-center  justify-end  bg-blue-600 shadow-lg uppercase font-semibold px-4 py-3 border-b border-stone-200 sm:px-16">

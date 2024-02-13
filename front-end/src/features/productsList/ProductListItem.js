@@ -22,6 +22,8 @@ function ProductListItem({ product }) {
     dispatch(addItem(newItem));
   };
 
+
+  
   return (
     <div className="w-60 h-72 shadow-xl rounded-[25px] mx-auto  hover:shadow-blue-300 transition-all duration-500">
       <img
@@ -36,7 +38,7 @@ function ProductListItem({ product }) {
             <p className="text-sm">{formatCurrency(price)}</p>
             <p className="text-sm">{duration} Month</p>
             <p className="text-sm font-extralight">
-              {plan === "none" ? "" : `${plan}`}{" "}
+              {plan === "none" ? "" : `${plan}`}
             </p>
           </div>
           <div className="ms-auto">

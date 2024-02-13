@@ -1,41 +1,34 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 
 export const signup = createAsyncThunk("auth/signup", async (data) => {
-  try {
-    const response = await fetch("http://127.0.0.1:8000/api/v1/users/signup", {
-      method: "POST",
-      maxBodyLength: Infinity,
-      // url: "127.0.0.1:8000/api/v1/users/login",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer null",
-      },
-      body: data,
-    });
-    return response.data;
-  } catch (err) {
-    console.log(err);
-  }
+  const response = await fetch("http://127.0.0.1:8000/api/v1/users/signup", {
+    method: "POST",
+    maxBodyLength: Infinity,
+    // url: "127.0.0.1:8000/api/v1/users/login",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer null",
+    },
+    body: data,
+  });
+  return response.data;
 });
 
-export const loginUser = createAsyncThunk(
-  "auth/login",
-  async (userCredentials) => {
-    const request = await axios.post("http://127.0.0.1:8000/api/v1/users/login", {
-      maxBodyLength: Infinity,
-      // url: "127.0.0.1:8000/api/v1/users/login",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer null",
-      },
-      body: userCredentials,
-    });
-    const response = request.data;
-    localStorage.setItem("user", JSON.stringify(response));
-    return response;
-  }
-);
+export const loginUser = createAsyncThunk("/login", async (userCredentials) => {
+  const request = await fetch("http://127.0.0.1:8000/api/v1/users/login", {
+    maxBodyLength: Infinity,
+    method: "POST",
+    // url: "127.0.0.1:8000/api/v1/users/login",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer null",
+    },
+    body: userCredentials,
+  });
+  const response = request.data;
+  localStorage.setItem("user", JSON.stringify(response));
+  return response;
+});
 
 const initialState = {
   user: "",
@@ -57,6 +50,20 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(signup.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoggedIn = true;
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(signup.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(signup.rejected, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = false;
+        state.err = "An Error Occured...";
+      })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isLoggedIn = true;

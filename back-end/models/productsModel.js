@@ -23,7 +23,8 @@ const productsSchema = new mongoose.Schema(
       required: [true, "A product must have a price"],
     },
     imageURL: String,
-    plan: {type:String , default:"none"},
+    plan: { type: String, default: "none" },
+    about: String,
   },
   {
     toJSON: { virtuals: true },

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { signup } from "./authSlice";
 
 const SignupPage = () => {
@@ -9,9 +9,9 @@ const SignupPage = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   // const username = useSelector((state) => state.auth.user.name);
-  const error = useSelector((state) => state.auth.error);
 
   const dispatch = useDispatch();
+  const Navigate = useNavigate();
   async function handleSignup(e) {
     e.preventDefault();
     let data = JSON.stringify({
@@ -20,20 +20,14 @@ const SignupPage = () => {
       password,
       passwordConfirm,
     });
-    dispatch(signup(data));
-    // // Handle signup logic here
-
-    // const response = await fetch("http://127.0.0.1:8000/api/v1/users/signup", {
-    //   method: "POST",
-    //   maxBodyLength: Infinity,
-    //   // url: "127.0.0.1:8000/api/v1/users/login",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: "Bearer null",
-    //   },
-    //   body: data,
-    // });
-    // console.log(response);
+    dispatch(signup(data)).then((result) => {
+      setEmail("");
+      setPassword("");
+      setPasswordConfirm("");
+      localStorage.setItem("user", result.name);
+      console.log(localStorage.getItem("user"))
+      Navigate("/list");
+    });
   }
 
   return (
@@ -103,7 +97,7 @@ const SignupPage = () => {
             onClick={handleSignup}>
             Sign Up
           </button>
-          {error ? <p className="pt-10 text-center">{error}</p> : ""}
+          {/* {error ? <p className="pt-10 text-center">{error}</p> : ""} */}
           {/* {username ? <Navigate to="/list" /> : null} */}
         </form>
       </div>
