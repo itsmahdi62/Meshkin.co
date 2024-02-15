@@ -9,6 +9,12 @@ export async function getList() {
   return data;
 }
 
+// export async function getProduct(userId) {
+  // const res = fetch(`http://127.0.0.1:8000/api/v1/products/${userId.id}`)
+  // console.log(res)
+  // if (res.status !== 200) throw Error("Failed getting product");
+  
+// }
 // export async function loginUser(username, password) {
 //   try {
 //     const res = await fetch(`${API_URL}/users/login`, {

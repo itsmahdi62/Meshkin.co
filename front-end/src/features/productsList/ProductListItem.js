@@ -5,6 +5,7 @@ import { addItem, getCurrentQuantityById } from "../cart/cartSlice";
 import DeleteItem from "../cart/DeleteItem";
 import UpdateQuantity from "../cart/UpdataQuantity";
 import ProductDetails from "./ProductDetails";
+import { Link } from "react-router-dom";
 function ProductListItem({ product }) {
   const dispatch = useDispatch();
   const { id, name, price, duration, imageURL, plan } = product;
@@ -22,40 +23,43 @@ function ProductListItem({ product }) {
     dispatch(addItem(newItem));
   };
 
-
-  
   return (
     <div className="w-60 h-72 shadow-xl rounded-[25px] mx-auto  hover:shadow-blue-300 transition-all duration-500">
-      <img
-        src={imageURL}
-        alt={name}
-        className="h-28 w-full rounded-tl-[25px] rounded-tr-[25px]"
-      />
-      <div className="flex flex-col grow pt-0.5">
-        <p className="font-medium ms-2 mt-2 ">{name}</p>
-        <div className=" flex flex-col p-2 justify-between ">
-          <div className="me-auto min-h-20">
-            <p className="text-sm">{formatCurrency(price)}</p>
-            <p className="text-sm">{duration} Month</p>
-            <p className="text-sm font-extralight">
-              {plan === "none" ? "" : `${plan}`}
-            </p>
-          </div>
-          <div className="ms-auto">
-            {isInCart && (
-              <div className="flex items-center gap-3 sm:gap-8">
-                <UpdateQuantity pizzaId={id} />
-                <DeleteItem pizzaId={id} />
-              </div>
-            )}
-            {!isInCart && (
-              <Button className="small" onClick={handleAddToCart} type="small">
-                Add to cart
-              </Button>
-            )}
+      <Link to={`/list/${id}`}>
+        <img
+          src={imageURL}
+          alt={name}
+          className="h-28 w-full rounded-tl-[25px] rounded-tr-[25px]"
+        />
+        <div className="flex flex-col grow pt-0.5">
+          <p className="font-medium ms-2 mt-2 ">{name}</p>
+          <div className=" flex flex-col p-2 justify-between ">
+            <div className="me-auto min-h-20">
+              <p className="text-sm">{formatCurrency(price)}</p>
+              <p className="text-sm">{duration} Month</p>
+              <p className="text-sm font-extralight">
+                {plan === "none" ? "" : `${plan}`}
+              </p>
+            </div>
+            <div className="ms-auto">
+              {isInCart && (
+                <div className="flex items-center gap-3 sm:gap-8">
+                  <UpdateQuantity pizzaId={id} />
+                  <DeleteItem pizzaId={id} />
+                </div>
+              )}
+              {!isInCart && (
+                <Button
+                  className="small"
+                  onClick={handleAddToCart}
+                  type="small">
+                  Add to cart
+                </Button>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 }

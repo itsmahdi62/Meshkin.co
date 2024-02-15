@@ -40,7 +40,7 @@ const router = createBrowserRouter([
       {
         path: "/list/:id",
         element: <ProductDetails />,
-        loader: listLoader,
+        // loader: productLoader,
         errorElement: <Error />,
       },
       {
