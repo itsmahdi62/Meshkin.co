@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItem, getCurrentQuantityById } from "../cart/cartSlice";
 import DeleteItem from "../cart/DeleteItem";
 import UpdateQuantity from "../cart/UpdataQuantity";
-import ProductDetails from "./ProductDetails";
 import { Link } from "react-router-dom";
 function ProductListItem({ product }) {
   const dispatch = useDispatch();
