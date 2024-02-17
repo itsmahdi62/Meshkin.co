@@ -25,6 +25,12 @@ const productsSchema = new mongoose.Schema(
     imageURL: String,
     plan: { type: String, default: "none" },
     about: String,
+    unlimitedFeatures: String,
+    title: {
+      type: String,
+      required: [true, "A Product must has a title !"],
+    },
+    benefits: [String],
   },
   {
     toJSON: { virtuals: true },
