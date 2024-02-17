@@ -7,7 +7,7 @@ function Menu() {
   const menu = useLoaderData();
   return (
     <div className="container flex flex-col">
-      <div className="banner-container gap-4 p-5 min-h-[400px] max-h-[800px]">
+      <div className="banner-container gap-4 p-5 min-h-[400px] max-h-[800px] mb-96 sm:mb-[500px] md:mb-0">
         <div className="grid-item-1 flex flex-col py-12 px-8 bg-blue-600 rounded-2xl text-stone-200 shadow-lg">
           <h4 className="mx-auto shadow-sm font-semibold">
             Wht Should we buy from Meshkin?
@@ -52,7 +52,7 @@ function Menu() {
           </div>
         </div>
       </div>
-      <ul className="divide-y mt-12 divide-slate-200 px-2 grid gap-6 sm:grid-cols-2 md:grid-cols-4 md:gap-8 ">
+      <ul className="divide-y mt-48  divide-slate-200 px-2 grid gap-6 sm:grid-cols-2 md:grid-cols-4 md:gap-10 sm:mt-12">
         {menu.map((product) => (
           <ProductListItem product={product} key={product.id} />
         ))}

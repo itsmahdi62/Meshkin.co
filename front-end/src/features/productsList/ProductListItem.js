@@ -23,7 +23,7 @@ function ProductListItem({ product }) {
   };
 
   return (
-    <div className="w-60 h-72 shadow-xl rounded-[25px] mx-auto  hover:shadow-blue-300 transition-all duration-500">
+    <div className="w-60 h-72 shadow-md rounded-[25px] mx-auto border border-stone-300  hover:shadow-blue-300 transition-all duration-500">
       <Link to={`/list/${id}`}>
         <img
           src={imageURL}
