@@ -3,11 +3,8 @@ import Username from "../features/user/Username";
 import CartOverview from "../features/cart/CartOverview";
 import { useSelector } from "react-redux";
 
-
-
 const Header = () => {
   const user = useSelector((state) => state.auth.user);
-  
 
   return (
     <header className="flex items-center  justify-end  bg-blue-600 shadow-lg uppercase font-semibold px-4 py-3 border-b border-stone-200 sm:px-16">
@@ -31,7 +28,7 @@ const Header = () => {
           </Link>
         </div>
       )}
-      <Username child={user} />
+      <Username />
     </header>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signup } from "./authSlice";
+import { signupAsync } from "./authSlice";
 
 const SignupPage = () => {
   const [name, setName] = useState("");
@@ -20,12 +20,12 @@ const SignupPage = () => {
       password,
       passwordConfirm,
     });
-    dispatch(signup(data)).then((result) => {
+    dispatch(signupAsync(data, { dispatch })).then((result) => {
       setEmail("");
       setPassword("");
       setPasswordConfirm("");
       localStorage.setItem("user", result.name);
-      console.log(localStorage.getItem("user"))
+      // console.log(localStorage.getItem("user"));
       Navigate("/list");
     });
   }

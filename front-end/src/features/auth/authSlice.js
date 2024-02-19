@@ -1,85 +1,98 @@
+// authSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { setName } from "../user/userSlice";
 
-export const signup = createAsyncThunk("auth/signup", async (data) => {
-  const response = await fetch("http://127.0.0.1:8000/api/v1/users/signup", {
-    method: "POST",
-    maxBodyLength: Infinity,
-    // url: "127.0.0.1:8000/api/v1/users/login",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer null",
-    },
-    body: data,
-  });
-  return response.data;
-});
+export const loginAsync = createAsyncThunk(
+  "auth/login",
+  async (credentials, { dispatch, getState }) => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/v1/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
 
-export const loginUser = createAsyncThunk("/login", async (userCredentials) => {
-  const request = await fetch("http://127.0.0.1:8000/api/v1/users/login", {
-    maxBodyLength: Infinity,
-    method: "POST",
-    // url: "127.0.0.1:8000/api/v1/users/login",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer null",
-    },
-    body: userCredentials,
-  });
-  const response = request.data;
-  localStorage.setItem("user", JSON.stringify(response));
-  return response;
-});
+      if (!response.ok) {
+        throw new Error("Failed to login");
+      }
 
-const initialState = {
-  user: "",
-  isLoggedIn: false,
-  loading: false,
-  error: null,
-};
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error during login:", error);
+      throw error;
+    }
+  }
+);
 
-export const authSlice = createSlice({
+export const signupAsync = createAsyncThunk(
+  "auth/signup",
+  async (userData, { dispatch }) => {
+    // Make API call to register user
+    // Dispatch signupSuccess or signupFailure based on API response
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/v1/users/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: userData,
+        }
+      );
+
+      if (response.status !== 201) {
+        throw new Error("Failed to signup");
+      }
+
+      const data = await response.json();
+      dispatch(setName(data.data.user.name));
+      console.log(data);
+      console.log(data.data.user.name);
+      return data;
+    } catch (error) {
+      console.error("Error during signup:", error);
+      throw error;
+    }
+  }
+);
+
+const authSlice = createSlice({
   name: "auth",
-  initialState,
-  reducers: {
-    logout: (state, action) => {
-      state.user = "";
-      state.isLoggedIn = false;
-      state.loading = false;
-      state.error = null;
-    },
+  initialState: {
+    user: null,
+    loading: "idle",
+    error: null,
   },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(signup.fulfilled, (state, action) => {
+      .addCase(loginAsync.pending, (state) => {
+        state.loading = "loading";
+      })
+      .addCase(loginAsync.fulfilled, (state, action) => {
+        state.loading = "idle";
         state.user = action.payload;
-        state.isLoggedIn = true;
-        state.loading = false;
-        state.error = null;
       })
-      .addCase(signup.pending, (state, action) => {
-        state.loading = true;
+      .addCase(loginAsync.rejected, (state, action) => {
+        state.loading = "idle";
+        state.error = action.error.message;
       })
-      .addCase(signup.rejected, (state, action) => {
-        state.loading = false;
-        state.isLoggedIn = false;
-        state.err = "An Error Occured...";
+      .addCase(signupAsync.pending, (state) => {
+        state.loading = "loading";
       })
-      .addCase(loginUser.fulfilled, (state, action) => {
+      .addCase(signupAsync.fulfilled, (state, action) => {
+        state.loading = "idle";
         state.user = action.payload;
-        state.isLoggedIn = true;
-        state.loading = false;
-        state.error = null;
       })
-      .addCase(loginUser.pending, (state, action) => {
-        state.loading = true;
-      })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.loading = false;
-        state.isLoggedIn = false;
-        state.err = "An Error Occured...";
+      .addCase(signupAsync.rejected, (state, action) => {
+        state.loading = "idle";
+        state.error = action.error.message;
       });
   },
 });
 
-export const { logout } = authSlice.actions;
 export default authSlice.reducer;

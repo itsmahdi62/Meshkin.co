@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "./authSlice";
+import { loginAsync } from "./authSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,7 +19,7 @@ const Login = () => {
       email,
       password,
     });
-    dispatch(loginUser(userCredentials)).then((result) => {
+    dispatch(loginAsync(userCredentials)).then((result) => {
       setEmail("");
       setPassword("");
       navigate("/list");
