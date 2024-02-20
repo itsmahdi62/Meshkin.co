@@ -19,9 +19,10 @@ const Login = () => {
       email,
       password,
     });
-    dispatch(loginAsync(userCredentials)).then((result) => {
+    dispatch(loginAsync(userCredentials, { dispatch })).then((result) => {
       setEmail("");
       setPassword("");
+      localStorage.setItem("user", result.name);
       navigate("/list");
     });
   }

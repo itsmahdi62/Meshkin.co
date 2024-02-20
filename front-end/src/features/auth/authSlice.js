@@ -4,21 +4,24 @@ import { setName } from "../user/userSlice";
 
 export const loginAsync = createAsyncThunk(
   "auth/login",
-  async (credentials, { dispatch, getState }) => {
+  async (credentials, { dispatch }) => {
     try {
       const response = await fetch("http://127.0.0.1:8000/api/v1/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(credentials),
+        body: credentials,
       });
 
-      if (!response.ok) {
+      if (response.status !== "success") {
         throw new Error("Failed to login");
       }
 
       const data = await response.json();
+      dispatch(setName(data.data.user.name));
+      console.log(data);
+      console.log(data.data.user.name);
       return data;
     } catch (error) {
       console.error("Error during login:", error);
