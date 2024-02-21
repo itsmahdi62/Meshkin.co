@@ -30,35 +30,36 @@ function ProductListItem({ product }) {
           alt={name}
           className="h-28 w-full rounded-tl-[25px] rounded-tr-[25px]"
         />
-        <div className="flex flex-col grow pt-0.5">
+      </Link>
+      <div className="flex flex-col grow pt-0.5 ">
+        <Link to={`/list/${id}`}>
           <p className="font-medium ms-2 mt-2 ">{name}</p>
-          <div className=" flex flex-col p-2 justify-between ">
-            <div className="me-auto min-h-20">
+        </Link>
+        <div className=" flex flex-col p-2 justify-between ">
+          <Link to={`/list/${id}`}>
+            <div className="me-auto min-h-20 ">
               <p className="text-sm">{formatCurrency(price)}</p>
               <p className="text-sm">{duration} Month</p>
               <p className="text-sm font-extralight">
                 {plan === "none" ? "" : `${plan}`}
               </p>
             </div>
-            <div className="ms-auto">
-              {isInCart && (
-                <div className="flex items-center gap-3 sm:gap-8">
-                  <UpdateQuantity pizzaId={id} />
-                  <DeleteItem pizzaId={id} />
-                </div>
-              )}
-              {!isInCart && (
-                <Button
-                  className=""
-                  onClick={handleAddToCart}
-                  type="small">
-                  Add to cart
-                </Button>
-              )}
-            </div>
+          </Link>
+          <div className="ms-auto">
+            {isInCart && (
+              <div className="flex items-center gap-3 sm:gap-8">
+                <UpdateQuantity productId={id} />
+                <DeleteItem productId={id} />
+              </div>
+            )}
+            {!isInCart && (
+              <Button onClick={handleAddToCart} type="small">
+                Add to cart
+              </Button>
+            )}
           </div>
         </div>
-      </Link>
+      </div>
     </div>
   );
 }
