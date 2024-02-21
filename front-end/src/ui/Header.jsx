@@ -13,6 +13,7 @@ const Header = () => {
         to="/">
         Meshkin Co.
       </Link>
+      <Username />
       <CartOverview />
       {!user && (
         <div className="flex me-5">
@@ -28,7 +29,6 @@ const Header = () => {
           </Link>
         </div>
       )}
-      <Username />
     </header>
   );
 };

@@ -24,7 +24,7 @@ const SignupPage = () => {
       setEmail("");
       setPassword("");
       setPasswordConfirm("");
-      localStorage.setItem("user", result.name);
+      // localStorage.setItem("user", result.name);
       // console.log(localStorage.getItem("user"));
       Navigate("/list");
     });

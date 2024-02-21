@@ -49,7 +49,7 @@ function ProductListItem({ product }) {
               )}
               {!isInCart && (
                 <Button
-                  className="small"
+                  className=""
                   onClick={handleAddToCart}
                   type="small">
                   Add to cart

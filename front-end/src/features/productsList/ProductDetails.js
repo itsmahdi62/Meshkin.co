@@ -3,11 +3,13 @@ import { useParams } from "react-router-dom";
 import Button from "../../ui/Button";
 import { TbBrandSpeedtest } from "react-icons/tb";
 import { MdHeadphones } from "react-icons/md";
-import { addItem, getCurrentQuantityById } from "../cart/cartSlice";
-
+import { addItem, deleteItem } from "../cart/cartSlice";
+import { useDispatch } from "react-redux";
 const ProductDetails = () => {
   const userId = useParams();
   const [data, setData] = useState();
+  const [flag, setFlag] = useState(true);
+  const dispatch = useDispatch();
   useEffect(() => {
     async function getData() {
       const res = await fetch(
@@ -22,7 +24,7 @@ const ProductDetails = () => {
           },
         }
       );
-      // if (res.status !== 201) throw Error("Failed getting product");
+      if (res.status !== 201) throw Error("Failed getting product");
       const result = await res.json();
 
       setData(result.data);
@@ -31,16 +33,28 @@ const ProductDetails = () => {
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const { id, name, price } = data;
+  // const { id, name, price } = data;
   const handleAddToCart = () => {
     const newItem = {
-      productId: id,
-      name,
+      productId: data.id,
+      name: data.name,
       quantity: 1,
-      price,
-      totalPrice: price * 1,
+      price: data.price,
+      totalPrice: data.price * 1,
     };
-    dispatchEvent(addItem(newItem));
+    setFlag(!flag);
+    dispatch(addItem(newItem));
+  };
+  const handleDeleteFromCart = () => {
+    // const newItem = {
+    //   productId: data.id,
+    //   name: data.name,
+    //   quantity: 1,
+    //   price: data.price,
+    //   totalPrice: data.price * 1,
+    // };
+    setFlag(!flag);
+    dispatch(deleteItem(data.id));
   };
   return (
     <div className="grid grid-cols-3 gap-8 items-center justify-center min-h-screen  pt-8 ">
@@ -50,9 +64,17 @@ const ProductDetails = () => {
           <p>Price</p>
           {data && <p className="ms-auto">{data.price}$</p>}
         </div>
-        <Button type="primary" onClick={handleAddToCart}>
-          Buy Product
-        </Button>
+        {flag === true ? (
+          <Button type="primary" onClick={handleAddToCart}>
+            Buy Product
+          </Button>
+        ) : (
+          <Button
+            className="bg-stone-200 uppercase text-sm font-semibold px-4 py-3 md:px-6 sm:py-4 text-stone-100  inline-block tracking-wide rounded-full hover:bg-blue-400 transition-colors duration-300 focus:outline-none  focus:bg-blue-400  disabled:cursor-not-allowed"
+            onClick={handleDeleteFromCart}>
+            Delete Item
+          </Button>
+        )}
       </div>
       <div className="col-span-2 px-12 py-4 rounded-2xl bg-stone-50 min-h-64 shadow-sm border border-stone-300 mb-auto flex flex-col">
         {/* what is the program */}
@@ -69,7 +91,9 @@ const ProductDetails = () => {
         {data && data.benefits && (
           <ul className="list-disc">
             {data.benefits.map((benefit) => (
-              <li className="my-2 font-light">{benefit}</li>
+              <li className="my-2 font-light" key={benefit}>
+                {benefit}
+              </li>
             ))}
           </ul>
         )}

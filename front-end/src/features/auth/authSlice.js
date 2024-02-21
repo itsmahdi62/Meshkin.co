@@ -20,8 +20,8 @@ export const loginAsync = createAsyncThunk(
 
       const data = await response.json();
       dispatch(setName(data.data.user.name));
-      console.log(data);
-      console.log(data.data.user.name);
+      // console.log(data);
+      // console.log(data.data.user.name);
       return data;
     } catch (error) {
       console.error("Error during login:", error);
@@ -53,8 +53,8 @@ export const signupAsync = createAsyncThunk(
 
       const data = await response.json();
       dispatch(setName(data.data.user.name));
-      console.log(data);
-      console.log(data.data.user.name);
+      // console.log(data);
+      // console.log(data.data.user.name);
       return data;
     } catch (error) {
       console.error("Error during signup:", error);
