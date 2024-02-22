@@ -9,6 +9,9 @@ module.exports = {
       height: {
         screen: "100dvh",
       },
+      boxShadow: {
+        "3xl": "0  10px 15px rgba(0, 0, 0, 0.3)",
+      },
     },
   },
   plugins: [],

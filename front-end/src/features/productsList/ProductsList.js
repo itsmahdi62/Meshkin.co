@@ -3,8 +3,8 @@ import { getList } from "../../services/apiShop";
 import ProductListItem from "./ProductListItem";
 import "./ProductsList.scss";
 import Button from "../../ui/Button";
-function Menu() {
-  const menu = useLoaderData();
+function ProductSList() {
+  const productList = useLoaderData();
   return (
     <div className="container flex flex-col">
       <div className="banner-container gap-4 p-5 min-h-[400px] max-h-[800px] mb-96 sm:mb-[500px] md:mb-0">
@@ -53,7 +53,7 @@ function Menu() {
         </div>
       </div>
       <ul className="divide-y mt-48  divide-slate-200 px-2 grid gap-6 sm:grid-cols-2 md:grid-cols-4 md:gap-10 sm:mt-12">
-        {menu.map((product) => (
+        {productList.map((product) => (
           <ProductListItem product={product} key={product.id} />
         ))}
       </ul>
@@ -65,4 +65,4 @@ export async function loader() {
   return list;
 }
 
-export default Menu;
+export default ProductSList;

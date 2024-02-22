@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useNavigation, useParams } from "react-router-dom";
 import Button from "../../ui/Button";
 import { TbBrandSpeedtest } from "react-icons/tb";
 import { MdHeadphones } from "react-icons/md";
-import { addItem, deleteItem } from "../cart/cartSlice";
-import { useDispatch } from "react-redux";
+import { addItem, deleteItem, getCurrentQuantityById } from "../cart/cartSlice";
+import { FaLongArrowAltLeft } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import Loader from "../../ui/Loader";
 const ProductDetails = () => {
   const userId = useParams();
   const [data, setData] = useState();
-  const [flag, setFlag] = useState(true);
+  const [productId, setProductId] = useState();
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "loading";
   useEffect(() => {
     async function getData() {
       const res = await fetch(
@@ -28,50 +32,45 @@ const ProductDetails = () => {
       const result = await res.json();
 
       setData(result.data);
+      // setProductId(data.id);
       console.log(data);
     }
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const currentQuantity = useSelector(getCurrentQuantityById(productId));
+  const isInCart = currentQuantity > 0;
+
   // const { id, name, price } = data;
   const handleAddToCart = () => {
     const newItem = {
-      productId: data.id,
+      productId: productId,
       name: data.name,
       quantity: 1,
       price: data.price,
       totalPrice: data.price * 1,
     };
-    setFlag(!flag);
     dispatch(addItem(newItem));
   };
-  const handleDeleteFromCart = () => {
-    // const newItem = {
-    //   productId: data.id,
-    //   name: data.name,
-    //   quantity: 1,
-    //   price: data.price,
-    //   totalPrice: data.price * 1,
-    // };
-    setFlag(!flag);
-    dispatch(deleteItem(data.id));
-  };
+
   return (
-    <div className="grid grid-cols-3 gap-8 items-center justify-center min-h-screen  pt-8 ">
+    <div className="grid grid-cols-3 gap-8 items-center justify-center min-h-screen  pt-8">
+      {isLoading && <Loader />}
       <div className="rounded-2xl bg-stone-50   min-h-96 shadow-sm border border-stone-300 mb-auto flex flex-col justify-center px-12 py-4">
         {data && <img className="rounded-2xl" src={data.imageURL} alt="" />}
         <div className="flex my-8">
           <p>Price</p>
           {data && <p className="ms-auto">{data.price}$</p>}
         </div>
-        {flag === true ? (
+        {!isInCart && (
           <Button type="primary" onClick={handleAddToCart}>
             Buy Product
           </Button>
-        ) : (
+        )}
+        {isInCart && (
           <Button
             className="bg-stone-200 uppercase text-sm font-semibold px-4 py-3 md:px-6 sm:py-4 text-stone-100  inline-block tracking-wide rounded-full hover:bg-blue-400 transition-colors duration-300 focus:outline-none  focus:bg-blue-400  disabled:cursor-not-allowed"
-            onClick={handleDeleteFromCart}>
+            onClick={() => dispatch(deleteItem(productId))}>
             Delete Item
           </Button>
         )}
@@ -109,6 +108,14 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
+
+      <Link
+        to="/"
+        className="absolute bottom-12 right-12 h-16 w-16 rounded-2xl p-5 sm:w-28
+         text-stone-950 flex items-center justify-center shadow-3xl bg-stone-100 cursor-pointer">
+        <FaLongArrowAltLeft />
+        <span className="ms-2">Menu</span>
+      </Link>
     </div>
   );
 };

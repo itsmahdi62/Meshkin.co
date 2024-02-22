@@ -14,7 +14,7 @@ export const loginAsync = createAsyncThunk(
         body: credentials,
       });
 
-      if (response.status !== "success") {
+      if (response.status !== 200) {
         throw new Error("Failed to login");
       }
 

@@ -1,14 +1,12 @@
 import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem, getCurrentQuantityById } from "../cart/cartSlice";
-import DeleteItem from "../cart/DeleteItem";
-import UpdateQuantity from "../cart/UpdataQuantity";
+import { addItem, deleteItem, getCurrentQuantityById } from "../cart/cartSlice";
 import { Link } from "react-router-dom";
 function ProductListItem({ product }) {
   const dispatch = useDispatch();
   const { id, name, price, duration, imageURL, plan } = product;
-
+  const productId = id;
   const currentQuantity = useSelector(getCurrentQuantityById(id));
   const isInCart = currentQuantity > 0;
   const handleAddToCart = () => {
@@ -47,10 +45,11 @@ function ProductListItem({ product }) {
           </Link>
           <div className="ms-auto">
             {isInCart && (
-              <div className="flex items-center gap-3 sm:gap-8">
-                <UpdateQuantity productId={id} />
-                <DeleteItem productId={id} />
-              </div>
+              <Button
+                onClick={() => dispatch(deleteItem(productId))}
+                type="small">
+                Delete Item
+              </Button>
             )}
             {!isInCart && (
               <Button onClick={handleAddToCart} type="small">

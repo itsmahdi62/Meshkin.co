@@ -1,5 +1,4 @@
 import Header from "./Header";
-import CartOverView from "../features/cart/CartOverview";
 import { Outlet, useNavigation } from "react-router-dom";
 import Loader from "./Loader";
 const AppLayout = () => {
