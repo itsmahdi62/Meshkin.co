@@ -22,7 +22,7 @@ router.patch(
 
 router.patch("/updateMe", userController.updateMe);
 
-router.use(authController.restrictTo("admin"));
+// router.use(authController.restrictTo("admin"));
 
 router
   .route("/")

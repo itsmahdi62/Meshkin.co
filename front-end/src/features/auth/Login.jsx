@@ -22,7 +22,6 @@ const Login = () => {
     dispatch(loginAsync(userCredentials, { dispatch })).then((result) => {
       setEmail("");
       setPassword("");
-      // localStorage.setItem("user", result.name);
       navigate("/list");
     });
   }

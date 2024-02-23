@@ -4,9 +4,9 @@ import Button from "../../ui/Button";
 import { TbBrandSpeedtest } from "react-icons/tb";
 import { MdHeadphones } from "react-icons/md";
 import { addItem, deleteItem, getCurrentQuantityById } from "../cart/cartSlice";
-import { FaLongArrowAltLeft } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../ui/Loader";
+import ReturnToMenu from "../../ui/ReturnToMenu";
 const ProductDetails = () => {
   const userId = useParams();
   const [data, setData] = useState();
@@ -108,14 +108,8 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-
-      <Link
-        to="/"
-        className="absolute bottom-12 right-12 h-16 w-16 rounded-2xl p-5 sm:w-28
-         text-stone-950 flex items-center justify-center shadow-3xl bg-stone-100 cursor-pointer">
-        <FaLongArrowAltLeft />
-        <span className="ms-2">Menu</span>
-      </Link>
+              
+      <ReturnToMenu />
     </div>
   );
 };
