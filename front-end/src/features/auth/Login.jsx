@@ -15,15 +15,43 @@ const Login = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    let userCredentials = JSON.stringify({
-      email,
-      password,
-    });
-    dispatch(loginAsync(userCredentials, { dispatch })).then((result) => {
-      setEmail("");
-      setPassword("");
-      navigate("/list");
-    });
+    // let userCredentials = JSON.stringify({
+    //   email,
+    //   password,
+    // });
+    // dispatch(loginAsync(userCredentials, { dispatch })).then((result) => {
+    //   setEmail("");
+    //   setPassword("");
+    //   navigate("/list");
+    // });
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/v1/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+      console.log(data);
+      if (data.status !== "success") {
+        throw new Error("Failed to login");
+      }
+      // dispatch(setName(data.data.user.name));
+      // console.log(data);
+      // console.log(data.data.user.name);
+      sessionStorage.setItem("auth-token", data.token);
+      sessionStorage.setItem("username", data.data.user.name);
+      navigate("/");
+      // return data;
+    } catch (error) {
+      console.error("Error during signup:", error);
+      throw error;
+    }
   }
   return (
     <div className="flex flex-col items-center justify-center mt-16 bg-gray-100 ">

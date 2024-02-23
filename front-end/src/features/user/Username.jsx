@@ -1,6 +1,7 @@
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 const Username = () => {
-  const username = useSelector((state) => state.user.username);
+  // const username = useSelector((state) => state.user.username);
+  const username = sessionStorage.getItem("username");
 
   if (!username) return null;
   return (

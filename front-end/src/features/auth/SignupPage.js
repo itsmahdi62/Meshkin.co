@@ -10,22 +10,57 @@ const SignupPage = () => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   // const username = useSelector((state) => state.auth.user.name);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const Navigate = useNavigate();
   async function handleSignup(e) {
     e.preventDefault();
-    let data = JSON.stringify({
-      name,
-      email,
-      password,
-      passwordConfirm,
-    });
-    dispatch(signupAsync(data, { dispatch })).then((result) => {
-      setEmail("");
-      setPassword("");
-      setPasswordConfirm("");
-      Navigate("/list");
-    });
+    // let data = JSON.stringify({
+    //   name,
+    //   email,
+    //   password,
+    //   passwordConfirm,
+    // });
+    // dispatch(signupAsync(data, { dispatch })).then((result) => {
+    //   setEmail("");
+    //   setPassword("");
+    //   setPasswordConfirm("");
+    //   Navigate("/list");
+    // });
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/v1/users/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            password,
+            passwordConfirm,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      console.log(data);
+      if (data.status !== "success") {
+        throw new Error("Failed to signup");
+      }
+      // dispatch(setName(data.data.user.name));
+      // console.log(data);
+      // console.log(data.data.user.name);
+      console.log(data.data.user.name);
+      sessionStorage.setItem("auth-token", data.token);
+      sessionStorage.setItem("username", data.data.user.name);
+
+      Navigate("/");
+      // return data;
+    } catch (error) {
+      console.error("Error during signup:", error);
+      throw error;
+    }
   }
 
   return (

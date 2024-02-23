@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import Username from "../features/user/Username";
 import CartOverview from "../features/cart/CartOverview";
-import { useSelector } from "react-redux";
 
 const Header = () => {
-  const user = useSelector((state) => state.auth.user);
+  // const username = useSelector((state) => state.auth.user);
+  const username = sessionStorage.getItem("username");
 
   return (
     <header className="flex items-center  justify-end  bg-blue-600 shadow-lg uppercase font-semibold px-4 py-3 border-b border-stone-200 sm:px-16">
@@ -15,7 +15,7 @@ const Header = () => {
       </Link>
       <Username />
       <CartOverview />
-      {!user && (
+      {!username && (
         <div className="flex me-5">
           <Link to="/login">
             <div className="hidden text-sm font-semibold text-stone-500 px-4 py-3 me-5 bg-stone-200 rounded-xl md:block hover:shadow-2xl hover:px-6 transition-all duration-500  ">
