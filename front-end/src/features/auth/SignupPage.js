@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { signupAsync } from "./authSlice";
+// import { useDispatch } from "react-redux";
+// import { signupAsync } from "./authSlice";
+import ReturnToMenu from "../../ui/ReturnToMenu";
 
 const SignupPage = () => {
   const [name, setName] = useState("");
@@ -134,6 +135,7 @@ const SignupPage = () => {
           {/* {username ? <Navigate to="/list" /> : null} */}
         </form>
       </div>
+      <ReturnToMenu />
     </div>
   );
 };

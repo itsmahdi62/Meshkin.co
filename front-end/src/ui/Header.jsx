@@ -18,7 +18,7 @@ const Header = () => {
       {!username && (
         <div className="flex me-5">
           <Link to="/login">
-            <div className="hidden text-sm font-semibold text-stone-500 px-4 py-3 me-5 bg-stone-200 rounded-xl md:block hover:shadow-2xl hover:px-6 transition-all duration-500  ">
+            <div className="hidden text-sm font-semibold text-stone-500  bg-stone-200 px-4 py-3 me-5  rounded-xl md:block hover:shadow-2xl hover:px-6 transition-all duration-500  ">
               Login
             </div>
           </Link>

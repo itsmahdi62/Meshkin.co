@@ -5,14 +5,14 @@ import { IoCartOutline } from "react-icons/io5";
 
 function CartOverview() {
   const totalCartQuantity = useSelector(getTotalCartQuantity);
-  const username = useSelector((state) => state.user.username);
-  if (!username) return null;
+  // const username = useSelector((state) => state.user.username);
+  // const username = sessionStorage.getItem("username");
 
   return (
-    <div className=" me-5 bg-stone-100 text-sm text-stone-200   rounded-md sm:px-6">
-      <Link to="/cart" className="flex items-center px-1 py-2">
-        <IoCartOutline className="text-stone-500 me-4" />
-        <p className="text-stone-300 font-semibold space-x-4 sm:space-x-6 md:text-base">
+    <div className="me-5 text-stone-500  bg-stone-200 text-sm py-[10px]  rounded-2xl sm:px-6">
+      <Link to="/cart" className="flex items-center">
+        <IoCartOutline className="text-stone-700 me-4" />
+        <p className="text-stone-500 font-semibold space-x-4 sm:space-x-6 md:text-base">
           {totalCartQuantity}
         </p>
       </Link>

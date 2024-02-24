@@ -2,7 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginAsync } from "./authSlice";
+// import { loginAsync } from "./authSlice";
+import ReturnToMenu from "../../ui/ReturnToMenu";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -107,6 +108,7 @@ const Login = () => {
           </div>
         </form>
       </div>
+      <ReturnToMenu />
     </div>
   );
 };
