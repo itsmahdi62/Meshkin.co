@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import { useDispatch } from "react-redux";
 // import { signupAsync } from "./authSlice";
 import ReturnToMenu from "../../ui/ReturnToMenu";
@@ -66,7 +66,7 @@ const SignupPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center mt-16 bg-gray-100 ">
-      <div className="max-w-md w-full mx-auto p-6 bg-white rounded-md shadow-md">
+      <div className="max-w-md w-full mx-auto p-6 bg-stone-100 shadow-xl border-2 border-stone-300 rounded-md ">
         <h2 className="text-2xl font-bold mb-4">Sign Up</h2>
         <form onSubmit={handleSignup}>
           <div className="mb-4">
@@ -125,12 +125,22 @@ const SignupPage = () => {
               onChange={(e) => setPasswordConfirm(e.target.value)}
             />
           </div>
-          <button
-            type="submit"
-            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-            onClick={handleSignup}>
-            Sign Up
-          </button>
+          <div className="flex items-center">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+              onClick={handleSignup}>
+              Sign Up
+            </button>
+            <Link
+              className="inline-block font-bold ms-auto text-sm text-stone-800"
+              to="/login">
+              Already have an account?{" "}
+              <span className=" text-blue-500 hover:text-blue-800">
+                Sign in
+              </span>
+            </Link>
+          </div>
           {/* {error ? <p className="pt-10 text-center">{error}</p> : ""} */}
           {/* {username ? <Navigate to="/list" /> : null} */}
         </form>

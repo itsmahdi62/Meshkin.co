@@ -56,7 +56,7 @@ const Login = () => {
   }
   return (
     <div className="flex flex-col items-center justify-center mt-16 bg-gray-100 ">
-      <div className="max-w-md w-full bg-white shadow-md  px-8 pt-6 pb-8 mb-4 rounded-3xl">
+      <div className="max-w-md w-full bg-stone-100 shadow-xl border-2 border-stone-300  px-8 pt-6 pb-8 mb-4 rounded-3xl ">
         <h2 className="text-2xl font-bold mb-6">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -100,11 +100,21 @@ const Login = () => {
                 {error}
               </div>
             )}
-            <Link
-              className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-              to="/resetPassword">
-              Forgot Password?
-            </Link>
+            <div className="flex flex-col justify-end">
+              <Link
+                className="inline-block text-end align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+                to="/resetPassword">
+                Forgot Password?
+              </Link>
+              <Link
+                className="inline-block font-bold text-sm text-stone-800"
+                to="/signup">
+                Don't have an account?{" "}
+                <span className=" text-blue-500 hover:text-blue-800">
+                  Sign up
+                </span>
+              </Link>
+            </div>
           </div>
         </form>
       </div>
