@@ -46,12 +46,14 @@ const Users = () => {
       if (res.status !== 200) throw Error("Failed getting List");
 
       const { data } = await res.json();
-      console.log(data);
       setData(data);
     };
     getList();
   }, []);
-
+  const transformedData = data.map((row) => ({
+    ...row,
+    id: row._id, // Add 'id' field based on the '_id' field
+  }));
   return (
     <div className="users">
       <div className="info">
@@ -59,9 +61,9 @@ const Users = () => {
         <button onClick={() => setOpen(true)}>Add new user</button>
       </div>
       <DataTable
-        slug="slug"
+        slug="users"
         columns={columns}
-        rows={data}
+        rows={transformedData}
         getRowId={(row) => row._id}
       />
       {open && <Add slug="user" column={columns} setOpen={setOpen} />}

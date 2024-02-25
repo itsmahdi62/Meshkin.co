@@ -17,6 +17,7 @@ import ProductsList, {
 } from "./features/productsList/ProductsList";
 import ProductDetails from "./features/productsList/ProductDetails";
 import Users from "./admin-section/features/users/Users";
+import ProductsTable from "./admin-section/features/productsTable/ProductsTable";
 const router = createBrowserRouter([
   {
     element: <AppLayout />,

@@ -2,18 +2,18 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import "./DataTable.scss";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-
+import { ReactComponent as YourSVGIcon } from "./delete.svg";
 export default function DataTable(props) {
-  const handleDelete = (id) => {
-    return id;
-    //axios.delete/(`/api/4{slug}/id`)
+  const handleDelete = async (id) => {
+    const res = await fetch(`http://127.0.0.1:8000/api/v1/${props.slug}/${id}`);
+    // console.log(await res.json());
   };
 
   const actionColumn = {
     field: "action",
     headerName: "Action",
     width: 200,
-    sortable:false,
+    sortable: false,
     renderCell: (params) => {
       return (
         <div className="action">
@@ -21,7 +21,7 @@ export default function DataTable(props) {
             <img src="../../../../public/img/view.svg" alt="" />
           </Link> */}
           <div className="delete" onClick={() => handleDelete(params.row.id)}>
-            <img src="./delete.svg" alt="" />
+            <YourSVGIcon />
           </div>
         </div>
       );
