@@ -8,6 +8,14 @@ export async function getList() {
   const { data } = await res.json();
   return data;
 }
+// export async function getUsers() {
+//   const res = await fetch(`${API_URL}/users/`);
+//   // fetch won't throw error on 400 errors (e.g. when URL is wrong), so we need to do it manually. This will then go into the catch block, where the message is set
+  // if (res.status !== 200) throw Error("Failed getting List");
+
+//   const { data } = await res.json();
+//   return data;
+// }
 
 // export async function getProduct(userId) {
 // const res = fetch(`http://127.0.0.1:8000/api/v1/products/${userId.id}`)

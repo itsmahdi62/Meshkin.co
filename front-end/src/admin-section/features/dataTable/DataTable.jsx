@@ -2,7 +2,6 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import "./DataTable.scss";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { Link } from "@mui/material";
 
 export default function DataTable(props) {
   const handleDelete = (id) => {
@@ -14,6 +13,7 @@ export default function DataTable(props) {
     field: "action",
     headerName: "Action",
     width: 200,
+    sortable:false,
     renderCell: (params) => {
       return (
         <div className="action">
@@ -21,22 +21,23 @@ export default function DataTable(props) {
             <img src="../../../../public/img/view.svg" alt="" />
           </Link> */}
           <div className="delete" onClick={() => handleDelete(params.row.id)}>
-            <img src="../../../../public/img/delete.svg" alt="" />
+            <img src="./delete.svg" alt="" />
           </div>
         </div>
       );
     },
   };
   return (
-    <Box sx={{ height: 400, width: "100%" }}>
+    <Box sx={{ height: 800, width: "100%" }}>
       <DataGrid
-        className="bg-stone-200 rounded-3xl border-2 border-stone-300 shadow-xl p-8 "
+        className="bg-stone-200 rounded-3xl border-2 border-stone-300 shadow-xl px-8 py-3 "
         rows={props.rows}
         columns={[...props.columns, actionColumn]}
+        getRowId={(row) => row._id}
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 10,
+              pageSize: 20,
             },
           },
         }}
