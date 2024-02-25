@@ -16,15 +16,22 @@ import ProductsList, {
   loader as listLoader,
 } from "./features/productsList/ProductsList";
 import ProductDetails from "./features/productsList/ProductDetails";
+import Users from "./admin-section/features/users/Users";
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
     errorElement: <Error />,
     children: [
+      // {
+      //   path: "/",
+      //   element: <ProductsList />,
+      //   loader: listLoader,
+      //   errorElement: <Error />,
+      // },
       {
         path: "/",
-        element: <ProductsList />,
-        loader: listLoader,
+        element: <Users />,
+        // loader: listLoader,
         errorElement: <Error />,
       },
       {

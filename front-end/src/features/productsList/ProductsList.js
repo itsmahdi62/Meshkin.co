@@ -10,10 +10,10 @@ function ProductSList() {
       <div className="banner-container gap-4 p-5 min-h-[400px] max-h-[800px] mb-96 sm:mb-[500px] md:mb-0">
         <div className="grid-item-1 flex flex-col py-12 px-8 bg-blue-600 rounded-2xl text-stone-200 shadow-lg">
           <h4 className="mx-auto shadow-sm font-semibold">
-            Wht Should we buy from Meshkin?
+            Why Should we buy from Meshkin?
           </h4>
           <ul className="mt-12">
-            <li>Warranty pbest price</li>
+            <li>Warranty best price</li>
             <li>24/7 online support</li>
           </ul>
           <img

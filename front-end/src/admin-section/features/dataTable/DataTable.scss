@@ -1,0 +1,13 @@
+.MuiDataGrid-toolbarContainer {
+  flex-direction: row-reverse;
+}
+
+.action {
+  display: flex;
+  gap: 15px;
+  img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+}
