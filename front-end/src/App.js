@@ -23,15 +23,20 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     errorElement: <Error />,
     children: [
-      // {
-      //   path: "/",
-      //   element: <ProductsList />,
-      //   loader: listLoader,
-      //   errorElement: <Error />,
-      // },
       {
         path: "/",
+        element: <ProductsList />,
+        loader: listLoader,
+        errorElement: <Error />,
+      },
+      {
+        path: "/users",
         element: <Users />,
+        errorElement: <Error />,
+      },
+      {
+        path: "/productsTable",
+        element: <ProductsTable />,
         errorElement: <Error />,
       },
       {

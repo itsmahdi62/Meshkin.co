@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 // import { loginAsync } from "./authSlice";
 import ReturnToMenu from "../../ui/ReturnToMenu";
 
@@ -38,16 +38,21 @@ const Login = () => {
       });
 
       const data = await response.json();
-      console.log(data);
+
       if (data.status !== "success") {
-        throw new Error("Failed to login");
+        // throw new Error("Failed to login");
+        alert(data.message);
       }
       // dispatch(setName(data.data.user.name));
       // console.log(data);
       // console.log(data.data.user.name);
       sessionStorage.setItem("auth-token", data.token);
       sessionStorage.setItem("username", data.data.user.name);
-      navigate("/");
+      if (data.data.user.role !== "admin") {
+        navigate("/");
+      } else {
+        navigate("/productsTable");
+      }
       // return data;
     } catch (error) {
       console.error("Error during signup:", error);

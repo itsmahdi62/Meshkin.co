@@ -5,6 +5,7 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { ReactComponent as YourSVGIcon } from "./delete.svg";
 export default function DataTable(props) {
   const handleDelete = async (id) => {
+    // eslint-disable-next-line no-unused-vars
     const res = await fetch(`http://127.0.0.1:8000/api/v1/${props.slug}/${id}`);
     // console.log(await res.json());
   };

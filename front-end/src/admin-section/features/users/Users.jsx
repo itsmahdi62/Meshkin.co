@@ -47,13 +47,19 @@ const Users = () => {
 
       const { data } = await res.json();
       setData(data);
+      setData(
+        data.map((row) => ({
+          ...row,
+          id: row._id, // Add 'id' field based on the '_id' field
+        }))
+      );
     };
     getList();
   }, []);
-  const transformedData = data.map((row) => ({
-    ...row,
-    id: row._id, // Add 'id' field based on the '_id' field
-  }));
+  // const transformedData = data.map((row) => ({
+  //   ...row,
+  //   id: row._id, // Add 'id' field based on the '_id' field
+  // }));
   return (
     <div className="users">
       <div className="info">
@@ -63,7 +69,7 @@ const Users = () => {
       <DataTable
         slug="users"
         columns={columns}
-        rows={transformedData}
+        rows={data}
         getRowId={(row) => row._id}
       />
       {open && <Add slug="user" column={columns} setOpen={setOpen} />}
