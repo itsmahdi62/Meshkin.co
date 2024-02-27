@@ -68,11 +68,9 @@ const ProductDetails = () => {
           </Button>
         )}
         {isInCart && (
-          <Button
-            className="bg-stone-200 uppercase text-sm font-semibold px-4 py-3 md:px-6 sm:py-4 text-stone-100  inline-block tracking-wide rounded-full hover:bg-blue-400 transition-colors duration-300 focus:outline-none  focus:bg-blue-400  disabled:cursor-not-allowed"
-            onClick={() => dispatch(deleteItem(productId))}>
+          <button className="uppercase text-xs px-4 py-2 md:px-5 md:py-2.5 font-semibold text-stone-900  inline-block tracking-wide rounded-full hover:bg-blue-600 bg-white hover:text-stone-100 border border-blue-600 transition-all duration-400">
             Delete Item
-          </Button>
+          </button>
         )}
       </div>
       <div className="col-span-2 px-12 py-4 rounded-2xl bg-stone-50 min-h-64 shadow-sm border border-stone-300 mb-auto flex flex-col">
@@ -108,7 +106,7 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-              
+
       <ReturnToMenu />
     </div>
   );

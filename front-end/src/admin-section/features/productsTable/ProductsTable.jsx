@@ -85,7 +85,7 @@ const ProductsTable = () => {
         <button
           className="text-white bg-blue-600  py-5 px-3 rounded-lg shadow-lg"
           onClick={() => setOpen(true)}>
-          Add new user
+          Add new product
         </button>
         <Link
           to="/users"

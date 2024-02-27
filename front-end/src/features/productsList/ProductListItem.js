@@ -45,11 +45,11 @@ function ProductListItem({ product }) {
           </Link>
           <div className="ms-auto">
             {isInCart && (
-              <Button
+              <button
                 onClick={() => dispatch(deleteItem(productId))}
-                type="small">
+                className="uppercase text-xs px-4 py-2 md:px-5 md:py-2.5 font-semibold text-stone-900  inline-block tracking-wide rounded-full hover:bg-blue-600 bg-white hover:text-stone-100 border border-blue-600 transition-all duration-400">
                 Delete Item
-              </Button>
+              </button>
             )}
             {!isInCart && (
               <Button onClick={handleAddToCart} type="small">

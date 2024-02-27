@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 import "./App.css";
-import Home from "./ui/Home";
 import Cart from "./features/cart/Cart";
-import Menu, { loader, loader as menuLoader } from "./features/Menu/Menu";
 import CreateOrder, {
   action as createOrderAction,
 } from "./features/order/CreateOrder";
@@ -24,7 +22,7 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       {
-        path: "/dd",
+        path: "/",
         element: <ProductsList />,
         loader: listLoader,
         errorElement: <Error />,
@@ -37,12 +35,6 @@ const router = createBrowserRouter([
       {
         path: "/productsTable",
         element: <ProductsTable />,
-        errorElement: <Error />,
-      },
-      {
-        path: "/menu",
-        element: <Menu />,
-        loader: menuLoader,
         errorElement: <Error />,
       },
       {
