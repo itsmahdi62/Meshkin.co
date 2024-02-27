@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import DataTable from "../dataTable/DataTable";
 import Add from "../Add/Add";
+import { Link } from "react-router-dom";
 
 const columns = [
   { field: "_id", headerName: "ID", width: 250 },
@@ -22,6 +23,18 @@ const columns = [
     headerName: "Role",
     width: 110,
     editable: true,
+  },
+  {
+    field: "password",
+    headerName: "Password",
+    width: 0,
+    editable: false,
+  },
+  {
+    field: "passwordConfirm",
+    headerName: "PasswordConfirm",
+    width: 0,
+    editable: false,
   },
 ];
 
@@ -61,10 +74,21 @@ const Users = () => {
   //   id: row._id, // Add 'id' field based on the '_id' field
   // }));
   return (
-    <div className="users">
-      <div className="info">
-        <h1>Users</h1>
-        <button onClick={() => setOpen(true)}>Add new user</button>
+    <div className="">
+      <div className="flex items-center gap-5 mb-5 ">
+        <span className="text-white bg-blue-800  py-5 px-5 rounded-lg shadow-lg">
+          Users
+        </span>
+        <button
+          className="text-white bg-blue-600  py-5 px-3 rounded-lg shadow-lg"
+          onClick={() => setOpen(true)}>
+          Add new user
+        </button>
+        <Link
+          to="/productsTable"
+          className="text-white bg-blue-600 ms-auto py-5 px-3 rounded-lg shadow-lg hover:bg-blue-800 transition-all duration-300">
+          Product Table
+        </Link>
       </div>
       <DataTable
         slug="users"
@@ -72,7 +96,7 @@ const Users = () => {
         rows={data}
         getRowId={(row) => row._id}
       />
-      {open && <Add slug="user" column={columns} setOpen={setOpen} />}
+      {open && <Add slug="user" columns={columns} setOpen={setOpen} />}
     </div>
   );
 };

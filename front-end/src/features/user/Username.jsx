@@ -55,14 +55,14 @@ const Username = () => {
     <div
       onMouseEnter={handleMouseEnter}
       onClick={() => setIsOptionClicked(true)}
-      className="relative me-3">
+      className="relative me-5">
       <button className="text-stone-50">{username}</button>
       {isOpen && (
         <div
           style={{
             position: "absolute",
             top: "160%",
-            left: "30px",
+            left: "5px",
             padding: "10px",
             border: "1px solid #ccc",
           }}
@@ -70,7 +70,7 @@ const Username = () => {
           <span
             onMouseEnter={handleMouseEnter}
             onClick={handleOptionClick}
-            className="text-stone-800">
+            className="text-stone-800 cursor-pointer">
             Logout
           </span>
         </div>

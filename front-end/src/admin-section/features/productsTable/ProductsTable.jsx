@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import DataTable from "../dataTable/DataTable";
 import Add from "../Add/Add";
-import "./ProductsTable.scss";
+import { Link } from "react-router-dom";
+
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
+  {
+    field: "title",
+    headerName: "title",
+    width: 250,
+    type: "string",
+  },
   {
     field: "imageURL",
     headerName: "Image",
@@ -36,6 +43,24 @@ const columns = [
     width: 150,
     type: "string",
   },
+  {
+    field: "about",
+    headerName: "about",
+    width: 150,
+    type: "string",
+  },
+  {
+    field: "unlimitedFeatures",
+    headerName: "unlimitedFeatures",
+    width: 150,
+    type: "string",
+  },
+  {
+    field: "benefits",
+    headerName: "benefits",
+    width: 150,
+    type: ["string"],
+  },
 ];
 
 const ProductsTable = () => {
@@ -52,10 +77,21 @@ const ProductsTable = () => {
     getList();
   }, []);
   return (
-    <div className="products">
-      <div className="info">
-        <h1>Products</h1>
-        <button onClick={() => setOpen(true)}>Add new Product</button>
+    <div className="">
+      <div className="flex items-center gap-5 mb-5 ">
+        <span className="text-white bg-blue-800  py-5 px-3 rounded-lg shadow-lg">
+          Products Table
+        </span>
+        <button
+          className="text-white bg-blue-600  py-5 px-3 rounded-lg shadow-lg"
+          onClick={() => setOpen(true)}>
+          Add new user
+        </button>
+        <Link
+          to="/users"
+          className="text-white bg-blue-600 ms-auto py-5 px-3 rounded-lg shadow-lg hover:bg-blue-800 transition-all duration-300">
+          Users Table
+        </Link>
       </div>
       <DataTable
         slug="products"
@@ -63,7 +99,7 @@ const ProductsTable = () => {
         rows={data}
         getRowId={(row) => row._id}
       />
-      {open && <Add slug="products" column={columns} setOpen={setOpen} />}
+      {open && <Add slug="products" columns={columns} setOpen={setOpen} />}
     </div>
   );
 };

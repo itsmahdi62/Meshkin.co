@@ -33,7 +33,20 @@ export default function DataTable(props) {
       <DataGrid
         className="bg-stone-200 rounded-3xl border-2 border-stone-300 shadow-xl px-8 py-3 "
         rows={props.rows}
-        columns={[...props.columns, actionColumn]}
+        columns={[
+          ...props.columns.filter(
+            (column) =>
+              column.field !== "id" &&
+              column.field !== "_id" &&
+              column.field !== "ablout" &&
+              column.field !== "imageURL" &&
+              column.field !== "id" &&
+              column.field !== "about" &&
+              column.field !== "unlimitedFeatures" &&
+              column.field !== "benefits"
+          ),
+          actionColumn,
+        ]}
         getRowId={(row) => row._id}
         initialState={{
           pagination: {
