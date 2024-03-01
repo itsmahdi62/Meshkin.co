@@ -17,6 +17,7 @@ import ProductDetails from "./features/productsList/ProductDetails";
 import Users from "./admin-section/features/users/Users";
 import ProductsTable from "./admin-section/features/productsTable/ProductsTable";
 import Orders from "./admin-section/features/Orders/Orders";
+import ResetPasswordPage from "./features/auth/ResetPasswordPage"
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
@@ -64,6 +65,11 @@ const router = createBrowserRouter([
         path: "signUp",
         element: <SignupPage />,
         // loader: loginLoader,
+        errorElement: <Error />,
+      },
+      {
+        path: "/resetPassword",
+        element: <ResetPasswordPage />,
         errorElement: <Error />,
       },
       {

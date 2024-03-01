@@ -158,7 +158,7 @@ app.use("/api/v1/products", productsRoutes);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reveiwRouter);
 app.use("api/v1/purchase", purchaseRouter);
-// app.use("/api/v1/orders", orderRoutes);
+app.use("/api/v1/orders", orderRoutes);
 app.all("*", (req, res, next) => {
   // res.status(404).json({
   //   status: 'fail',
