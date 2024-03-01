@@ -55,15 +55,15 @@ const Orders = () => {
         <span className="text-white bg-blue-800  py-5 px-5 rounded-lg shadow-lg">
           Orders
         </span>
-        <button
-          className="text-white bg-blue-600  py-5 px-3 rounded-lg shadow-lg"
-          onClick={() => setOpen(true)}>
-          Add new Order
-        </button>
         <Link
           to="/productsTable"
           className="text-white bg-blue-600 ms-auto py-5 px-3 rounded-lg shadow-lg hover:bg-blue-800 transition-all duration-300">
-          Product Table
+          Products Table
+        </Link>
+        <Link
+          to="/users"
+          className="text-white bg-blue-600  py-5 px-3 rounded-lg shadow-lg hover:bg-blue-800 transition-all duration-300">
+          Users Table
         </Link>
       </div>
       <DataTable
@@ -72,7 +72,6 @@ const Orders = () => {
         rows={data}
         getRowId={(row) => row._id}
       />
-      {open && <Add slug="order" columns={columns} setOpen={setOpen} />}
     </div>
   );
 };

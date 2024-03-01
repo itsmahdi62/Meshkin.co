@@ -92,6 +92,11 @@ const ProductsTable = () => {
           className="text-white bg-blue-600 ms-auto py-5 px-3 rounded-lg shadow-lg hover:bg-blue-800 transition-all duration-300">
           Users Table
         </Link>
+        <Link
+          to="/orders"
+          className="text-white bg-blue-600  py-5 px-3 rounded-lg shadow-lg hover:bg-blue-800 transition-all duration-300">
+          Orders Table
+        </Link>
       </div>
       <DataTable
         slug="products"

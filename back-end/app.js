@@ -2,6 +2,11 @@ const express = require("express");
 const morgan = require("morgan");
 const tourRouter = require("./routes/tourRoutes");
 const userRouter = require("./routes/userRoutes.js");
+const productsRoutes = require("./routes/productsRoutes");
+const purchaseRouter = require("./routes/purchaseRoutes.js");
+const orderRouter = require("./routes/orderRoutes.js");
+const reveiwRouter = require("./routes/reviewRoutes.js");
+const viewRoutes = require("./routes/viewRoutes");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const AppError = require("./utils/appError.js");
@@ -11,12 +16,8 @@ const helmet = require("helmet");
 const monogoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
-const reveiwRouter = require("./routes/reviewRoutes.js");
 const path = require("path");
 const request = require("request");
-const productsRoutes = require("./routes/productsRoutes");
-const purchaseRouter = require("./routes/purchaseRoutes.js");
-const orderRouter = require("./routes/orderRoutes.js");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const { initializePayment, verifyPayment } = require("./payStack")(request);
@@ -37,7 +38,7 @@ mongoose
   });
 
 const app = express();
-// app.set("view engine", "pug");
+app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 // GLOBAL middleware
 
@@ -158,7 +159,8 @@ app.use("/api/v1/products", productsRoutes);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reveiwRouter);
 app.use("api/v1/purchase", purchaseRouter);
-app.use("/api/v1/orders", orderRoutes);
+app.use("/api/v1/orders", orderRouter);
+app.use("/api/v1/views", viewRoutes);
 app.all("*", (req, res, next) => {
   // res.status(404).json({
   //   status: 'fail',

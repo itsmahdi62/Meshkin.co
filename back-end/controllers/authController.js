@@ -127,7 +127,7 @@ exports.forgotPassword = async (req, res, next) => {
     return next(new AppError("There is no email address ", 404));
   }
   // 2) Generate random token
-  const resetToken = user.correctPasswordResetToken();
+  const resetToken = user.createPasswordResetToken();
   await user.save({ validateBeforeSave: false });
   // 3) Send it to user's email
   try {
@@ -139,7 +139,7 @@ exports.forgotPassword = async (req, res, next) => {
     //   subject: "Your password reset token (valid for 10min)",
     //   message,
     // });
-    await new Email(user, resetURL).sendPasswordReset();
+    await new Email(user, resetURL).sendPasswordReset();``
     res.status(200).json({
       status: "success",
       message: "Token sent to email!",
