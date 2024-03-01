@@ -66,7 +66,7 @@ const Add = (props) => {
             type="submit"
             onClick={handleSubmit}
             className="rounded-lg my-5 py-8">
-            Add user
+            Add {`${props.slug}`}
           </button>
         </form>
       </div>

@@ -7,6 +7,6 @@ router.use(authController.protect);
 router.use(authController.restrictTo("admin"));
 router.route("/").get(orderController.getAllOrders);
 router
-  .route("/id")
+  .route("/:id")
   .patch(orderController.updateOrder)
   .delete(orderController.deleteOrder);

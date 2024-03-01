@@ -15,13 +15,13 @@ const reveiwRouter = require("./routes/reviewRoutes.js");
 const path = require("path");
 const request = require("request");
 const productsRoutes = require("./routes/productsRoutes");
-// const orderRouter = require("./routes/orderRoutes.js")
+const purchaseRouter = require("./routes/purchaseRoutes.js");
+const orderRouter = require("./routes/orderRoutes.js");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const { initializePayment, verifyPayment } = require("./payStack")(request);
 const pug = require("pug");
 // console.log(process.env);
-const { Donor } = require("./models/Donor.js");
 const _ = require("lodash");
 dotenv.config({ path: "./config.env" });
 mongoose
@@ -45,7 +45,14 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Body parser , reading data from body into req.body
-app.use(express.json({ limit: "10kb" }));
+app.use(
+  express.json({
+    limit: "10kb",
+    verify: (req, res, buf) => {
+      req.rawBody = buf.toString();
+    },
+  })
+);
 app.use(cookieParser());
 
 //Set Security HETTP  headers
@@ -150,7 +157,8 @@ app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/products", productsRoutes);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reveiwRouter);
-// app.use("/api/v1/orders",orderRouter)
+app.use("api/v1/purchase", purchaseRouter);
+// app.use("/api/v1/orders", orderRoutes);
 app.all("*", (req, res, next) => {
   // res.status(404).json({
   //   status: 'fail',
