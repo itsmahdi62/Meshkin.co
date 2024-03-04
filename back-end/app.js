@@ -7,6 +7,7 @@ const purchaseRouter = require("./routes/purchaseRoutes.js");
 const orderRouter = require("./routes/orderRoutes.js");
 const reveiwRouter = require("./routes/reviewRoutes.js");
 const viewRoutes = require("./routes/viewRoutes");
+const transactionRouter = require("./routes/transactionRoutes");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const AppError = require("./utils/appError.js");
@@ -20,9 +21,7 @@ const path = require("path");
 const request = require("request");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const { initializePayment, verifyPayment } = require("./payStack")(request);
 const pug = require("pug");
-// console.log(process.env);
 const _ = require("lodash");
 dotenv.config({ path: "./config.env" });
 mongoose
@@ -158,9 +157,11 @@ app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/products", productsRoutes);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reveiwRouter);
-app.use("api/v1/purchase", purchaseRouter);
+app.use("/api/v1/purchase", purchaseRouter);
+app.use("/api/v1/checktransaction", transactionRouter);
 app.use("/api/v1/orders", orderRouter);
 app.use("/api/v1/views", viewRoutes);
+
 app.all("*", (req, res, next) => {
   // res.status(404).json({
   //   status: 'fail',

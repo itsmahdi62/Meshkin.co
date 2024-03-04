@@ -10,6 +10,15 @@ export default function DataTable(props) {
     // console.log(await res.json());
   };
 
+  const handleEdit = async (id) => {
+    // eslint-disable-next-line no-unused-vars
+    const res = await fetch(
+      `http://127.0.0.1:8000/api/v1/${props.slug}/${id}`,
+      { method: "PATCH", body: "d" }
+    );
+    // console.log(await res.json());
+  };
+
   const actionColumn = {
     field: "action",
     headerName: "Action",
@@ -22,6 +31,9 @@ export default function DataTable(props) {
             <img src="../../../../public/img/view.svg" alt="" />
           </Link> */}
           <div className="delete" onClick={() => handleDelete(params.row.id)}>
+            <YourSVGIcon />
+          </div>
+          <div className="delete" onClick={() => handleEdit(params.row.id)}>
             <YourSVGIcon />
           </div>
         </div>
