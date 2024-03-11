@@ -108,15 +108,14 @@ exports.checkTransactionConfirmationTeron = async (req, res, next) => {
   // } catch (error) {
   //   console.error("Error checking transaction confirmation:", error);
   // }
-  //******************************* btc  */
+  //******************************* teron correct */
   const transactionHash = req.body.hash;
-  const value = req.body.amount;
-  const apiUrl = `https://btcscan.org/api/tx/${transactionHash}/status`;
+  const apiUrl = `https://apilist.tronscanapi.com/api/transaction-info?hash=${transactionHash}`;
   try {
     const response = await fetch(apiUrl);
     const data = await response.json();
-    console.log(data);
-    if (data.confirmed) {
+    // console.log(data.confirmed);
+    if (data.confirmed !== "true") {
       console.log(
         `Transaction with hash ${transactionHash} is confirmed with value of ${
           transaction.value / 10 ** 18
