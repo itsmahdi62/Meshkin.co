@@ -1,6 +1,8 @@
 const Order = require("../models/orderModel");
 const factory = require("./handlerFactory");
-const Products = require("../models/productModel");
+const Products = require("../models/productsModel");
+const catchAsync = require("../utils/catchAsync");
+
 exports.getAllOrders = factory.getAll(Order);
 exports.updateOrder = factory.updateOne(Order);
 exports.deleteOrder = factory.deleteOne(Order);
