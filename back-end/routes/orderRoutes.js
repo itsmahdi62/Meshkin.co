@@ -5,7 +5,7 @@ const orderController = require("../controllers/orderController");
 
 // router.use(authController.protect);
 // router.use(authController.restrictTo("admin"));
-router.route("/").get(orderController.getAllOrders);
+router.route("/").get(orderController.getMyProducts).post(orderController.createBookingCheckout);
 router
   .route("/:id")
   .patch(orderController.updateOrder)

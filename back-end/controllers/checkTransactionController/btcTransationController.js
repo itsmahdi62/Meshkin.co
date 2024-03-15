@@ -1,5 +1,5 @@
 const fetch = require("node-fetch");
-
+const Order = require("../../models/orderModel");
 exports.btcTransationController = async (req, res, next) => {
   // ********************* btc correct
   const destinationAddress = "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2"; // replace with the actual destination wallet address
@@ -18,15 +18,20 @@ exports.btcTransationController = async (req, res, next) => {
           output.value === value * 100000000
       );
       if (transaction) {
-        console.log(
-          `Transaction with hash ${transactionHash} is confirmed with value of ${
-            transaction.value / 100000000
-          } BTC.`
-        );
+        await Order.findByIdAndUpdate(req.params.id, req.body, {
+          new: true,
+          runValidators: true,
+        });
+        res.status(201).json({
+          status: "success",
+        });
       } else {
         console.log(
           `Transaction with hash ${transactionHash} is not found or the value is not correct.`
         );
+        res.status(404).json({
+          status: "unsuccess",
+        });
       }
     } else {
       console.log("Unable to get transaction list.");

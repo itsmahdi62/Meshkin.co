@@ -9,7 +9,13 @@ exports.teronTransationController = async (req, res, next) => {
     const data = await response.json();
     // console.log(data.confirmed);
     if (data.confirmed !== "true") {
-      
+      await Order.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true,
+      });
+      res.status(201).json({
+        status: "success",
+      });
       // console.log(
       //   `Transaction with hash ${transactionHash} is confirmed with value of ${
       //     transaction.value / 10 ** 18
@@ -19,6 +25,9 @@ exports.teronTransationController = async (req, res, next) => {
       console.log(
         `Transaction with hash ${transactionHash} is not found or the value is not correct.`
       );
+      res.status(404).json({
+        status: "unsuccess",
+      });
     }
   } catch (error) {
     console.error("Error checking transaction confirmation:", error);
