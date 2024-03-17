@@ -6,14 +6,12 @@ import { clearCart, getCart, getTotalCartPrice } from "../cart/cartSlice";
 import EmptyCart from "../cart/EmptyCart";
 import store from "../../store";
 import { formatCurrency } from "../../utils/helpers";
-const isValidPhone = (str) =>
-  /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
-    str
-  );
+import { useState } from "react";
+import ReturnToMenu from "../../ui/ReturnToMenu";
 
 function CreateOrder() {
-  // const [withPriority, setWithPriority] = useState(false);
-  // const username = useSelector((state) => state.user.username);
+  const [coin, setCoin] = useState(false);
+  const [avalableCoins] = useState(["Btc", "Eth", "Teron", "Ada"]);
   const navigation = useNavigate();
   const isSubmitting = navigation.state === "submitting";
 
@@ -29,58 +27,27 @@ function CreateOrder() {
 
       {/* <Form method="POST" action="/order/new"> */}
       <Form method="POST">
-        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
-          <label className="sm:basis-40">First Name</label>
-          <input
-            className="input grow"
-            type="text"
-            name="customer"
-            required
-            defaultValue="username"
-          />
-        </div>
-
-        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
-          <label className="sm:basis-40">Phone number</label>
-          <div className="grow">
-            <input type="tel" name="phone" required className="input w-full" />
-            {formErrors?.phone && (
-              <p className="mt-2 rounded-md bg-red-100 p-2 text-xs text-red-700">
-                {formErrors.phone}
-              </p>
-            )}
-          </div>
-        </div>
-
-        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
-          <label className="sm:basis-40">Address</label>
-          <div className="grow">
+        {avalableCoins.map((avalableCoin) => (
+          <div className="mb-7 flex">
             <input
-              type="text"
-              name="address"
-              required
-              className="input w-full"
+              type="radio"
+              name="priority"
+              id="priority"
+              className="h-6 w-6 accent-blue-500 focus:outline-none  md:px-6 md:py-3 focus:ring-offset-2"
+              value={coin}
+              onChange={(e) => setCoin(e.target.checked)}
             />
+            <label className="font-medium ms-5">{avalableCoin}</label>
           </div>
-        </div>
-
-        <div className="mb-7 flex">
-          <input
-            type="checkbox"
-            name="priority"
-            id="priority"
-            className="h-6 w-6 accent-yellow-400 focus:outline-none focus:ring focus:ring-yellow-400  md:px-6 md:py-3 focus:ring-offset-2"
-            // value={withPriority}
-            // onChange={(e) => setWithPriority(e.target.checked)}
-          />
-
-          <label className="font-medium ms-5" htmlFor="priority">
-            Want to yo give your order priority?
-          </label>
-        </div>
+        ))}
 
         <div>
-          <input type="hidden" name="cart" value={JSON.stringify(cart)} />
+          <input
+            type="hidden"
+            name="cart"
+            className="border border-red-500"
+            value={JSON.stringify(cart)}
+          />
           <Button type="primary" disabled={isSubmitting}>
             {isSubmitting
               ? "Placing order...."
@@ -88,6 +55,7 @@ function CreateOrder() {
           </Button>
         </div>
       </Form>
+      <ReturnToMenu />
     </div>
   );
 }
@@ -101,9 +69,6 @@ export async function action({ request }) {
     priority: data.priority ? true : false,
   };
   const errors = {};
-  if (!isValidPhone(order.phone))
-    errors.phone =
-      "Please give us your correct phone number. We might need it to contact you !";
 
   if (Object.keys(errors).length > 0) return errors;
   // if everything is ok create new order and redirect

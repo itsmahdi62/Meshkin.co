@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Username from "../features/user/Username";
 import CartOverview from "../features/cart/CartOverview";
+import UserProducts from "../features/user/UserProducts";
 
 const Header = () => {
   // const username = useSelector((state) => state.auth.user);
@@ -14,6 +15,7 @@ const Header = () => {
         Meshkin Co.
       </Link>
       <Username />
+      <UserProducts />
       <CartOverview />
       {!username && (
         <div className="flex me-5">
