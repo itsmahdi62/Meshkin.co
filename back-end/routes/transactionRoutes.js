@@ -8,9 +8,9 @@ const authController = require("../controllers/authController");
 
 // router.use(authController.isLoogedIn);
 
-router.post("/btc", btcTransationController.btcTransationController);
-router.post("/eth", ethTransationController.ethTransationController);
-router.post("/trx", teronTransationController.teronTransationController);
-router.post("/ada", cardanoTransationController.cardanoTransationController);
+router.post("/Btc", btcTransationController.btcTransationController);
+router.post("/Eth", ethTransationController.ethTransationController);
+router.post("/Trx", teronTransationController.teronTransationController);
+router.post("/Ada", cardanoTransationController.cardanoTransationController);
 
 module.exports = router;

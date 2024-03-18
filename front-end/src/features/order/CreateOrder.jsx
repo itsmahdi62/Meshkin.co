@@ -1,4 +1,4 @@
-import { Form, redirect, useActionData, useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 import Button from "../../ui/Button";
 import { useSelector } from "react-redux";
@@ -11,50 +11,106 @@ import ReturnToMenu from "../../ui/ReturnToMenu";
 
 function CreateOrder() {
   const [coin, setCoin] = useState(false);
-  const [avalableCoins] = useState(["Btc", "Eth", "Teron", "Ada"]);
+  const [hashId, setHashId] = useState();
+  const [avalableCoins] = useState([
+    {
+      label: "Btc",
+      wallet: "15wWzRXtgpDyQ5vSdtpDyWrpk3tkJNH9zc",
+      network: "Bitcoin",
+    },
+    {
+      label: "Eth",
+      wallet:
+        "addr1q8gcefxpnnlukhfduvjagjy7k3x4dx9scmvgd557d755qjpyas0w75sham58dmm56vz2jydr7vd060wq7eswekll28xqvr8que",
+      network: "ERC20",
+    },
+    {
+      label: "Trx",
+      wallet: "TV63SGWfJmwsuu1aLZf1rzu59gmMmySM9M",
+      network: "TRC20",
+    },
+    {
+      label: "Ada",
+      wallet:
+        "addr1q8gcefxpnnlukhfduvjagjy7k3x4dx9scmvgd557d755qjpyas0w75sham58dmm56vz2jydr7vd060wq7eswekll28xqvr8que",
+      network: "CARDANO ADA",
+    },
+  ]);
+
   const navigation = useNavigate();
   const isSubmitting = navigation.state === "submitting";
-
-  const formErrors = useActionData();
 
   const cart = useSelector(getCart);
   const totalCartPrice = useSelector(getTotalCartPrice);
   if (!cart.length) return <EmptyCart />;
 
+  const checkTransactionHandler = async () => {
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/v1/checktransaction/${coin}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          hashId,
+        }),
+      }
+    );
+  };
+
   return (
-    <div className="px-4 py-6">
+    <div className="px-4 py-2">
       <h2 className="mb-8 text-xl font-semibold">Ready to order? Let's go!</h2>
-
       {/* <Form method="POST" action="/order/new"> */}
-      <Form method="POST">
-        {avalableCoins.map((avalableCoin) => (
-          <div className="mb-7 flex">
-            <input
-              type="radio"
-              name="priority"
-              id="priority"
-              className="h-6 w-6 accent-blue-500 focus:outline-none  md:px-6 md:py-3 focus:ring-offset-2"
-              value={coin}
-              onChange={(e) => setCoin(e.target.checked)}
-            />
-            <label className="font-medium ms-5">{avalableCoin}</label>
-          </div>
-        ))}
-
-        <div>
+      {avalableCoins.map((avalableCoin) => (
+        <div className="mb-7  flex flex-wrap border border-stone-300 p-5 rounded-lg">
           <input
-            type="hidden"
-            name="cart"
-            className="border border-red-500"
-            value={JSON.stringify(cart)}
+            type="radio"
+            name="priority"
+            id="priority"
+            className="h-6 w-4 me-5  accent-blue-500 focus:outline-none  md:px-6 md:py-3 focus:ring-offset-2"
+            value={coin}
+            onChange={(e) => setCoin(e.target.checked)}
           />
-          <Button type="primary" disabled={isSubmitting}>
-            {isSubmitting
-              ? "Placing order...."
-              : `Order now from ${formatCurrency(totalCartPrice)}`}
-          </Button>
+          <label className="font-medium me-16">{avalableCoin.label}</label>
+          <label className="font-medium me-16">
+            Network : {avalableCoin.network}
+          </label>
+          <label className="font-medium ">
+            Address : {avalableCoin.wallet}
+          </label>
         </div>
-      </Form>
+      ))}
+
+      <div className="text-center mt-5 flex flex-col">
+        <label
+          className="block text-gray-700 text-sm font-bold mb-2"
+          htmlFor="password">
+          Enter your transactionhash
+        </label>
+        <input
+          className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="hash"
+          type="text"
+          value={hashId}
+          onChange={(e) => setHashId(e.target.value)}
+          placeholder="Enter your hashId"
+        />
+      </div>
+      <div className="mt-5 flex">
+        <Button type="primary" disabled={isSubmitting}>
+          {isSubmitting
+            ? "Placing order...."
+            : `Pay ${formatCurrency(totalCartPrice)}`}
+        </Button>
+        <button
+          onClick={checkTransactionHandler}
+          className="bg-blue-600 ms-8 uppercase text-sm font-semibold text-stone-100  inline-block tracking-wide rounded-full hover:bg-blue-400 transition-colors duration-300 focus:outline-none  focus:bg-blue-400  disabled:cursor-not-allowed  px-4 py-3 md:px-6 sm:py-4"
+          disabled={isSubmitting}>
+          Check transaction
+        </button>
+      </div>
       <ReturnToMenu />
     </div>
   );
