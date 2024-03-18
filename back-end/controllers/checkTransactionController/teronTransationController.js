@@ -9,7 +9,7 @@ exports.teronTransationController = async (req, res, next) => {
     const data = await response.json();
     // console.log(data.confirmed);
     if (data.confirmed !== "true") {
-      await Order.findByIdAndUpdate(req.params.id, req.body, {
+      await Order.findByIdAndUpdate(req.params.id, req.body.paid, {
         new: true,
         runValidators: true,
       });

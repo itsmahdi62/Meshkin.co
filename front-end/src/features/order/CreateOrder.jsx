@@ -39,10 +39,14 @@ function CreateOrder() {
 
   const navigation = useNavigate();
   const isSubmitting = navigation.state === "submitting";
-
+  const paid = { isPaid: true };
   const cart = useSelector(getCart);
   const totalCartPrice = useSelector(getTotalCartPrice);
   if (!cart.length) return <EmptyCart />;
+
+  const handleRadioChange = (event) => {
+    setCoin(event.target.value);
+  };
 
   const checkTransactionHandler = async () => {
     const response = await fetch(
@@ -54,9 +58,16 @@ function CreateOrder() {
         },
         body: JSON.stringify({
           hashId,
+          paid,
         }),
       }
     );
+    const result = await response.json();
+    if (result.status === "success") {
+      navigation("MyProducts");
+    } else {
+      console.log("payment not verified yet , check it in few seconds later");
+    }
   };
 
   return (
@@ -70,8 +81,8 @@ function CreateOrder() {
             name="priority"
             id="priority"
             className="h-6 w-4 me-5  accent-blue-500 focus:outline-none  md:px-6 md:py-3 focus:ring-offset-2"
-            value={coin}
-            onChange={(e) => setCoin(e.target.checked)}
+            value={avalableCoin.label}
+            onChange={handleRadioChange}
           />
           <label className="font-medium me-16">{avalableCoin.label}</label>
           <label className="font-medium me-16">

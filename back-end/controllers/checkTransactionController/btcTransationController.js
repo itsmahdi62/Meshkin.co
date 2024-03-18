@@ -18,7 +18,7 @@ exports.btcTransationController = async (req, res, next) => {
           output.value === value * 100000000
       );
       if (transaction) {
-        await Order.findByIdAndUpdate(req.params.id, req.body, {
+        await Order.findByIdAndUpdate(req.params.id, req.body.paid, {
           new: true,
           runValidators: true,
         });
