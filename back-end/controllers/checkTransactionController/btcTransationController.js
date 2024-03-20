@@ -11,7 +11,7 @@ exports.btcTransationController = async (req, res, next) => {
     const response = await fetch(apiUrl);
     const data = await response.json();
     // console.log(data);
-    if (data.data) {
+    if (data.data.size === req.body.amount) {
       Order.findOneAndUpdate(data.data, update, { new: true });
       res.status(201).json({
         status: "success",

@@ -1,38 +1,29 @@
 const fetch = require("node-fetch");
+const Order = require("../../models/orderModel");
 
 exports.ethTransationController = async (req, res, next) => {
-  //************************************* correct eth */
-  const destinationAddress = "0x5409ed021d9299bf6814279a6a1411a7e866a631"; 
-  const value = req.body.amount;
+  const exampleHash =
+    "0xda214d1b1d458e7ae0e626b69a52a59d19762c51a53ff64813c4d31256282fdf";
   const transactionHash = req.body.hash;
-  // const apiUrl = `https://api.etherscan.io/api?module=account&action=txlist&address=${destinationAddress}&value=${value}&sort=desc&page=1&offset=10&startblock=0&endblock=99999999&apikey=B96DUP9C69AIVX2MQFBAZH67ZC7D33W643`;
-  // const url = `https://api.etherscan.io/api?module=transaction&action=getstatus&txhash=0xb4bc263278d3f77a652a8d73a6bfd8ec0ba1a63923bbb4f38147fb8a943da26d&apikey=B96DUP9C69AIVX2MQFBAZH67ZC7D33W643`;
-  const URL = `https://api.etherscan.io/api?module=transaction&action=gettxreceiptstatus&txhash=${transactionHash}&apikey=B96DUP9C69AIVX2MQFBAZH67ZC7D33W643`;
+  const URL = `https://api.blockchair.com/ethereum/raw/block/${transactionHash}`;
+  const update = { $set: { isPaid: true } };
 
   try {
     const response = await fetch(URL);
     const data = await response.json();
     // console.log(data);
-    if (data.result.length !== 0) {
-      const transaction = Object.values(data.result).find(
-        (tx) => tx.hash === transactionHash && tx.value === value
+    if (data.data.size === req.body.amount) {
+      Order.findOneAndUpdate(data.data, update, { new: true });
+      res.status(201).json({
+        status: "success",
+      });
+    } else {
+      console.log(
+        `Transaction with hash ${transactionHash} is not found or the value is not correct.`
       );
-      if (transaction) {
-        await Order.findByIdAndUpdate(req.params.id, req.body.paid, {
-          new: true,
-          runValidators: true,
-        });
-        res.status(201).json({
-          status: "success",
-        });
-      } else {
-        res.status(404).json({
-          status: "unsuccess",
-        });
-        console.log(
-          `Transaction with hash ${transactionHash} is not found or the value is not correct.`
-        );
-      }
+      res.status(404).json({
+        status: "unsuccess",
+      });
     }
   } catch (error) {
     console.error("Error checking transaction confirmation:", error);
