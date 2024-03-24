@@ -18,7 +18,7 @@ function CreateOrder() {
     tron: 0,
     ada: 0,
   });
-  const [avalableCoins] = useState([
+  const [avalableCoins, setAvalableCoins] = useState([
     {
       label: "Btc",
       wallet: "15wWzRXtgpDyQ5vSdtpDyWrpk3tkJNH9zc",
@@ -54,17 +54,15 @@ function CreateOrder() {
       );
       const btcPrice = await response.json();
 
-      // response = await fetch(
-      //   "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd",
+      response = await fetch(
+        "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
+      );
+      const ethPrice = await response.json();
 
-      // );
-      // const ethPrice = await response.json();
-
-      // response = await fetch(
-      //   "https://api.coingecko.com/api/v3/simple/price?ids=tron&vs_currencies=usd';",
-
-      // );
-      // const tronPrice = await response.json();
+      response = await fetch(
+        "https://api.coingecko.com/api/v3/simple/price?ids=tron&vs_currencies=usd"
+      );
+      const tronPrice = await response.json();
 
       response = await fetch(
         "https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=usd"
@@ -73,13 +71,45 @@ function CreateOrder() {
 
       setCoinPrices({
         btc: btcPrice.bitcoin,
-        // eth: ethPrice.etherium,
-        // tron: tronPrice.tron,
+        eth: ethPrice.ethereum,
+        tron: tronPrice.tron,
         ada: adaPrice.cardano,
       });
-      console.log(coinPrices.ada.usd);
     };
+
+    // Run getPrice on component mount
     getPrice();
+
+    // Update avalableCoins with new coinPrices
+
+    setAvalableCoins([
+      {
+        label: "Btc",
+        wallet: "15wWzRXtgpDyQ5vSdtpDyWrpk3tkJNH9zc",
+        network: "Bitcoin",
+        price: coinPrices.btc.usd,
+      },
+      {
+        label: "Eth",
+        wallet:
+          "addr1q8gcefxpnnlukhfduvjagjy7k3x4dx9scmvgd557d755qjpyas0w75sham58dmm56vz2jydr7vd060wq7eswekll28xqvr8que",
+        network: "ERC20",
+        price: coinPrices.eth.usd,
+      },
+      {
+        label: "Trx",
+        wallet: "TV63SGWfJmwsuu1aLZf1rzu59gmMmySM9M",
+        network: "TRC20",
+        price: coinPrices.tron.usd,
+      },
+      {
+        label: "Ada",
+        wallet:
+          "addr1q8gcefxpnnlukhfduvjagjy7k3x4dx9scmvgd557d755qjpyas0w75sham58dmm56vz2jydr7vd060wq7eswekll28xqvr8que",
+        network: "CARDANO ADA",
+        price: coinPrices.ada.usd,
+      },
+    ]);
   }, []);
   const navigation = useNavigate();
   const isSubmitting = navigation.state === "submitting";
@@ -136,7 +166,7 @@ function CreateOrder() {
             Address : {avalableCoin.wallet}
           </label>
           <label className="font-medium ">
-            Amount : {console.log(avalableCoin.price)}
+            Amount : {avalableCoin.price}
           </label>
         </div>
       ))}
