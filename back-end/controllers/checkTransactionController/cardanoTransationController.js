@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 const Order = require("../../models/orderModel");
 
-exports.ethTransationController = async (req, res, next) => {
+exports.cardanoTransationController = async (req, res, next) => {
   const exampleHash =
     "5641a3c38fd200aa49df75690e9ea48526da874b336913868cd4b7aebfeb4107";
   const transactionHash = req.body.hash;

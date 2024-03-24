@@ -6,40 +6,83 @@ import { clearCart, getCart, getTotalCartPrice } from "../cart/cartSlice";
 import EmptyCart from "../cart/EmptyCart";
 import store from "../../store";
 import { formatCurrency } from "../../utils/helpers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReturnToMenu from "../../ui/ReturnToMenu";
 
 function CreateOrder() {
   const [coin, setCoin] = useState(false);
   const [hashId, setHashId] = useState();
+  const [coinPrices, setCoinPrices] = useState({
+    btc: 0,
+    eth: 0,
+    tron: 0,
+    ada: 0,
+  });
   const [avalableCoins] = useState([
     {
       label: "Btc",
       wallet: "15wWzRXtgpDyQ5vSdtpDyWrpk3tkJNH9zc",
       network: "Bitcoin",
+      price: coinPrices.btc,
     },
     {
       label: "Eth",
       wallet:
         "addr1q8gcefxpnnlukhfduvjagjy7k3x4dx9scmvgd557d755qjpyas0w75sham58dmm56vz2jydr7vd060wq7eswekll28xqvr8que",
       network: "ERC20",
+      price: coinPrices.eth,
     },
     {
       label: "Trx",
       wallet: "TV63SGWfJmwsuu1aLZf1rzu59gmMmySM9M",
       network: "TRC20",
+      price: coinPrices.tron,
     },
     {
       label: "Ada",
       wallet:
         "addr1q8gcefxpnnlukhfduvjagjy7k3x4dx9scmvgd557d755qjpyas0w75sham58dmm56vz2jydr7vd060wq7eswekll28xqvr8que",
       network: "CARDANO ADA",
+      price: coinPrices.ada,
     },
   ]);
 
+  useEffect(() => {
+    const getPrice = async () => {
+      let response = await fetch(
+        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
+      );
+      const btcPrice = await response.json();
+
+      // response = await fetch(
+      //   "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd",
+
+      // );
+      // const ethPrice = await response.json();
+
+      // response = await fetch(
+      //   "https://api.coingecko.com/api/v3/simple/price?ids=tron&vs_currencies=usd';",
+
+      // );
+      // const tronPrice = await response.json();
+
+      response = await fetch(
+        "https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=usd"
+      );
+      const adaPrice = await response.json();
+
+      setCoinPrices({
+        btc: btcPrice.bitcoin,
+        // eth: ethPrice.etherium,
+        // tron: tronPrice.tron,
+        ada: adaPrice.cardano,
+      });
+      console.log(coinPrices.ada.usd);
+    };
+    getPrice();
+  }, []);
   const navigation = useNavigate();
   const isSubmitting = navigation.state === "submitting";
-  const paid = { isPaid: true };
   const cart = useSelector(getCart);
   const totalCartPrice = useSelector(getTotalCartPrice);
   if (!cart.length) return <EmptyCart />;
@@ -58,7 +101,6 @@ function CreateOrder() {
         },
         body: JSON.stringify({
           hashId,
-          paid,
         }),
       }
     );
@@ -75,7 +117,9 @@ function CreateOrder() {
       <h2 className="mb-8 text-xl font-semibold">Ready to order? Let's go!</h2>
       {/* <Form method="POST" action="/order/new"> */}
       {avalableCoins.map((avalableCoin) => (
-        <div className="mb-7  flex flex-wrap border border-stone-300 p-5 rounded-lg">
+        <div
+          className="mb-7  flex flex-wrap border border-stone-300 p-5 rounded-lg"
+          key={avalableCoin.label}>
           <input
             type="radio"
             name="priority"
@@ -90,6 +134,9 @@ function CreateOrder() {
           </label>
           <label className="font-medium ">
             Address : {avalableCoin.wallet}
+          </label>
+          <label className="font-medium ">
+            Amount : {console.log(avalableCoin.price)}
           </label>
         </div>
       ))}
