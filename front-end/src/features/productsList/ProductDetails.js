@@ -3,10 +3,11 @@ import { Link, useNavigation, useParams } from "react-router-dom";
 import Button from "../../ui/Button";
 import { TbBrandSpeedtest } from "react-icons/tb";
 import { MdHeadphones } from "react-icons/md";
-import { addItem, deleteItem, getCurrentQuantityById } from "../cart/cartSlice";
+import { addItem, getCurrentQuantityById } from "../cart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../ui/Loader";
 import ReturnToMenu from "../../ui/ReturnToMenu";
+
 const ProductDetails = () => {
   const userId = useParams();
   const [data, setData] = useState();

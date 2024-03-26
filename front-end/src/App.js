@@ -17,7 +17,8 @@ import ProductDetails from "./features/productsList/ProductDetails";
 import Users from "./admin-section/features/users/Users";
 import ProductsTable from "./admin-section/features/productsTable/ProductsTable";
 import Orders from "./admin-section/features/Orders/Orders";
-import ResetPasswordPage from "./features/auth/ResetPasswordPage"
+import ResetPasswordPage from "./features/auth/ResetPasswordPage";
+import UserProductsList from "./features/user/UserProductsList";
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
@@ -87,6 +88,11 @@ const router = createBrowserRouter([
         path: "/order/:orderId",
         element: <Order />,
         loader: orderLoader,
+        errorElement: <Error />,
+      },
+      {
+        path: "/userProducts",
+        element: <UserProductsList />,
         errorElement: <Error />,
       },
     ],

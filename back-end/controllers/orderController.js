@@ -24,7 +24,6 @@ exports.getMyProducts = catchAsync(async (req, res, next) => {
   const products = await Products.find({ _id: { $in: productIDs } });
 
   res.status(200).json({
-    title: "My products",
     products,
   });
 });

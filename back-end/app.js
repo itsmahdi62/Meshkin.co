@@ -3,7 +3,6 @@ const morgan = require("morgan");
 const tourRouter = require("./routes/tourRoutes");
 const userRouter = require("./routes/userRoutes.js");
 const productsRoutes = require("./routes/productsRoutes");
-const purchaseRouter = require("./routes/purchaseRoutes.js");
 const orderRouter = require("./routes/orderRoutes.js");
 const reveiwRouter = require("./routes/reviewRoutes.js");
 const viewRoutes = require("./routes/viewRoutes");
@@ -95,69 +94,11 @@ app.use(
   })
 );
 
-// 3) Routes
-// app.use("/", viewRouter);
-// app.get('/',(req, res) => {
-//   res.render('index.pug');
-//   });
-// app.post("/paystack/pay", (req, res) => {
-//   const form = _.pick(req.body, ["amount", "email", "full_name"]);
-//   form.metadata = {
-//     full_name: form.full_name,
-//   };
-//   form.amount *= 100;
-//   initializePayment(form, (error, body) => {
-//     if (error) {
-//       //handle errors
-//       console.log("error");
-//       return;
-//     }
-//     response = JSON.parse(body);
-//     res.redirect(response.data.authorization_url);
-//     // res.redirect("/pay");
-//   });
-// });
-// app.get("/paystack/callback", (req, res) => {
-//   const ref = req.query.reference;
-//   verifyPayment(ref, (error, body) => {
-//     if (error) {
-//       //handle errors appropriately
-//       console.log("inja ");
-//       return res.redirect("/error");
-//     }
-//     response = JSON.parse(body);
-//     const data = _.at(response.data, [
-//       "reference",
-//       "amount",
-//       "customer.email",
-//       "metadata.full_name",
-//     ]);
-//     [reference, amount, email, full_name] = data;
-//     newDonor = { reference, amount, email, full_name };
-//     const donor = new Donor(newDonor);
-//     donor
-//       .save()
-//       .then((donor) => {
-//         if (donor) {
-//           res.redirect("/receipt/" + donor._id);
-//         }
-//       })
-//       .catch((e) => {
-//         res.redirect("/error");
-//       });
-//   });
-// });
-// app.use((req , res , next)={
-//   res.setHeader('Access-Control-Allow-Origin', '*');
-//   res.setHeader('Access-Control-Allow-Origin', '*');
-//   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
-// })
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/products", productsRoutes);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reveiwRouter);
-app.use("/api/v1/purchase", purchaseRouter);
+// app.use("/api/v1/purchase", purchaseRouter);
 app.use("/api/v1/checktransaction", transactionRouter);
 app.use("/api/v1/orders", orderRouter);
 app.use("/api/v1/views", viewRoutes);
