@@ -1,6 +1,4 @@
 const Products = require("../models/productsModel");
-const AppError = require("../utils/appError");
-const cathcAsync = require("../utils/catchAsync");
 const factory = require("./handlerFactory");
 
 exports.getAllProducts = factory.getAll(Products);

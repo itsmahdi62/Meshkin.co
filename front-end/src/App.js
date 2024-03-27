@@ -19,6 +19,7 @@ import ProductsTable from "./admin-section/features/productsTable/ProductsTable"
 import Orders from "./admin-section/features/Orders/Orders";
 import ResetPasswordPage from "./features/auth/ResetPasswordPage";
 import UserProductsList from "./features/user/UserProductsList";
+import MyProducts from "./features/user/MyProducts";
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
@@ -93,6 +94,12 @@ const router = createBrowserRouter([
       {
         path: "/userProducts",
         element: <UserProductsList />,
+        errorElement: <Error />,
+      },
+      {
+        path: "/userProducts/:id",
+        element: <MyProducts />,
+        // loader: productLoader,
         errorElement: <Error />,
       },
     ],

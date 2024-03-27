@@ -5,10 +5,14 @@ const orderController = require("../controllers/orderController");
 
 // router.use(authController.protect);
 // router.use(authController.restrictTo("admin"));
-router.route("/").get(orderController.getMyProducts).post(orderController.createBookingCheckout);
+router
+  .route("/")
+  .get(orderController.getMyProducts)
+  .post(orderController.createBookingCheckout);
 router
   .route("/:id")
+  .get(orderController.getMyProduct)
   .patch(orderController.updateOrder)
   .delete(orderController.deleteOrder);
 
-  module.exports = router;
+module.exports = router;

@@ -27,3 +27,12 @@ exports.getMyProducts = catchAsync(async (req, res, next) => {
     products,
   });
 });
+
+exports.getMyProduct = catchAsync(async (req, res, next) => {
+  // 1) Find all bookings
+  const product = await Products.findById(req.id).select("+videos");
+  console.log(product);
+  res.status(200).json({
+    product,
+  });
+});
