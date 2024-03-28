@@ -2,7 +2,6 @@ import { useLoaderData } from "react-router-dom";
 import { getList } from "../../services/apiShop";
 import ProductListItem from "./ProductListItem";
 import "./ProductsList.scss";
-import Button from "../../ui/Button";
 import SlideShow from "../../ui/SlideShow";
 function ProductSList() {
   const productList = useLoaderData();
@@ -53,7 +52,7 @@ function ProductSList() {
           </div>
         </div>
       </div> */}
-      <SlideShow slides={productList} />
+      <SlideShow slides={productList}  />
       <ul className="divide-y mt-48  divide-slate-200 px-2 grid gap-6 sm:grid-cols-2 md:grid-cols-4 md:gap-10 sm:mt-12">
         {productList.map((product) => (
           <ProductListItem product={product} key={product.id} />

@@ -8,15 +8,18 @@ const Slideshow = ({ slides }) => {
     dots: true,
     fade: true,
     infinite: true,
-    speed: 300000,
+    speed: 1000,
     slidesToShow: 1,
     slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000, // Change the speed to 3 seconds
+    autoplayInterval: 3000,
   };
 
   return (
     <Slider {...settings}>
       {slides.map((slide, index) => (
-        <div key={index} className="mt-5 max-w-96">
+        <div key={index} className="mt-5 px-40 bg-red-500">
           <img
             src={slide.imageURL}
             alt={slide.name}
