@@ -1,18 +1,22 @@
 const fetch = require("node-fetch");
 const Order = require("../../models/orderModel");
+const User = require("../../models/userModel");
 exports.btcTransationController = async (req, res, next) => {
   // ********************* btc correct
   const exampleHash =
     "f4184fc596403b9d638783cf57adfe4c75c605f6356fbc91338530e9831e9e16";
-  const transactionHash = req.body.hash;
+  const transactionHash = req.body.hashId;
   const apiUrl = `https://api.blockchair.com/bitcoin/raw/transaction/${transactionHash}`;
-  const update = { $set: { isPaid: true } };
+  const { products, email, amount } = req.body;
+
   try {
     const response = await fetch(apiUrl);
     const data = await response.json();
     // console.log(data);
-    if (data.data.size === req.body.amount) {
-      Order.findOneAndUpdate(data.data, update, { new: true });
+    if (data.data.size === amount) {
+      const user = User.findOne({ email: { $gte: { email } } });
+      const newOrder = new Order({ user, products });
+      await newOrder.save();
       res.status(201).json({
         status: "success",
       });

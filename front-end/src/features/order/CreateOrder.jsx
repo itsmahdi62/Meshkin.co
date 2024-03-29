@@ -14,6 +14,7 @@ function CreateOrder() {
   const [coin, setCoin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [hashId, setHashId] = useState();
+
   const [coinPrices, setCoinPrices] = useState({
     btc: 0,
     eth: 0,
@@ -29,6 +30,7 @@ function CreateOrder() {
       wallet: "15wWzRXtgpDyQ5vSdtpDyWrpk3tkJNH9zc",
       network: "Bitcoin",
       price: coinPrices.btc,
+      amount: 0,
     },
     {
       label: "Eth",
@@ -36,12 +38,14 @@ function CreateOrder() {
         "addr1q8gcefxpnnlukhfduvjagjy7k3x4dx9scmvgd557d755qjpyas0w75sham58dmm56vz2jydr7vd060wq7eswekll28xqvr8que",
       network: "ERC20",
       price: coinPrices.eth,
+      amount: 0,
     },
     {
       label: "Trx",
       wallet: "TV63SGWfJmwsuu1aLZf1rzu59gmMmySM9M",
       network: "TRC20",
       price: coinPrices.tron,
+      amount: 0,
     },
     {
       label: "Ada",
@@ -49,9 +53,10 @@ function CreateOrder() {
         "addr1q8gcefxpnnlukhfduvjagjy7k3x4dx9scmvgd557d755qjpyas0w75sham58dmm56vz2jydr7vd060wq7eswekll28xqvr8que",
       network: "CARDANO ADA",
       price: coinPrices.ada,
+      amount: 0,
     },
   ]);
-
+  // getting coins price
   useEffect(() => {
     const getPrice = async () => {
       let response = await fetch(
@@ -73,6 +78,7 @@ function CreateOrder() {
         "https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=usd"
       );
       const adaPrice = await response.json();
+
       // console.log(Math.random() * (0.0025 - 0.002) + 0.002);
       setCoinPrices({
         btc: btcPrice.bitcoin,
@@ -137,6 +143,8 @@ function CreateOrder() {
           },
           body: JSON.stringify({
             hashId,
+            email: sessionStorage.getItem("email"),
+            products: cart,
           }),
         }
       );
