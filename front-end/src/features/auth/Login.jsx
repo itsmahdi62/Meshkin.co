@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-// import { loginAsync } from "./authSlice";
 import ReturnToMenu from "../../ui/ReturnToMenu";
 
 const Login = () => {
@@ -16,15 +15,6 @@ const Login = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    // let userCredentials = JSON.stringify({
-    //   email,
-    //   password,
-    // });
-    // dispatch(loginAsync(userCredentials, { dispatch })).then((result) => {
-    //   setEmail("");
-    //   setPassword("");
-    //   navigate("/list");
-    // });
     try {
       const response = await fetch("http://127.0.0.1:8000/api/v1/users/login", {
         method: "POST",
@@ -48,6 +38,7 @@ const Login = () => {
       // console.log(data.data.user.name);
       sessionStorage.setItem("auth-token", data.token);
       sessionStorage.setItem("username", data.data.user.name);
+      sessionStorage.setItem("email", data.data.user.email);
       if (data.data.user.role !== "admin") {
         navigate("/");
       } else {

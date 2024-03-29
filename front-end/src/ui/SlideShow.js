@@ -12,18 +12,18 @@ const Slideshow = ({ slides }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000, // Change the speed to 3 seconds
+    autoplaySpeed: 2000,
     autoplayInterval: 3000,
   };
 
   return (
     <Slider {...settings}>
       {slides.map((slide, index) => (
-        <div key={index} className="mt-5 px-40 bg-red-500">
+        <div key={index} className="mt-5 px-40">
           <img
             src={slide.imageURL}
             alt={slide.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover rounded-lg"
           />
           {slide.name && (
             <div className="text-center text-white p-4 absolute bottom-0 left-0 right-0">

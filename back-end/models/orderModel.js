@@ -5,23 +5,13 @@ const orderSchema = new mongoose.Schema({
     ref: "User",
     required: [true, "Ordering must belong to a user ."],
   },
-  products: {
+  products: [
+    {
       type: mongoose.Schema.ObjectId,
       ref: "Products",
       required: [true, "Ordering must belong to a user ."],
     },
-  price: {
-    type: Number,
-    require: [true, "Order must have a price ."],
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now(),
-  },
-  isPaid: {
-    type: Boolean,
-    default: false,
-  },
+  ],
 });
 
 orderSchema.pre(/^find/, function (next) {

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import { useDispatch } from "react-redux";
-// import { signupAsync } from "./authSlice";
 import ReturnToMenu from "../../ui/ReturnToMenu";
 
 const SignupPage = () => {
@@ -9,24 +7,10 @@ const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  // const username = useSelector((state) => state.auth.user.name);
 
-  // const dispatch = useDispatch();
   const Navigate = useNavigate();
   async function handleSignup(e) {
     e.preventDefault();
-    // let data = JSON.stringify({
-    //   name,
-    //   email,
-    //   password,
-    //   passwordConfirm,
-    // });
-    // dispatch(signupAsync(data, { dispatch })).then((result) => {
-    //   setEmail("");
-    //   setPassword("");
-    //   setPasswordConfirm("");
-    //   Navigate("/list");
-    // });
     try {
       const response = await fetch(
         "http://127.0.0.1:8000/api/v1/users/signup",
@@ -43,19 +27,14 @@ const SignupPage = () => {
           }),
         }
       );
-
       const data = await response.json();
       console.log(data);
       if (data.status !== "success") {
         throw new Error("Failed to signup");
       }
-      // dispatch(setName(data.data.user.name));
-      // console.log(data);
-      // console.log(data.data.user.name);
-      console.log(data.data.user.name);
       sessionStorage.setItem("auth-token", data.token);
       sessionStorage.setItem("username", data.data.user.name);
-
+      sessionStorage.setItem("email", data.data.user.email);
       Navigate("/");
       // return data;
     } catch (error) {
