@@ -17,7 +17,10 @@ const Header = () => {
         Meshkin Co.
       </Link>
       <Username />
-
+      <div className="hidden md:flex ">
+        <UserProducts />
+        <CartOverview />
+      </div>
       {!username && (
         <div className="flex me-5">
           <Link to="/login">
@@ -49,21 +52,22 @@ const Header = () => {
           />
         </svg>
       </button>
+
       {showMenu && (
-        <div className="absolute top-16 right-0 w-full min-h-dvh text-center bg-stone-50 shadow-lg py-2 rounded-md z-20">
+        <div className="absolute top-12 right-0 w-full min-h-dvh text-center bg-stone-50 shadow-lg py-2 rounded-md z-20">
           <UserProducts setShowMenu={setShowMenu} />
           <CartOverview setShowMenu={setShowMenu} />
           <Link
             onClick={() => setShowMenu(false)}
-            className="block py-8 my-20 text-sm text-stone-900 border border-stone-600 hover:bg-stone-100 sm:px-4 sm:py-2 sm:border-none"
-            to="/login">
-            Login
+            className="block py-8 my-20 text-sm text-stone-900 border border-stone-400 hover:bg-stone-100 md:px-4 md:py-2 md:border-none"
+            to="/signUp">
+            Sign Up
           </Link>
           <Link
             onClick={() => setShowMenu(false)}
-            className="block py-8 my-20 text-sm text-stone-900 border border-stone-600 hover:bg-stone-100 sm:px-4 sm:py-2 sm:border-none"
-            to="/signUp">
-            Sign Up
+            className="block py-8 my-20 text-sm text-stone-900 border border-stone-400 hover:bg-stone-100 md:px-4 md:py-2 md:border-none"
+            to="/login">
+            Login
           </Link>
         </div>
       )}
