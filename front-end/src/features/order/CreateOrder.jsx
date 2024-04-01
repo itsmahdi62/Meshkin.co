@@ -14,7 +14,6 @@ function CreateOrder() {
   const [coin, setCoin] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [hashId, setHashId] = useState();
-
   const [coinPrices, setCoinPrices] = useState({
     btc: 0,
     eth: 0,
@@ -60,72 +59,53 @@ function CreateOrder() {
   useEffect(() => {
     const getPrice = async () => {
       try {
-        let response = await fetch(
-          "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
+        const response = await fetch(
+          "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tron,cardano&vs_currencies=usd"
         );
-        const btcPrice = await response.json();
-
-        response = await fetch(
-          "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
-        );
-        const ethPrice = await response.json();
-
-        response = await fetch(
-          "https://api.coingecko.com/api/v3/simple/price?ids=tron&vs_currencies=usd"
-        );
-        const tronPrice = await response.json();
-
-        response = await fetch(
-          "https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=usd"
-        );
-        const adaPrice = await response.json();
-
-        // console.log(Math.random() * (0.0025 - 0.002) + 0.002);
+        const prices = await response.json();
         setCoinPrices({
-          btc: btcPrice.bitcoin,
-          eth: ethPrice.ethereum,
-          tron: tronPrice.tron,
-          ada: adaPrice.cardano,
+          btc: prices.bitcoin,
+          eth: prices.ethereum,
+          tron: prices.tron,
+          ada: prices.cardano,
         });
+
+        // Update avalableCoins with new coinPrices
+        setAvalableCoins([
+          {
+            label: "Btc",
+            wallet: "15wWzRXtpDyQ5vSdtpDyWrpk3tkJNH9zc",
+            network: "Bitcoin",
+            price: coinPrices.btc.usd,
+          },
+          {
+            label: "Eth",
+            wallet:
+              "addr1q8gcefxpnnlukhfduvjagjy7k3x4dx9scmvgd557d755qjpyas0w75sham58dmm56vz2jydr7vd060wq7eswekll28xqvr8que",
+            network: "ERC20",
+            price: coinPrices.eth.usd,
+          },
+          {
+            label: "Trx",
+            wallet: "TV63SGWfJmwsuu1aLZf1rzu59gmMmySM9M",
+            network: "TRC20",
+            price: coinPrices.tron.usd,
+          },
+          {
+            label: "Ada",
+            wallet:
+              "addr1q8gcefxpnnlukhfduvjagjy7k3x4dx9scmvgd557d755qjpyas0w75sham58dmm56vz2jydr7vd060wq7eswekll28xqvr8que",
+            network: "CARDANO ADA",
+            price: coinPrices.ada.usd,
+          },
+        ]);
       } catch {}
-
-      setIsLoading(false);
     };
-
     // Run getPrice on component mount
     getPrice();
+    setIsLoading(false);
+  }, );
 
-    // Update avalableCoins with new coinPrices
-
-    setAvalableCoins([
-      {
-        label: "Btc",
-        wallet: "15wWzRXtgpDyQ5vSdtpDyWrpk3tkJNH9zc",
-        network: "Bitcoin",
-        price: coinPrices.btc.usd,
-      },
-      {
-        label: "Eth",
-        wallet:
-          "addr1q8gcefxpnnlukhfduvjagjy7k3x4dx9scmvgd557d755qjpyas0w75sham58dmm56vz2jydr7vd060wq7eswekll28xqvr8que",
-        network: "ERC20",
-        price: coinPrices.eth.usd,
-      },
-      {
-        label: "Trx",
-        wallet: "TV63SGWfJmwsuu1aLZf1rzu59gmMmySM9M",
-        network: "TRC20",
-        price: coinPrices.tron.usd,
-      },
-      {
-        label: "Ada",
-        wallet:
-          "addr1q8gcefxpnnlukhfduvjagjy7k3x4dx9scmvgd557d755qjpyas0w75sham58dmm56vz2jydr7vd060wq7eswekll28xqvr8que",
-        network: "CARDANO ADA",
-        price: coinPrices.ada.usd,
-      },
-    ]);
-  }, []);
   const navigation = useNavigate();
   const isSubmitting = navigation.state === "submitting";
   const cart = useSelector(getCart);
@@ -189,6 +169,7 @@ function CreateOrder() {
               </label>
               <label className="font-medium me-16">
                 Current Coin Price : {avalableCoin.price}
+                {console.log(avalableCoin.price)}
               </label>
               <label className="font-medium me-16">
                 Amount you should pay exactly :

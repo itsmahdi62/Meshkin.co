@@ -18,8 +18,8 @@ const Header = () => {
       </Link>
       <Username />
       <div className="hidden md:flex ">
-        <UserProducts />
-        <CartOverview />
+        <UserProducts setShowMenu={setShowMenu} />
+        <CartOverview setShowMenu={setShowMenu} />
       </div>
       {!username && (
         <div className="flex me-5">
