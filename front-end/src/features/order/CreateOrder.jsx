@@ -71,40 +71,42 @@ function CreateOrder() {
         });
 
         // Update avalableCoins with new coinPrices
-        setAvalableCoins([
+        const updatedCoins = [
           {
             label: "Btc",
             wallet: "15wWzRXtpDyQ5vSdtpDyWrpk3tkJNH9zc",
             network: "Bitcoin",
-            price: coinPrices.btc.usd,
+            price: prices.bitcoin.usd,
           },
           {
             label: "Eth",
             wallet:
               "addr1q8gcefxpnnlukhfduvjagjy7k3x4dx9scmvgd557d755qjpyas0w75sham58dmm56vz2jydr7vd060wq7eswekll28xqvr8que",
             network: "ERC20",
-            price: coinPrices.eth.usd,
+            price: prices.ethereum.usd,
           },
           {
             label: "Trx",
             wallet: "TV63SGWfJmwsuu1aLZf1rzu59gmMmySM9M",
             network: "TRC20",
-            price: coinPrices.tron.usd,
+            price: prices.tron.usd,
           },
           {
             label: "Ada",
             wallet:
               "addr1q8gcefxpnnlukhfduvjagjy7k3x4dx9scmvgd557d755qjpyas0w75sham58dmm56vz2jydr7vd060wq7eswekll28xqvr8que",
             network: "CARDANO ADA",
-            price: coinPrices.ada.usd,
+            price: prices.cardano.usd,
           },
-        ]);
+        ];
+
+        setAvalableCoins(updatedCoins);
       } catch {}
     };
     // Run getPrice on component mount
     getPrice();
     setIsLoading(false);
-  }, );
+  }, []);
 
   const navigation = useNavigate();
   const isSubmitting = navigation.state === "submitting";
