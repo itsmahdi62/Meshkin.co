@@ -59,33 +59,36 @@ function CreateOrder() {
   // getting coins price
   useEffect(() => {
     const getPrice = async () => {
-      let response = await fetch(
-        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
-      );
-      const btcPrice = await response.json();
+      try {
+        let response = await fetch(
+          "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
+        );
+        const btcPrice = await response.json();
 
-      response = await fetch(
-        "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
-      );
-      const ethPrice = await response.json();
+        response = await fetch(
+          "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
+        );
+        const ethPrice = await response.json();
 
-      response = await fetch(
-        "https://api.coingecko.com/api/v3/simple/price?ids=tron&vs_currencies=usd"
-      );
-      const tronPrice = await response.json();
+        response = await fetch(
+          "https://api.coingecko.com/api/v3/simple/price?ids=tron&vs_currencies=usd"
+        );
+        const tronPrice = await response.json();
 
-      response = await fetch(
-        "https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=usd"
-      );
-      const adaPrice = await response.json();
+        response = await fetch(
+          "https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=usd"
+        );
+        const adaPrice = await response.json();
 
-      // console.log(Math.random() * (0.0025 - 0.002) + 0.002);
-      setCoinPrices({
-        btc: btcPrice.bitcoin,
-        eth: ethPrice.ethereum,
-        tron: tronPrice.tron,
-        ada: adaPrice.cardano,
-      });
+        // console.log(Math.random() * (0.0025 - 0.002) + 0.002);
+        setCoinPrices({
+          btc: btcPrice.bitcoin,
+          eth: ethPrice.ethereum,
+          tron: tronPrice.tron,
+          ada: adaPrice.cardano,
+        });
+      } catch {}
+
       setIsLoading(false);
     };
 

@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 
-const UserProducts = () => {
+const UserProducts = (props) => {
   return (
-    <div className="me-5 text-stone-500  bg-stone-200 text-sm py-[10px]  rounded-2xl sm:px-6">
-      <Link to="/userProducts" className="flex items-center">
+    <div
+      onClick={() => props.setShowMenu(false)}
+      className="py-8 my-20  text-sm text-stone-900 border border-stone-600 hover:bg-stone-100 sm:px-4 sm:py-2 sm:border-none">
+      <Link to="/userProducts" className="flex items-center justify-center">
         <p className="text-stone-500 font-semibold space-x-4 sm:space-x-6 md:text-base">
           My Products
         </p>
