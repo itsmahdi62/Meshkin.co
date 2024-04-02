@@ -11,7 +11,8 @@ import { useEffect, useState } from "react";
 import ReturnToMenu from "../../ui/ReturnToMenu";
 
 function CreateOrder() {
-  const [coin, setCoin] = useState(false);
+  let selectedCoin = null;
+  let finalAmount = 0;
   const [isLoading, setIsLoading] = useState(true);
   const [hashId, setHashId] = useState();
   const [coinPrices, setCoinPrices] = useState({
@@ -29,7 +30,6 @@ function CreateOrder() {
       wallet: "15wWzRXtgpDyQ5vSdtpDyWrpk3tkJNH9zc",
       network: "Bitcoin",
       price: coinPrices.btc,
-      amount: 0,
     },
     {
       label: "Eth",
@@ -37,14 +37,12 @@ function CreateOrder() {
         "addr1q8gcefxpnnlukhfduvjagjy7k3x4dx9scmvgd557d755qjpyas0w75sham58dmm56vz2jydr7vd060wq7eswekll28xqvr8que",
       network: "ERC20",
       price: coinPrices.eth,
-      amount: 0,
     },
     {
       label: "Trx",
       wallet: "TV63SGWfJmwsuu1aLZf1rzu59gmMmySM9M",
       network: "TRC20",
       price: coinPrices.tron,
-      amount: 0,
     },
     {
       label: "Ada",
@@ -52,7 +50,6 @@ function CreateOrder() {
         "addr1q8gcefxpnnlukhfduvjagjy7k3x4dx9scmvgd557d755qjpyas0w75sham58dmm56vz2jydr7vd060wq7eswekll28xqvr8que",
       network: "CARDANO ADA",
       price: coinPrices.ada,
-      amount: 0,
     },
   ]);
   // getting coins price
@@ -114,13 +111,17 @@ function CreateOrder() {
   if (!cart.length) return <EmptyCart />;
 
   const handleRadioChange = (event) => {
-    setCoin(event.target.value);
+    selectedCoin = event.target.value;
+    finalAmount =
+      totalCartPrice /
+      avalableCoins.find((avalableCoin) => selectedCoin === avalableCoin.label)
+        .price;
   };
 
   const checkTransactionHandler = async () => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/v1/checktransaction/${coin}`,
+        `http://127.0.0.1:8000/api/v1/checktransaction/${selectedCoin}`,
         {
           method: "POST",
           headers: {
@@ -130,6 +131,7 @@ function CreateOrder() {
             hashId,
             email: sessionStorage.getItem("email"),
             products: cart,
+            finalAmount,
           }),
         }
       );
@@ -143,7 +145,6 @@ function CreateOrder() {
       alert(e);
     }
   };
-
   return (
     <div className="px-4 py-2">
       {isLoading ? (
@@ -164,6 +165,9 @@ function CreateOrder() {
                 className="h-6 w-4 me-5  accent-blue-500 focus:outline-none  md:px-6 md:py-3 focus:ring-offset-2"
                 value={avalableCoin.label}
                 onChange={handleRadioChange}
+                checked={
+                  selectedCoin && selectedCoin.label === avalableCoin.label
+                }
               />
               <label className="font-medium me-16">{avalableCoin.label}</label>
               <label className="font-medium me-16">
@@ -171,11 +175,9 @@ function CreateOrder() {
               </label>
               <label className="font-medium me-16">
                 Current Coin Price : {avalableCoin.price}
-                {console.log(avalableCoin.price)}
               </label>
               <label className="font-medium me-16">
-                Amount you should pay exactly :
-                {totalCartPrice / avalableCoin.price}
+                Amount you should pay exactly :{avalableCoin.amount}
               </label>
               <label className="font-medium ">
                 Address : {avalableCoin.wallet}
