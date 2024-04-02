@@ -12,7 +12,7 @@ exports.btcTransationController = async (req, res, next) => {
   try {
     const response = await fetch(apiUrl);
     const data = await response.json();
-    // console.log(data);
+    console.log(data);
     if (data.data.size === amount) {
       const user = User.findOne({ email: { $gte: { email } } });
       const newOrder = new Order({ user, products });
@@ -29,6 +29,8 @@ exports.btcTransationController = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.error("Error checking transaction confirmation:", error);
+    res.status(404).json({
+      status: "unsuccess",
+    });
   }
 };

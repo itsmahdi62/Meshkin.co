@@ -11,10 +11,12 @@ import { useEffect, useState } from "react";
 import ReturnToMenu from "../../ui/ReturnToMenu";
 
 function CreateOrder() {
-  let selectedCoin = null;
-  let finalAmount = 0;
+  const [selectedCoin, setSelectedCoin] = useState("");
+  const [finalAmount, setFinalAmount] = useState("");
+  let successResult = null;
+  let errorsResult = null;
   const [isLoading, setIsLoading] = useState(true);
-  const [hashId, setHashId] = useState();
+  const [hashId, setHashId] = useState("");
   const [coinPrices, setCoinPrices] = useState({
     btc: 0,
     eth: 0,
@@ -105,20 +107,25 @@ function CreateOrder() {
     setIsLoading(false);
   }, []);
 
+  useEffect(() => {
+    const temp = avalableCoins.find(
+      (avalableCoin) => selectedCoin === avalableCoin.label
+    );
+    if (temp) {
+      setFinalAmount(totalCartPrice / temp.price);
+    }
+  }, [selectedCoin]);
   const navigation = useNavigate();
   const isSubmitting = navigation.state === "submitting";
   const cart = useSelector(getCart);
   if (!cart.length) return <EmptyCart />;
 
   const handleRadioChange = (event) => {
-    selectedCoin = event.target.value;
-    finalAmount =
-      totalCartPrice /
-      avalableCoins.find((avalableCoin) => selectedCoin === avalableCoin.label)
-        .price;
+    setSelectedCoin(event.target.value);
   };
 
   const checkTransactionHandler = async () => {
+    console.log(finalAmount)
     try {
       const response = await fetch(
         `http://127.0.0.1:8000/api/v1/checktransaction/${selectedCoin}`,
@@ -131,15 +138,16 @@ function CreateOrder() {
             hashId,
             email: sessionStorage.getItem("email"),
             products: cart,
-            finalAmount,
+            amount: finalAmount,
           }),
         }
       );
       const result = await response.json();
       if (result.status === "success") {
-        navigation("MyProducts");
+        successResult = "Success payment";
       } else {
-        console.log("payment not verified yet , check it in few seconds later");
+        errorsResult =
+          "payment is not verified yet , check it few seconds later !";
       }
     } catch (e) {
       alert(e);
@@ -165,9 +173,9 @@ function CreateOrder() {
                 className="h-6 w-4 me-5  accent-blue-500 focus:outline-none  md:px-6 md:py-3 focus:ring-offset-2"
                 value={avalableCoin.label}
                 onChange={handleRadioChange}
-                checked={
-                  selectedCoin && selectedCoin.label === avalableCoin.label
-                }
+                // checked={
+                //   selectedCoin && selectedCoin.label === avalableCoin.label
+                // }
               />
               <label className="font-medium me-16">{avalableCoin.label}</label>
               <label className="font-medium me-16">
@@ -177,7 +185,8 @@ function CreateOrder() {
                 Current Coin Price : {avalableCoin.price}
               </label>
               <label className="font-medium me-16">
-                Amount you should pay exactly :{avalableCoin.amount}
+                Amount you should pay exactly :
+                {totalCartPrice / avalableCoin.price}
               </label>
               <label className="font-medium ">
                 Address : {avalableCoin.wallet}
@@ -195,6 +204,7 @@ function CreateOrder() {
               className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="hash"
               type="text"
+              required
               value={hashId}
               onChange={(e) => setHashId(e.target.value)}
               placeholder="Enter your hashId"
@@ -210,6 +220,12 @@ function CreateOrder() {
               disabled={isSubmitting}>
               Check transaction
             </button>
+            {successResult && (
+              <div className="my-5 px-6 py-4 bg-green-300">{successResult}</div>
+            )}
+            {errorsResult && (
+              <div className="my-5 px-6 py-4 bg-red-300">{errorsResult}</div>
+            )}
           </div>
           <ReturnToMenu />
         </>
