@@ -13,10 +13,12 @@ import ReturnToMenu from "../../ui/ReturnToMenu";
 function CreateOrder() {
   const [selectedCoin, setSelectedCoin] = useState("");
   const [finalAmount, setFinalAmount] = useState("");
-  let successResult = null;
-  let errorsResult = null;
+  const [successResult, setSuccessResult] = useState(null);
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [hashId, setHashId] = useState("");
+  const [inputLength, setInputLength] = useState(null);
+  const [readytofetch, setReadyToFetch] = useState(false);
   const [coinPrices, setCoinPrices] = useState({
     btc: 0,
     eth: 0,
@@ -115,6 +117,22 @@ function CreateOrder() {
       setFinalAmount(totalCartPrice / temp.price);
     }
   }, [selectedCoin]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setInputLength(hashId.length);
+    }, 500);
+    return () => clearTimeout(timeoutId);
+  }, [hashId]);
+
+  useEffect(() => {
+    if (inputLength === 64) {
+      setReadyToFetch(true);
+    } else if (inputLength !== null) {
+      setReadyToFetch(false);
+    }
+  }, [inputLength]);
+
   const navigation = useNavigate();
   const isSubmitting = navigation.state === "submitting";
   const cart = useSelector(getCart);
@@ -125,32 +143,44 @@ function CreateOrder() {
   };
 
   const checkTransactionHandler = async () => {
-    console.log(finalAmount)
-    try {
-      const response = await fetch(
-        `http://127.0.0.1:8000/api/v1/checktransaction/${selectedCoin}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            hashId,
-            email: sessionStorage.getItem("email"),
-            products: cart,
-            amount: finalAmount,
-          }),
+    if (readytofetch) {
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:8000/api/v1/checktransaction/${selectedCoin}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              hashId,
+              email: sessionStorage.getItem("email"),
+              products: cart,
+              amount: finalAmount,
+            }),
+          }
+        );
+        const result = await response.json();
+        if (result.status === "success") {
+          setSuccessResult("Successfull payment");
+          setTimeout(() => {
+            navigation("/userProducts");
+          }, 3000);
+        } else {
+          setError(
+            "payment is not verified yet , check it few seconds later !"
+          );
         }
-      );
-      const result = await response.json();
-      if (result.status === "success") {
-        successResult = "Success payment";
-      } else {
-        errorsResult =
-          "payment is not verified yet , check it few seconds later !";
+      } catch (e) {
+        alert(e);
       }
-    } catch (e) {
-      alert(e);
+    } else {
+      async function setErrorWithDelay(errorMessage, delay) {
+        setError(errorMessage);
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        setError(null);
+      }
+      setErrorWithDelay("Hash id must be 64 characters", 3000);
     }
   };
   return (
@@ -159,12 +189,9 @@ function CreateOrder() {
         <Loader />
       ) : (
         <>
-          <h2 className="mb-8 text-xl font-semibold">
-            Ready to order? Let's go!
-          </h2>
           {avalableCoins.map((avalableCoin) => (
             <div
-              className="mb-7  flex flex-wrap border border-stone-300 p-5 rounded-lg"
+              className="mb-4  flex flex-wrap border border-stone-300 p-5 rounded-lg"
               key={avalableCoin.label}>
               <input
                 type="radio"
@@ -173,9 +200,6 @@ function CreateOrder() {
                 className="h-6 w-4 me-5  accent-blue-500 focus:outline-none  md:px-6 md:py-3 focus:ring-offset-2"
                 value={avalableCoin.label}
                 onChange={handleRadioChange}
-                // checked={
-                //   selectedCoin && selectedCoin.label === avalableCoin.label
-                // }
               />
               <label className="font-medium me-16">{avalableCoin.label}</label>
               <label className="font-medium me-16">
@@ -220,13 +244,17 @@ function CreateOrder() {
               disabled={isSubmitting}>
               Check transaction
             </button>
-            {successResult && (
-              <div className="my-5 px-6 py-4 bg-green-300">{successResult}</div>
-            )}
-            {errorsResult && (
-              <div className="my-5 px-6 py-4 bg-red-300">{errorsResult}</div>
-            )}
           </div>
+          {successResult !== null && (
+            <div className="absolute bottom-48 left-[700px] rounded-lg my-5 px-12 py-8 text-center bg-green-300">
+              {successResult}
+            </div>
+          )}
+          {error !== null && (
+            <div className="absolute bottom-48 left-[700px] rounded-lg my-5 px-12 py-8 text-center bg-red-300">
+              {error}
+            </div>
+          )}
           <ReturnToMenu />
         </>
       )}
