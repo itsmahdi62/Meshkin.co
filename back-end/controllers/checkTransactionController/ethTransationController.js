@@ -2,9 +2,9 @@ const fetch = require("node-fetch");
 const Order = require("../../models/orderModel");
 const User = require("../../models/userModel");
 exports.ethTransationController = async (req, res, next) => {
-  // ********************* btc correct
+  // does not work with the example
   const exampleHash =
-    "0xda214d1b1d458e7ae0e626b69a52a59d19762c51a53ff64813c4d31256282fdf";
+    "0xda214d1b1d458e7ae0e626b69a52a59d19762c51a53ff64813c4d31256282f";
   const transactionHash = req.body.hashId;
   const apiUrl = `https://api.blockchair.com/ethereum/raw/block/${transactionHash}`;
   const { products, email, amount } = req.body;

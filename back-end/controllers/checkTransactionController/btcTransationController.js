@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
 const Order = require("../../models/orderModel");
 const User = require("../../models/userModel");
 exports.btcTransationController = async (req, res, next) => {
-  // ********************* btc correct
+  // works with the example
   const exampleHash =
     "f4184fc596403b9d638783cf57adfe4c75c605f6356fbc91338530e9831e9e16";
   const transactionHash = req.body.hashId;

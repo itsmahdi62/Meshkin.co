@@ -116,6 +116,7 @@ function CreateOrder() {
     if (temp) {
       setFinalAmount(totalCartPrice / temp.price);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCoin]);
 
   useEffect(() => {
@@ -167,12 +168,18 @@ function CreateOrder() {
             navigation("/userProducts");
           }, 3000);
         } else {
-          setError(
-            "payment is not verified yet , check it few seconds later !"
+          async function setErrorWithDelay(errorMessage, delay) {
+            setError(errorMessage);
+            await new Promise((resolve) => setTimeout(resolve, delay));
+            setError(null);
+          }
+          setErrorWithDelay(
+            "payment is not verified yet , check it few seconds later !",
+            3000
           );
         }
       } catch (e) {
-        alert(e);
+        console.log(e);
       }
     } else {
       async function setErrorWithDelay(errorMessage, delay) {
@@ -246,12 +253,12 @@ function CreateOrder() {
             </button>
           </div>
           {successResult !== null && (
-            <div className="absolute bottom-48 left-[700px] rounded-lg my-5 px-12 py-8 text-center bg-green-300">
+            <div className="absolute bottom-48 lg:left-[700px] rounded-lg my-5 px-12 py-8 text-center bg-green-300">
               {successResult}
             </div>
           )}
           {error !== null && (
-            <div className="absolute bottom-48 left-[700px] rounded-lg my-5 px-12 py-8 text-center bg-red-300">
+            <div className="absolute bottom-48 lg:left-[700px] rounded-lg my-5 px-12 py-8 text-center bg-red-300">
               {error}
             </div>
           )}

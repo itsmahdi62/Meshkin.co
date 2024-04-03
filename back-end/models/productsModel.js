@@ -15,22 +15,21 @@ const productsSchema = new mongoose.Schema(
     slug: String,
     duration: {
       type: Number,
-      required: [true, "A Product must have a duration"],
-      enum: [1, 3, 6, 12],
     },
     price: {
       type: Number,
       required: [true, "A product must have a price"],
     },
     imageURL: String,
-    plan: { type: String, default: "none" },
     about: String,
-    unlimitedFeatures: String,
     title: {
       type: String,
       required: [true, "A Product must has a title !"],
     },
-    benefits: [String],
+    videos: {
+      type: [String],
+      select: false,
+    },
   },
   {
     toJSON: { virtuals: true },

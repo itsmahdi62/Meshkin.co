@@ -59,10 +59,15 @@ const ProductDetails = () => {
       {isLoading && <Loader />}
       <div className="rounded-2xl bg-stone-50   min-h-96 shadow-sm border border-stone-300 mb-auto flex flex-col justify-center px-12 py-4">
         {data && <img className="rounded-2xl" src={data.imageURL} alt="" />}
-        <div className="flex my-8">
+        <div className="flex mt-8 mb-4">
           <p>Price</p>
           {data && <p className="ms-auto">{data.price}$</p>}
         </div>
+        <div className="flex mb-4">
+          <p>Course Duration</p>
+          {data && <p className="ms-auto">{data.duration} Hours</p>}
+        </div>
+
         {!isInCart && (
           <Button type="primary" onClick={handleAddToCart}>
             Buy Product

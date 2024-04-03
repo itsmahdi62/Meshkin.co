@@ -37,7 +37,6 @@ function ProductListItem({ product }) {
           <Link to={`/list/${id}`}>
             <div className="me-auto min-h-20 ">
               <p className="text-sm">{formatCurrency(price)}</p>
-              <p className="text-sm">{duration} Month</p>
               <p className="text-sm font-extralight">
                 {plan === "none" ? "" : `${plan}`}
               </p>
