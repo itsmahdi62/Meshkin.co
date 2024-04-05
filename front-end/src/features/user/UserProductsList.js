@@ -5,7 +5,15 @@ const UserProductsList = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     const getList = async () => {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/products");
+      const response = await fetch("http://127.0.0.1:8000/api/v1/orders/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: "laura@example.com",
+        }),
+      });
       const result = await response.json();
       setData(result.data);
       console.log(data);
@@ -16,12 +24,12 @@ const UserProductsList = () => {
 
   return (
     <div className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-4 ">
-      {data.length === 0 ? (
+      {/* {data.length === 0 ? (
         <Loader />
       ) : (
         <>
           {data.map((myProduct) => (
-            <Link to={`/userProducts/${myProduct.id}`}>
+            <Link key={myProduct} to={`/userProducts/${myProduct.id}`}>
               <div
                 className="w-60 h-72 shadow-md rounded-[25px] mx-auto border border-stone-300  hover:shadow-blue-300 transition-all duration-500"
                 key={myProduct.id}>
@@ -41,7 +49,8 @@ const UserProductsList = () => {
             </Link>
           ))}
         </>
-      )}
+      )} */}
+      ff
     </div>
   );
 };

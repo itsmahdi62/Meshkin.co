@@ -1,6 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 import { getList } from "../../services/apiShop";
 import ProductListItem from "./ProductListItem";
+import Button from "../../ui/Button";
 import "./ProductsList.scss";
 import SlideShow from "../../ui/SlideShow";
 function ProductSList() {
