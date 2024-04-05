@@ -116,7 +116,7 @@ function CreateOrder() {
     if (temp) {
       setFinalAmount(totalCartPrice / temp.price);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCoin]);
 
   useEffect(() => {
@@ -155,13 +155,15 @@ function CreateOrder() {
             },
             body: JSON.stringify({
               hashId,
-              email: sessionStorage.getItem("email"),
+              // email: sessionStorage.getItem("email"),
+              email: "laura@example.com",
               products: cart,
-              amount: finalAmount,
+              amount: 59.9,
             }),
           }
         );
         const result = await response.json();
+        console.log(result)
         if (result.status === "success") {
           setSuccessResult("Successfull payment");
           setTimeout(() => {

@@ -32,3 +32,6 @@ exports.ethTransationController = async (req, res, next) => {
     console.error("Error checking transaction confirmation:", error);
   }
 };
+//https://api.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash=0x4b9c2b3c4f0e1a8d6b2f7e9a0c6a8b6e1a5e0b5c7d7f8a9b6f8a9b6e1a5e0b5 &apikey=B96DUP9C69AIVX2MQFBAZH67ZC7D33W643
+// const apiBaseUrl = 'https://api.etherscan.io/api';
+//   const url = `${apiBaseUrl}?module=proxy&action=eth_getTransactionReceipt&txhash=${transactionHash}&apikey=${apiKey}`;

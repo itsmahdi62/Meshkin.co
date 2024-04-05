@@ -3,13 +3,13 @@ const orderSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
-    required: [true, "Ordering must belong to a user ."],
+    // required: [true, "Ordering must belong to a user ."],
   },
   products: [
     {
       type: mongoose.Schema.ObjectId,
       ref: "Products",
-      required: [true, "Ordering must belong to a user ."],
+      // required: [true, "Ordering must belong to a user ."],
     },
   ],
 });
@@ -18,6 +18,7 @@ orderSchema.pre(/^find/, function (next) {
   this.populate("user").populate({
     path: "products",
     select: "name",
+    select: "videos",
   });
 });
 

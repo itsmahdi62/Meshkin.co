@@ -5,7 +5,7 @@ import { addItem, deleteItem, getCurrentQuantityById } from "../cart/cartSlice";
 import { Link } from "react-router-dom";
 function ProductListItem({ product }) {
   const dispatch = useDispatch();
-  const { id, name, price, duration, imageURL, plan } = product;
+  const { id, name, price, imageURL, plan } = product;
   const productId = id;
   const currentQuantity = useSelector(getCurrentQuantityById(id));
   const isInCart = currentQuantity > 0;
