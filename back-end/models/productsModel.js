@@ -1,7 +1,4 @@
 const mongoose = require("mongoose");
-const multer = require("multer");
-const slugify = require("slugify");
-const validator = require("validator");
 
 const productsSchema = new mongoose.Schema(
   {
@@ -26,10 +23,13 @@ const productsSchema = new mongoose.Schema(
       type: String,
       required: [true, "A Product must has a title !"],
     },
-    videos: {
-      type: [String],
-      select: false,
-    },
+    videos: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Videos",
+        private: true,
+      },
+    ],
   },
   {
     toJSON: { virtuals: true },

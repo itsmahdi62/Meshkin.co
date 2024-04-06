@@ -22,6 +22,7 @@ const UserProductsList = () => {
       }
     };
     getList();
+    console.log(data);
   }, []);
 
   // console.log(data);
@@ -30,10 +31,8 @@ const UserProductsList = () => {
       {data ? (
         <>
           {data.map((myProduct) => (
-            <Link to={`/userProducts/${myProduct.id}`}>
-              <div
-                className="w-60 h-72 shadow-md rounded-[25px] mx-auto border border-stone-300  hover:shadow-blue-300 transition-all duration-500"
-                key={myProduct.id}>
+            <Link to={`/userProducts/${myProduct.id}`} key={myProduct.id}>
+              <div className="w-60 h-72 shadow-md rounded-[25px] mx-auto border border-stone-300  hover:shadow-blue-300 transition-all duration-500">
                 <img
                   src={myProduct.imageURL}
                   alt={myProduct.name}

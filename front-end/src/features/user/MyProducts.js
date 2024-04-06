@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Loader from "../../ui/Loader";
 
 const MyProducts = () => {
@@ -11,17 +11,28 @@ const MyProducts = () => {
       if (res.status !== 200) throw Error("Failed getting product");
       const result = await res.json();
 
-      setData(result.data);
-      console.log(data);
+      setData(result.product);
     }
     getData();
+    console.log(data);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  console.log(data);
   return (
     <div className="mt-5">
-      <div className="mt-5 grid grid-cols-1 gap-6 sm:grid-cols-4 ">
-        {data ? <Loader /> : <>ffk</>}
-      </div>
+      {data ? (
+        <div className="flex flex-col my-4 mx-auto ">
+          {/* {data.videoURLs.map((product) => (
+            <Link
+              to={`${product}`}
+              className="bg-stone-300 my-5 text-2xl text-black py-3 pe-8 ps-4">
+              {product}
+            </Link>
+          ))} */}
+        </div>
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 };

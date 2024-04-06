@@ -14,13 +14,12 @@ exports.getMyProducts = catchAsync(async (req, res, next) => {
   // console.log(user);
   const Orders = await Order.findOne({ user: user._id });
   const result = Orders.products;
-  console.log(result);
   res.status(200).json({ result });
 });
 
 exports.getMyProduct = catchAsync(async (req, res, next) => {
   // 1) Find all bookings
-  const product = await Products.findById(req.id).select("+videos");
+  const product = await Products.findById(req.params.id).select({ videos: 1 });
   console.log(product);
   res.status(200).json({
     product,
