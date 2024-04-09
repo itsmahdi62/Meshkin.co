@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 
 const productsSchema = new mongoose.Schema(
   {
-    name: {
+    title: {
       type: String,
       required: [true, "A Product must has a name !"],
-      maxLength: [40, "A Product Name must have less or equal 40 charachter"],
+      maxLength: [100, "A Product Name must have less or equal 100 charachter"],
       minLength: [3, "A Product Name must have more or equal 10 charachter"],
       // validate : [validator.isAlpha , 'Only use characters']
     },
@@ -19,17 +19,10 @@ const productsSchema = new mongoose.Schema(
     },
     imageURL: String,
     about: String,
-    title: {
-      type: String,
-      required: [true, "A Product must has a title !"],
-    },
-    videos: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: "Videos",
-        private: true,
-      },
-    ],
+    instructor: String,
+    totalVideo: Number,
+    CourseContents: [String],
+    videos: [String],
   },
   {
     toJSON: { virtuals: true },

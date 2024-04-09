@@ -116,5 +116,15 @@
     "active": true,
     "photo": "user-20.jpg",
     "password": "$2a$12$uA9FsDw63v6dkJKGlLQ/8ufYBs8euB7kqIQewyYlZXU5azEKeLEky"
+  },
+  {
+    "id": "5c8a24a02f8fb814b56fa253",
+    "name": "Amir Mahdi",
+    "email": "amiralmasi021@gmail.com",
+    "role": "admin",
+    "active": true,
+    "photo": "user-20.jpg",
+    "password": "$2a$12$uA9FsDw63v6dkJKGlLQ/8ufYBs8euB7kqIQewyYlZXU5azEKeLEky"
   }
+  
 ]
