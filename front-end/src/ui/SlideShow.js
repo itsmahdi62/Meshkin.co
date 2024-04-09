@@ -22,12 +22,12 @@ const Slideshow = ({ slides }) => {
         <div key={index} className="mt-5 px-40">
           <img
             src={slide.imageURL}
-            alt={slide.name}
+            alt={slide.title}
             className="w-full h-full object-cover rounded-lg"
           />
-          {slide.name && (
+          {slide.title && (
             <div className="text-center text-white p-4 absolute bottom-0 left-0 right-0">
-              {slide.name}
+              {slide.title}
             </div>
           )}
         </div>

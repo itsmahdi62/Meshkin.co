@@ -20,8 +20,8 @@ const columns = [
     },
   },
   {
-    field: "name",
-    headerName: "Name",
+    field: "title",
+    headerName: "Title",
     width: 150,
     type: "string",
   },

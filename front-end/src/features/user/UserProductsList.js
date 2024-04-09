@@ -35,11 +35,11 @@ const UserProductsList = () => {
               <div className="w-60 h-72 shadow-md rounded-[25px] mx-auto border border-stone-300  hover:shadow-blue-300 transition-all duration-500">
                 <img
                   src={myProduct.imageURL}
-                  alt={myProduct.name}
+                  alt={myProduct.title}
                   className="h-28 w-full rounded-tl-[25px] rounded-tr-[25px]"
                 />
                 <div className="flex flex-col grow pt-0.5 ">
-                  <p className="font-medium ms-4 mt-4 ">{myProduct.name}</p>
+                  <p className="font-medium ms-4 mt-4 ">{myProduct.title}</p>
                 </div>
               </div>
             </Link>

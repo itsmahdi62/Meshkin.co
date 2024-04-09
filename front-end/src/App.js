@@ -3,7 +3,6 @@ import "./App.css";
 import Cart from "./features/cart/Cart";
 import CreateOrder from "./features/order/CreateOrder";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Order, { loader as orderLoader } from "./features/order/Order";
 import AppLayout from "./ui/AppLayout";
 import Error from "./ui/Error";
 import Login from "./features/auth/Login";
@@ -14,7 +13,6 @@ import ProductsList, {
 import ProductDetails from "./features/productsList/ProductDetails";
 import Users from "./admin-section/features/users/Users";
 import ProductsTable from "./admin-section/features/productsTable/ProductsTable";
-import Orders from "./admin-section/features/Orders/Orders";
 import ResetPasswordPage from "./features/auth/ResetPasswordPage";
 import UserProductsList from "./features/user/UserProductsList";
 import MyProducts from "./features/user/MyProducts";
@@ -73,20 +71,8 @@ const router = createBrowserRouter([
         errorElement: <Error />,
       },
       {
-        path: "orders",
-        element: <Orders />,
-        // loader: loginLoader,
-        errorElement: <Error />,
-      },
-      {
         path: "/order/new",
         element: <CreateOrder />,
-      },
-      {
-        path: "/order/:orderId",
-        element: <Order />,
-        loader: orderLoader,
-        errorElement: <Error />,
       },
       {
         path: "/userProducts",

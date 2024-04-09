@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import DataTable from "../dataTable/DataTable";
-import Add from "../Add/Add";
 import { Link } from "react-router-dom";
 
 const columns = [

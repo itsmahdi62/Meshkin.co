@@ -46,7 +46,7 @@ const ProductDetails = () => {
   const handleAddToCart = () => {
     const newItem = {
       productId: productId,
-      name: data.name,
+      title: data.title,
       quantity: 1,
       price: data.price,
       totalPrice: data.price * 1,
@@ -85,32 +85,22 @@ const ProductDetails = () => {
           {data && data.title}
         </h2>
         <hr className="border border-stone-300 mb-8 " />
-        <p className="leading-8 text-pretty mb-8">{data && data.about}</p>
-        <h3 className="font-bold text-2xl text-stone-400 mb-6">
-          Purchase premium app
+        <h2 className="text-2xl font-bold mb-4">Introduction</h2>
+        <p className="leading-8 text-pretty mb-8"></p>
+        <p className="my-2">Instructor</p>
+        <p className="my-2">{data && data.Instructor}</p>
+        <h3 className="font-bold text-2xl text-stone-400 mb-2">
+          What will we learn in this Course
         </h3>
-        <p className="leading-8 mb-8">{data && data.unlimitedFeatures}</p>
-        {/* unlimited features*/}
-        {data && data.benefits && (
+        {data && data.CourseContents && (
           <ul className="list-disc">
-            {data.benefits.map((benefit) => (
-              <li className="my-2 font-light" key={benefit}>
-                {benefit}
+            {data.CourseContents.map((CourseContent) => (
+              <li className="my-2 font-normal" key={CourseContent}>
+                {CourseContent}
               </li>
             ))}
           </ul>
         )}
-        <div className="flex mt-8 py-6 bg-stone-200 rounded-2xl justify-center">
-          <div className="flex  items-center">
-            <TbBrandSpeedtest />
-            <span>Instant delivery</span>
-          </div>
-          <hr className="mx-6  border-l-2 border-stone-500 h-6" />
-          <div className="flex  items-center">
-            <MdHeadphones />
-            <span>24h support</span>
-          </div>
-        </div>
       </div>
 
       <ReturnToMenu />

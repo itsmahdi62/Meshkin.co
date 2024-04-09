@@ -22,13 +22,13 @@ const MyProducts = () => {
     <div className="mt-5">
       {data ? (
         <div className="flex flex-col my-4 mx-auto ">
-          {/* {data.videoURLs.map((product) => (
+          {data.videos.map((product, index) => (
             <Link
               to={`${product}`}
               className="bg-stone-300 my-5 text-2xl text-black py-3 pe-8 ps-4">
-              {product}
+              Part {index + 1}
             </Link>
-          ))} */}
+          ))}
         </div>
       ) : (
         <Loader />

@@ -1,11 +1,9 @@
-import { redirect, useNavigate } from "react-router-dom";
-import { createOrder } from "../../services/apiRestaurant";
+import { useNavigate } from "react-router-dom";
 import Button from "../../ui/Button";
 import { useSelector } from "react-redux";
-import { clearCart, getCart, getTotalCartPrice } from "../cart/cartSlice";
+import { getCart, getTotalCartPrice } from "../cart/cartSlice";
 import EmptyCart from "../cart/EmptyCart";
 import Loader from "../../ui/Loader";
-import store from "../../store";
 import { formatCurrency } from "../../utils/helpers";
 import { useEffect, useState } from "react";
 import ReturnToMenu from "../../ui/ReturnToMenu";
@@ -163,7 +161,7 @@ function CreateOrder() {
           }
         );
         const result = await response.json();
-        console.log(result)
+        console.log(result);
         if (result.status === "success") {
           setSuccessResult("Successfull payment");
           setTimeout(() => {
@@ -269,23 +267,6 @@ function CreateOrder() {
       )}
     </div>
   );
-}
-
-export async function action({ request }) {
-  const formData = await request.formData();
-  const data = Object.fromEntries(formData);
-  const order = {
-    ...data,
-    cart: JSON.parse(data.cart),
-    priority: data.priority ? true : false,
-  };
-  const errors = {};
-
-  if (Object.keys(errors).length > 0) return errors;
-  // if everything is ok create new order and redirect
-  const newOrder = await createOrder(order);
-  store.dispatch(clearCart());
-  return redirect(`/order/${newOrder.id}`);
 }
 
 export default CreateOrder;

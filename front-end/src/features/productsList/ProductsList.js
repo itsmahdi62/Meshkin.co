@@ -54,7 +54,7 @@ function ProductSList() {
         </div>
       </div> */}
       <SlideShow slides={productList} />
-      <ul className="divide-y mt-48  divide-slate-200 px-2 grid gap-6 sm:grid-cols-2 md:grid-cols-4 md:gap-10 sm:mt-12">
+      <ul className="divide-y mt-48  divide-slate-200 px-2 grid gap-4 sm:grid-cols-2 md:grid-cols-4 md:gap-12 sm:mt-12">
         {productList.map((product) => (
           <ProductListItem product={product} key={product.id} />
         ))}
