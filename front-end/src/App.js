@@ -52,6 +52,8 @@ const router = createBrowserRouter([
       {
         path: "cart",
         element: <Cart />,
+
+        errorElement: <Error />,
       },
       {
         path: "login",
@@ -73,6 +75,7 @@ const router = createBrowserRouter([
       {
         path: "/order/new",
         element: <CreateOrder />,
+        errorElement: <Error />,
       },
       {
         path: "/userProducts",
@@ -82,7 +85,6 @@ const router = createBrowserRouter([
       {
         path: "/userProducts/:id",
         element: <MyProducts />,
-        // loader: productLoader,
         errorElement: <Error />,
       },
     ],

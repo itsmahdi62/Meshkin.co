@@ -8,12 +8,12 @@ exports.teronTransationController = async (req, res, next) => {
   const apiUrl = `https://apilist.tronscanapi.com/api/transaction-info?hash=${transactionHash}`;
   const { products, email, amount } = req.body;
   try {
-    // const response = await fetch(apiUrl);
-    // const data = await response.json();
+    const response = await fetch(apiUrl);
+    const data = await response.json();
 
-    // // console.log(data.contractData.amount/1000000);
-    // const dataAmount = data.contractData.amount / 1000000;
-    if (true) {
+    // console.log(data.contractData.amount/1000000);
+    const dataAmount = data.contractData.amount / 1000000;
+    if (dataAmount === amount) {
       const user = await User.findOne({ email });
       if (!user) {
         // Handle the error when user is not found

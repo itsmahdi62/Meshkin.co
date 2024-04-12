@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigation, useParams } from "react-router-dom";
+import { useNavigation, useParams } from "react-router-dom";
 import Button from "../../ui/Button";
-import { TbBrandSpeedtest } from "react-icons/tb";
-import { MdHeadphones } from "react-icons/md";
 import { addItem, getCurrentQuantityById } from "../cart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../ui/Loader";
@@ -17,24 +15,29 @@ const ProductDetails = () => {
   const isLoading = navigation.state === "loading";
   useEffect(() => {
     async function getData() {
-      const res = await fetch(
-        `http://127.0.0.1:8000/api/v1/products/${userId.id}`,
-        {
-          method: "GET",
-          maxBodyLength: Infinity,
-          // url: "127.0.0.1:8000/api/v1/users/login",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer null",
-          },
-        }
-      );
-      if (res.status !== 201) throw Error("Failed getting product");
-      const result = await res.json();
+      try {
+        const res = await fetch(
+          `http://127.0.0.1:8000/api/v1/products/${userId.id}`,
+          {
+            method: "GET",
+            maxBodyLength: Infinity,
+            // url: "127.0.0.1:8000/api/v1/users/login",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer null",
+            },
+          }
+        );
+        if (res.status !== 201) throw Error("Failed getting product");
+        const result = await res.json();
 
-      setData(result.data);
-      // setProductId(data.id);
-      console.log(data);
+        setData(result.data);
+        // setProductId(data.id);
+        console.log(data);
+      } catch (error) {
+        setData(null);
+        throw Error("Unable to get data", error);
+      }
     }
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
