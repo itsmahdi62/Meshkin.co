@@ -8,7 +8,7 @@ function ProductSList() {
   const productList = useLoaderData();
   return (
     <div className="container flex flex-col">
-      {/* <div className="banner-container gap-4 p-5 min-h-[400px] max-h-[800px] mb-96 sm:mb-[500px] md:mb-0">
+      <div className="banner-container gap-4 p-5 min-h-[400px] max-h-[800px] mb-96 sm:mb-[500px] md:mb-0">
         <div className="grid-item-1 flex flex-col py-12 px-8 bg-blue-600 rounded-2xl text-stone-200 shadow-lg">
           <h4 className="mx-auto shadow-sm font-semibold">
             Why Should we buy from Meshkin?
@@ -52,8 +52,8 @@ function ProductSList() {
             <p className="mt-8 max-w-52">Active all plato features !</p>
           </div>
         </div>
-      </div> */}
-      <SlideShow slides={productList} />
+      </div>
+      {/* <SlideShow slides={productList} /> */}
       <ul className="divide-y mt-48  divide-slate-200 px-2 grid gap-4 sm:grid-cols-2 md:grid-cols-4 md:gap-12 sm:mt-12">
         {productList.map((product) => (
           <ProductListItem product={product} key={product.id} />
